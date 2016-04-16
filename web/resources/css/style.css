@@ -188,3 +188,14 @@ nav
     margin-bottom: 10px;
     word-wrap: break-word;
 }
+
+/*code*/
+.code
+{
+    height: 200px;
+}
+
+#editor
+{
+    height: 100%;
+}
