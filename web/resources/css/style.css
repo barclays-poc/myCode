@@ -48,12 +48,6 @@ a:hover, a:active
     color: #007eb6;
 }
 
-.more
-{
-    display: inline-block;
-    text-align: right;
-}
-
 /* Headings */
 
 h1, h2, h3, h4
@@ -190,6 +184,12 @@ nav
 .links a:hover, a:active
 {
     background-color: #00adee;
+}
+
+.content
+{
+    margin: 0px 30px 0px 30px;
+    font-size: 70%;
 }
 
 .content-text
