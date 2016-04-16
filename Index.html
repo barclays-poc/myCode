@@ -153,30 +153,4 @@
         
     </body>
     
-    <script type="text/javascript">
-        
-        var buildmenus = [];
-        buildmenus.push({title: "Developer Desktop", content: "Windows machine"});
-        buildmenus.push({title: "Database Model", content: "DBA Content"});
-        
-        var links = document.getElementById("build-links");
-
-        for (var i = 0; i < buildmenus.length; i++ ) 
-        {
-            var anchor = document.createElement("a");
-            anchor.onclick = function(buildmenus[i].content)
-            {
-                var content = document.getElementById("build-content");
-                alert(buildmenus[i].content);
-                content.innerHTML = "aaa";
-                return false;
-            }; 
-
-            anchor.href = "#";
-            anchor.innerHTML = buildmenus[i].title;
-            links.appendChild(anchor);
-        }
-        
-    </script>
-    
 </html>
