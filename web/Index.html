@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css" />
         <link rel="stylesheet" type="text/css" href="resources/css/style.css" />
         <link rel="stylesheet" type="text/css" href="resources/css/modal.css" />
+        <script type="text/javascript" src="/web/vendors/ace/ace.js" charset="utf-8"></script>
         <title>Barclays Developer Portal</title>
     </head>
     
@@ -141,13 +142,24 @@
                 </div>
             </div>
         </section>
-
+    
         <div id="openModal" class="modalDialog">
             <div>
                 <a href="#close" title="Close" class="close">X</a>
-                <h3>Modal Box</h3>
-                <p>This is a sample modal box that can be created using the powers of CSS3.</p>
-                <p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a login/register form for users.</p>
+                <h3>Code Tutorial</h3>
+                <div class="code">
+                <div id="editor">function foo(items)
+                {
+                    var x = "All this is syntax highlighted";
+                    return x;
+                }
+                </div>
+                </div>
+                <script>
+                    var editor = ace.edit("editor");
+                    editor.setTheme("ace/theme/monokai");
+                    editor.getSession().setMode("ace/mode/javascript");
+                </script>
             </div>
         </div>
         
