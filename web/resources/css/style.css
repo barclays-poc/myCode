@@ -48,12 +48,6 @@ a:hover, a:active
     color: #007eb6;
 }
 
-.more
-{
-    display: inline-block;
-    text-align: right;
-}
-
 /* Headings */
 
 h1, h2, h3, h4
@@ -172,12 +166,30 @@ nav
     display: block;
 }
 
-.links a
+.links a:link, a:visited
 {
+    color: #ffffff;
     display: block;
+    background-color: #88deff;
     width: 100%;
     font-size: 70%;
-    margin: 0px;
+    margin: 0px 0px 3px 0px;
+    padding: 2px 0px 2px 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.links a:hover, a:active
+{
+    background-color: #00adee;
+}
+
+.content
+{
+    margin: 0px 30px 0px 30px;
+    font-size: 70%;
 }
 
 .content-text
@@ -192,6 +204,7 @@ nav
 /*code*/
 .code
 {
+    margin-top: 20px;
     height: 200px;
 }
 

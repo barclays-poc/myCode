@@ -2,15 +2,18 @@
 <html lang="en">
     
     <head>
+
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="resources/css/modal.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/grid.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css" />
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css" />
-        <link rel="stylesheet" type="text/css" href="resources/css/modal.css" />
+        <script type="text/javascript" src="/web/vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="/web/vendors/ace/ace.js" charset="utf-8"></script>
+        <link rel="shortcut icon" href="/web/resources/images/favicon.ico">
         <title>Barclays Developer Portal</title>
     </head>
-    
+
     <body>
         
         <!-- Navigation -->
@@ -65,15 +68,49 @@
         
         <!-- Requirements Section-->
         <section id="requirements" class="section">
+            <h2>Requirements</h2>
             <div class="row">
-                <h2>Requirements</h2>
+                <div class="row">
+                    <div class="col span-1-of-5">
+                        <div class="content-left">
+                            <h4>Information</h4>
+                            <div id="requirements-information-links" class="links"></div>
+                            <h4>Useful Links</h4>
+                            <div id="requirements-additional-links" class="links"></div>
+                        </div>
+                    </div>  
+                    <div class="col span-3-of-5">
+                        <div id="requirements-content" class="content"></div>
+                    </div>   
+                    <div class="col span-1-of-5">
+                        <h4>Tutorials</h4>
+                        <div id="requirements-tutorial-links" class="links"></div>
+                    </div>
+                </div>
             </div>
         </section>
         
         <!-- Design Section-->
         <section id="design" class="section">
+            <h2>Design</h2>
             <div class="row">
-                <h2>Design</h2>
+                <div class="row">
+                    <div class="col span-1-of-5">
+                        <div class="content-left">
+                            <h4>Information</h4>
+                            <div id="design-information-links" class="links"></div>
+                            <h4>Useful Links</h4>
+                            <div id="design-additional-links" class="links"></div>
+                        </div>
+                    </div>  
+                    <div class="col span-3-of-5">
+                        <div id="design-content" class="content"></div>
+                    </div>   
+                    <div class="col span-1-of-5">
+                        <h4>Tutorials</h4>
+                        <div id="design-tutorial-links" class="links"></div>
+                    </div>
+                </div>
             </div>
         </section>
         
@@ -85,24 +122,17 @@
                     <div class="col span-1-of-5">
                         <div class="content-left">
                             <h4>Information</h4>
-                            <div id="build-links" class="links"></div>
+                            <div id="build-information-links" class="links"></div>
                             <h4>Useful Links</h4>
-                            <div class="links">
-                                <a href="https://www.atlassian.com/software/confluence" target="_blank">Confluence</a>
-                                <a href="https://www.atlassian.com/software/confluence" target="_blank">Jira Board</a>
-                            </div>
+                            <div id="build-additional-links" class="links"></div>
                         </div>
                     </div>  
                     <div class="col span-3-of-5">
-                        <p id="build-content" class="content-text">
-                            Integre voluptatibus et quo, liber disputationi interpretaris est an, liber aliquam fabulas eu duo. Harum aliquid molestiae est at, an nostrud facilisis sed. Harum audiam moderatius usu id, vim tota dolore assentior ei. Sit elit gloriatur dissentiet ut.
-                        </p>
+                        <div id="build-content" class="content"></div>
                     </div>   
                     <div class="col span-1-of-5">
                         <h4>Tutorials</h4>
-                        <div class="links">
-                            <a href="#openModal">Add a Staging Table</a>
-                        </div>
+                        <div id="build-tutorial-links" class="links"></div>
                     </div>
                 </div>
             </div>
@@ -115,29 +145,17 @@
                     <div class="col span-1-of-5">
                         <div class="content-left">
                             <h4>Information</h4>
-                            <div id="test-links" class="links">
-                                <a href="#build">Testing Phases</a>
-                                <a href="#build">Test Data</a>
-                            </div>
+                            <div id="test-information-links" class="links"></div>
                             <h4>Useful Links</h4>
-                            <div class="links">
-                                <a href="#build">Quality Centre</a>
-                            </div>
+                            <div id="test-additional-links" class="links"></div>
                         </div>
                     </div>  
                     <div class="col span-3-of-5">
-                        <p class="content-text">
-                            Integre voluptatibus et quo, liber disputationi interpretaris est an, liber aliquam fabulas eu duo. Harum aliquid molestiae est at, an nostrud facilisis sed. Harum audiam moderatius usu id, vim tota dolore assentior ei. Sit elit gloriatur dissentiet ut.
-                        </p>
-                        <p class="content-text">
-                            Usu id dicat persecuti. Id mel malis facilisis, in nam soleat nominavi vituperata. Ius an molestiae persequeris, ea eam phaedrum adipiscing adversarium. Ne impetus sanctus quo, minimum molestiae persequeris no eos.
-                        </p>
+                        <div id="test-content" class="content"></div>
                     </div>   
                     <div class="col span-1-of-5">
                         <h4>Tutorials</h4>
-                        <div class="links">
-                            <a href="#openModal">Execute Script</a>
-                        </div>
+                        <div id="test-tutorial-links" class="links"></div>
                     </div>
                 </div>
             </div>
@@ -158,7 +176,7 @@
                 <script>
                     var editor = ace.edit("editor");
                     editor.setTheme("ace/theme/monokai");
-                    editor.getSession().setMode("ace/mode/javascript");
+                    editor.getSession().setMode("ace/mode/csharp");
                 </script>
             </div>
         </div>
@@ -166,3 +184,63 @@
     </body>
     
 </html>
+
+<script>
+    
+    function populateSections()
+    {   
+        var information = [];
+        information.push({title : 'Test Menu', url : '#'});
+        
+        var additional = [];
+        additional.push({title : 'Confluence', url : 'https://www.atlassian.com/software/confluence', target : '_blank'});
+        additional.push({title : 'Jira', url : 'https://www.atlassian.com/software/jira', target : '_blank'});
+        
+        var tutorial = [];
+        tutorial.push({title : 'Add Staging Table', url : '#openModal'});
+        
+        populateSection('requirements', 'Requirements explanatory text', information, additional, tutorial);
+        populateSection('design', 'Design explanatory text', information, additional, tutorial);
+        populateSection('build', 'Build explanatory text', information, additional, tutorial);
+        populateSection('test', 'Test explanatory text', information, additional, tutorial);
+    }
+    
+    function populateSection(section, content, information, additional, tutorial)
+    {
+        populateMenu(section + '-information-links', information);
+        populateMenu(section + '-additional-links', additional);
+        populateMenu(section + '-tutorial-links', tutorial);
+        populateContent(section + '-content', content);
+    }
+    
+    function populateMenu(divName, links)
+    {
+        var div = document.getElementById( divName );  
+        
+        /* Loops the data and creates links */
+        if(links!=null && links.length > 0)
+        {
+            for (i = 0; i < links.length; i++) 
+            { 
+                var anchor = document.createElement('a');
+                anchor.innerHTML = links[i].title;
+                
+                anchor.setAttribute('href', links[i].url);
+                if (typeof links[i].target != 'undefined')
+                {
+                    anchor.setAttribute('target', links[i].target);    
+                }
+                div.appendChild( anchor );
+            }
+        }
+    }
+    
+    function populateContent(divName, content)
+    {
+        var div = document.getElementById( divName );  
+        div.innerHTML = content;
+    }
+    
+    document.onload = populateSections();
+    
+</script>
