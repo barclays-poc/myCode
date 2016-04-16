@@ -174,22 +174,22 @@ nav
 
 .links a:link, a:visited
 {
+    color: #ffffff;
     display: block;
-    background-color: #f7f7f7;
+    background-color: #88deff;
     width: 100%;
     font-size: 70%;
-    margin: 0px;
-    margin-bottom: 3px;
+    margin: 0px 0px 3px 0px;
     padding: 2px 0px 2px 10px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .links a:hover, a:active
 {
-    color: #ffffff;
-    background-color: red;
+    background-color: #00adee;
 }
 
 .content-text
