@@ -8,13 +8,15 @@
         <link rel="stylesheet" type="text/css" href="vendors/css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/grid.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css" />
+        <script type="text/javascript" src="/web/resources/javascript/data.js" charset="utf-8"></script>
         <script type="text/javascript" src="/web/vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="/web/vendors/ace/ace.js" charset="utf-8"></script>
         <link rel="shortcut icon" href="/web/resources/images/favicon.ico">
         <title>Barclays Developer Portal</title>
+        
     </head>
 
-    <body>
+    <body onload="populateSections();">
         
         <!-- Navigation -->
         <nav>
@@ -183,64 +185,28 @@
         
     </body>
     
-</html>
-
-<script>
-    
-    function populateSections()
-    {   
-        var information = [];
-        information.push({title : 'Test Menu', url : '#'});
-        
-        var additional = [];
-        additional.push({title : 'Confluence', url : 'https://www.atlassian.com/software/confluence', target : '_blank'});
-        additional.push({title : 'Jira', url : 'https://www.atlassian.com/software/jira', target : '_blank'});
-        
-        var tutorial = [];
-        tutorial.push({title : 'Add Staging Table', url : '#openModal'});
-        
-        populateSection('requirements', 'Requirements explanatory text', information, additional, tutorial);
-        populateSection('design', 'Design explanatory text', information, additional, tutorial);
-        populateSection('build', 'Build explanatory text', information, additional, tutorial);
-        populateSection('test', 'Test explanatory text', information, additional, tutorial);
-    }
-    
-    function populateSection(section, content, information, additional, tutorial)
-    {
-        populateMenu(section + '-information-links', information);
-        populateMenu(section + '-additional-links', additional);
-        populateMenu(section + '-tutorial-links', tutorial);
-        populateContent(section + '-content', content);
-    }
-    
-    function populateMenu(divName, links)
-    {
-        var div = document.getElementById( divName );  
-        
-        /* Loops the data and creates links */
-        if(links!=null && links.length > 0)
-        {
-            for (i = 0; i < links.length; i++) 
-            { 
-                var anchor = document.createElement('a');
-                anchor.innerHTML = links[i].title;
-                
-                anchor.setAttribute('href', links[i].url);
-                if (typeof links[i].target != 'undefined')
-                {
-                    anchor.setAttribute('target', links[i].target);    
+    <div class="test-data">
+        <div id="platform-data">
+            {
+                "platformGroup": "Payments & Common Engines",
+                "platformName": "Pricing & Billing",
+                "requirements": {
+                    "content": "requirements content",
+                    "information": [{
+                        "title": "Test Menu",
+                        "url": "#"
+                    }],
+                    "additional": [{
+                        "title": "Confluence",
+                        "url": "https://www.atlassian.com/software/confluence",
+                        "target": "_blank"
+                    }],
+                    "tutorial": [{
+                        "title": "Add Staging Table",
+                        "url": "#openModal"
+                    }]
                 }
-                div.appendChild( anchor );
             }
-        }
-    }
-    
-    function populateContent(divName, content)
-    {
-        var div = document.getElementById( divName );  
-        div.innerHTML = content;
-    }
-    
-    document.onload = populateSections();
-    
-</script>
+        </div>
+    </div>
+</html>
