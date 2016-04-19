@@ -1,9 +1,14 @@
 function populateSections()
 {   
+    var selector = document.getElementById( 'platform-selector' );
+    var platformId = selector.options[selector.selectedIndex].value;
+    
+    /* Insert API call here */
+    
     var data = document.getElementById( 'platform-data' ); 
     var platform = JSON.parse( data.innerHTML );
 
-    populateSection('requirements', platform.requirements.content, platform.requirements.information,                                               platform.requirements.additional, platform.requirements.tutorial);
+    populateSection('requirements', platform.requirements.content, platform.requirements.information,                         platform.requirements.additional, platform.requirements.tutorial);
 }
 
 function populateSection(section, content, information, additional, tutorial)
@@ -18,6 +23,10 @@ function populateMenu(divName, links)
 {
     var div = document.getElementById( divName );  
 
+    while (div.hasChildNodes()) {
+        div.removeChild(node.lastChild);
+    }
+    
     /* Loops the data and creates links */
     if(links!=null && links.length > 0)
     {
