@@ -13,16 +13,20 @@
         <script type="text/javascript" src="/web/vendors/ace/ace.js" charset="utf-8"></script>
         <link rel="shortcut icon" href="/web/resources/images/favicon.ico">
         <title>Barclays Developer Portal</title>
-        
     </head>
 
-    <body onload="populateSections();">
+    <body onload="javascript: populateSections();">
         
         <!-- Navigation -->
         <nav>
             <div class="nav-row">
-                <a href="#" class="nav-item">Platforms</a>
-                <a href="#" class="nav-item">Edit</a>
+                <select id="platform-selector" class="selector" onchange="javascript: populateSections();">
+                  <option value="1" selected="true">Corporate</option>
+                  <option value="2">Mortgages</option>
+                  <option value="3">Payments &amp; Common Engines</option>
+                  <option value="4">Wealth</option>
+                </select>
+                <a href="Documentation.html" class="nav-item">Docs</a>
             </div>
         </nav>
         
@@ -169,11 +173,10 @@
                 <h3>Code Tutorial</h3>
                 <div class="code">
                 <div id="editor">function foo(items)
-                {
-                    var x = "All this is syntax highlighted";
-                    return x;
-                }
-                </div>
+{
+    var x = "All this is syntax highlighted";
+    return x;
+}</div>
                 </div>
                 <script>
                     var editor = ace.edit("editor");

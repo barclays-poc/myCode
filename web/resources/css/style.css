@@ -63,7 +63,7 @@ h1, h2, h3, h4
 
 h2
 {
-    padding-top: 50px;
+    padding-top: 45px;
     font-size: 120%;  
     text-align: center;
 }
@@ -108,6 +108,14 @@ nav
     margin-right: 10px;
     color: #ffffff;
     font-size: 70%;
+}
+
+.selector
+{
+    font-size: 70%;
+    color: #00395d;
+    margin-right: 10px;
+    height: 20px;
 }
 
 /*  Header Section */
@@ -206,14 +214,20 @@ nav
     word-wrap: break-word;
 }
 
-/*code*/
-.code
+/* Documentation Section */
+
+.vision
 {
-    margin-top: 20px;
-    height: 200px;
+    width: 65%;
 }
 
-#editor
+.doc-section
 {
-    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.doc-section h2
+{
+    padding-top: 0px;
 }
