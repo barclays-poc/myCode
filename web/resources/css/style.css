@@ -37,6 +37,11 @@ html
     visibility: hidden;
 }
 
+.test-data
+{
+    visibility: hidden;
+}
+
 a:link, a:visited
 {
     color: #00adee;
