@@ -13,14 +13,16 @@ app.use(function(req, res, next){
 
 app.use(bodyParser.json());
 
+//assign model
 var Content = require ('./models/content');
 
 //connect to mongoose
 mongoose.connect('mongodb://localhost/api');
 var db = mongoose.connection;
 
+
 app.get('/', function(request, response){
-	response.send('Please use the /api/webbody');
+	response.send('Please use the /api/contents');
 })
 
 
@@ -47,7 +49,7 @@ app.get('/api/contents/:_id', function(request, response){
 //add content to db
 app.post('/api/contents', function(request, response){
    //access everything that comes in from a form and assign to 
-   //genre
+   //content
    var content = request.body;
     Content.addContent(content, function(err, content){
      if(err){
@@ -60,7 +62,7 @@ app.post('/api/contents', function(request, response){
 //updates content in db
 app.put('/api/contents/:_id', function(request, response){
    //access everything that comes in from a form and assign to 
-   //genre
+   //content
    var id = request.params._id;
    var content = request.body;
     Content.updateContent(id,content,{} ,function(err, content){
@@ -74,7 +76,7 @@ app.put('/api/contents/:_id', function(request, response){
 //delete content in db
 app.delete('/api/contents/:_id', function(request, response){
    //access everything that comes in from a form and assign to 
-   //genre
+   //content
    var id = request.params._id;
    var content = request.body;
     Book.deleteContent(id,function(err, content){

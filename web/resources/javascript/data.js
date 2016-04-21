@@ -2,14 +2,15 @@ function populateSections()
 {   
     var selector = document.getElementById( 'platform-selector' );
     var platformId = selector.options[selector.selectedIndex].value;
-    
+	
     /* Insert API call here */
-    
-    var data = document.getElementById( 'platform-data' ); 
-    var platform = JSON.parse( data.innerHTML );
+    $.getJSON("http://localhost:8888/api/contents/"+ platformId, function(data) {
+    populateSection('requirements', data.requirements.content, data.requirements.information, data.requirements.additional, data.requirements.tutorial);
+    populateSection('design', data.design.content, data.design.information, data.design.additional, data.design.tutorial);
+    populateSection('build', data.build.content, data.build.information, data.build.additional, data.build.tutorial);
+    populateSection('test', data.test.content, data.test.information, data.test.additional, data.test.tutorial);
 
-    populateSection('requirements', platform.requirements.content, platform.requirements.information,                         platform.requirements.additional, platform.requirements.tutorial);
-}
+    })}
 
 function populateSection(section, content, information, additional, tutorial)
 {

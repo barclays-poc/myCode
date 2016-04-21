@@ -71,7 +71,7 @@ var contentSchema = mongoose.Schema({
   }
 });
 
-//make the genre object accessiable from whole app
+//make the Content object accessiable from whole app
 var Content = module.exports = mongoose.model('Content', contentSchema);
 
 //Get all Contents from DB
