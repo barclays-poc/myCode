@@ -29,10 +29,11 @@
         <nav>
             <div class="nav-row">
                 <select id="platform-selector" class="selector" onchange="javascript: populateSections();">
-                  <option value="1" selected="true">Corporate</option>
-                  <option value="2">Mortgages</option>
-                  <option value="3">Payments &amp; Common Engines</option>
-                  <option value="4">Wealth</option>
+                  <option value="1" selected="true">Select Platform...</option>
+				  <option value="2">Corporate</option>
+                  <option value="3">Mortgages</option>
+                  <option value="4">Payments &amp; Common Engines</option>
+                  <option value="5">Wealth</option>
                 </select>
                 <a href="Documentation.html" class="nav-item">Docs</a>
             </div>
@@ -80,6 +81,7 @@
             </div>
         </section>
         
+	<div id="webbody" style="display:none">
         <!-- Requirements Section-->
         <section id="requirements" class="section">
             <h2>Requirements</h2>
@@ -174,7 +176,8 @@
                 </div>
             </div>
         </section>
-    
+    </div>
+	
         <div id="openModal" class="modalDialog">
             <div>
                 <a href="#close" title="Close" class="close">X</a>
