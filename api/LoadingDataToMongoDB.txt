@@ -1,0 +1,16 @@
+1- open command prompt and run command 'mongod' to start mongoDB 
+(note- if mongoDB/bin hasnt been applied to your path variable then the command has to be executed from the /bin directory of mongo)
+2- on a separate command line and run command 'mongo' to open mongo shell (note- same as above)
+3- using the same terminal from step 2 - run command 'use api' - to create DB
+4- then run command 'db.createCollection('contents') to confirm run 'show collections' this will display available collections
+5- once the collection has been created, you can load the json objects by running the command below:
+
+db.contents.insert({"_id" : "4","platformGroup": "Payments & Common Engines","platformName": "Pricing & Billing",
+"requirements": {"content": "Requirements content","information": [{"title": "Document","url": "#"}],"additional": [{"title": "Confluence","url": "https://www.atlassian.com/software/confluence","target": "_blank"},{"title": "JIRA","url": "https://jira.atlassian.com/secure/Dashboard.jspa","target": "_blank"}],"tutorial": [{"title": "Add Staging Table","url": "#openModal"}]},
+"design": {"content": "Design content","information": [{"title": "Documents","url": "#"}],"additional": [{"title": "Confluence","url": "https://www.atlassian.com/software/confluence","target": "_blank"}],"tutorial": [{"title": "Design Add Staging Table","url": "#openModal"}]},
+"build": {"content": "Build content","information": [{"title": "PBE Overview","url": "#"},{"title": "Development Tools","url": "#"},{"title": "New Joiners Guide","url": "#"}],"additional": [{"title": "Confluence","url": "https://www.atlassian.com/software/confluence","target": "_blank"}],"tutorial": [{"title": "Build Add Staging Table","url": "#openModal"}]},
+"test": {"content": "Test content","information": [{"title": "Test Menu","url": "#"}],"additional": [{"title": "Confluence","url": "https://www.atlassian.com/software/confluence","target": "_blank"}],"tutorial": [{
+"title": "Test Add Staging Table","url": "#openModal"}]}
+})
+
+6 - to display all json objects within a collection run 'db.contents.find().pretty()'
