@@ -8,65 +8,53 @@
         <link rel="stylesheet" type="text/css" href="vendors/css/grid.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css" />
         
-		<script type="text/javascript" src="resources/javascript/data.js" charset="utf-8"></script>
-        <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8" ></script>
-		
         <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="resources/javascript/data.js" charset="utf-8"></script>
-        <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8"></script>
+        <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8" ></script>
+        <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="vendors/javascript/vue.js" charset="utf-8"></script>
+        
+        <!-- item template -->
+        <script type="text/x-template" id="item-template">
+          <li>
+            <div
+              :class="{bold: isFolder}"
+              @click="toggle"
+              @dblclick="changeType">
+              {{model.name}}
+              <span v-if="isFolder"></span>
+            </div>
+            <ul v-show="open" v-if="isFolder">
+              <item
+                class="item"
+                v-for="model in model.children"
+                :model="model">
+              </item>
+            </ul>
+          </li>
+        </script>
+        
         <link rel="shortcut icon" href="resources/images/favicon.ico">
         <title>Barclays myCode</title>
+        
     </head>
 
     <body onload="javascript: init(null, null);">
 
-        <style>
-          .item {
-            cursor: pointer;
-          }
-          ul {
-            padding-left: 1em;
-            line-height: 1.5em;
-            list-style-type: none;
-          }
-        </style>
-    <script src="vue.js"></script>
-
-    <!-- item template -->
-    <script type="text/x-template" id="item-template">
-      <li>
-        <div
-          :class="{bold: isFolder}"
-          @click="toggle"
-          @dblclick="changeType">
-          {{model.name}}
-          <span v-if="isFolder"></span>
+        <!-- the demo root element -->
+        <div class="tutorial">
+            <ul id="demo">
+              <item
+                class="item"
+                :model="treeData">
+              </item>
+            </ul>
         </div>
-        <ul v-show="open" v-if="isFolder">
-          <item
-            class="item"
-            v-for="model in model.children"
-            :model="model">
-          </item>
-        </ul>
-      </li>
-    </script>
-
-    <!-- the demo root element -->
-    <div class="tutorial">
-        <ul id="demo">
-          <item
-            class="item"
-            :model="treeData">
-          </item>
-        </ul>
-    </div>
         
         <!-- Header section -->
         <header>
             <div class="row">
-                <img class="img-logo" src="resources/images/barclays-logo-desktop.png" alt="Barclays logo" />
+                <img class="img-logo" src="resources/images/barclays.png" alt="Barclays logo" />
             </div>
             <div class="img-work" />
         </header>
