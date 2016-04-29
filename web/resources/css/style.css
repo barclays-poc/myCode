@@ -9,7 +9,7 @@ html
 {
     color: #666;
     font-family: ExpertSans,verdana,arial,sans-serif;
-    background: #ffffff;
+    background-color: #ffffff;
     font-size: 20px;
     font-weight: 200;
     text-rendering: auto;
@@ -35,11 +35,6 @@ html
     clear: both;
     display: block;
     height: 0;
-    visibility: hidden;
-}
-
-.test-data
-{
     visibility: hidden;
 }
 
@@ -111,22 +106,14 @@ nav
     font-size: 70%;
 }
 
-.selector
-{
-    font-size: 70%;
-    color: #00395d;
-    margin-right: 10px;
-    height: 20px;
-}
-
 /*  Header Section */
 
 .img-logo
 {
-    height: 40px;
+    height: 35px;
     width: auto;
     float: left;
-    margin: 55px 0px 20px 15px;
+    margin: 15px 0px 15px 40px;
     display: block;
 }
 
@@ -135,85 +122,62 @@ nav
     background-image: url(images/work.jpg);
     background-attachment: fixed;
     background-size: contain;
-    height: 150px;
+    height: 125px;
 }
 
-/* Capability Section */
-
-.section-capability
+/* How To Section */
+.section-how-to
 {
     padding-top: 30px;
     background-color: #f7f7f7;
     padding-bottom: 30px;
+    font-size: 150%;
 }
 
-.section-capability i
+.how-to
 {
-    font-size: 110%;
-    display: block;
-    float: left;
-    margin-left: 15px;
-    width: 35px;
-    text-align: center;
+    width: 320px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.how-to-text
+{
+    padding-top: 7px;
+    font-size: 70%;
+    height: 100%;
     color: #00395d;
 }
 
-.capability-text
+.how-to-bullet
 {
-    margin-left: 50px;
-    margin-right: 30px;
-    padding-left: 0;
+    background-color: #00395d;
+    display: block;
+    float: left;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    vertical-align: middle;
+}
+
+.how-to-icon
+{
+    height: 30px;
+    color: #ffffff;
+    float: left;
     font-size: 70%;
-    word-wrap: break-word;
+    width: 30px; 
+    text-align: center;
+    margin-top: 7px;
+    margin-left: 5px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 /* Content Section */
-
-.content-left
-{
-    margin-left: 45px;
-}
-
-.links
-{
-    margin-bottom: 15px;
-    display: block;
-}
-
-.links a:link, a:visited
-{
-    color: #ffffff;
-    display: block;
-    background-color: #88deff;
-    width: 100%;
-    font-size: 70%;
-    margin: 0px 0px 3px 0px;
-    padding: 2px 0px 2px 10px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.links a:hover, a:active
-{
-    background-color: #00adee;
-}
-
-.content
-{
-    margin: 0px 30px 0px 30px;
-    font-size: 70%;
-}
-
-.content-text
-{
-    margin-left: 30px;
-    margin-right: 30px;
-    font-size: 70%;
-    margin-bottom: 10px;
-    word-wrap: break-word;
-}
 
 /* Documentation Section */
 
@@ -231,4 +195,19 @@ nav
 .doc-section h2
 {
     padding-top: 0px;
+}
+
+.tutorial
+{
+    padding: 10px;
+    font-size: 80%;
+    width: 300px;
+    background-color: #00395d;
+    color: #ffffff;
+    position: absolute;
+    right: 40px;
+    top: 0px;
+    overflow: hidden;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
