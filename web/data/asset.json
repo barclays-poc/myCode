@@ -1,8 +1,6 @@
-/* http://mycode.barclays.com/platform/[ID] (GET) */
-
 {
-    "platformId": 1,
-    "title": "Pricing & Billing",
+    "assetId": 1,
+    "title": "Personal miRevenue",
     "content": "Pricing & Billing Description",
     "picture": "/platforms/1",
     "resources": [

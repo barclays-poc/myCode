@@ -14,12 +14,12 @@
                     {
                         "label": "Personal miRevenue",
                         "id": 5,
-                        "assetId": 1,
+                        "assetId": "asset-1",
                         "children": [
                             {
                                 "label": "Add Staging Table",
                                 "id": 6,
-                                "tutorialId": 1
+                                "tutorialId": "tutorial-1"
                             }
                         ]
                     }

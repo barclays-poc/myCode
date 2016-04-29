@@ -6,7 +6,7 @@
         "new": "Create an account stage table",
         "example" : "Create a customer staging table"
     },
-    "design" : "",
+    "design" : "To be decided",
     "build" :
     {
         "Steps": [
