@@ -1,0 +1,16 @@
+{
+                "tutorialName": "Add Staging Table",
+                "Overview": {
+                "content": "requirements content",
+                "image": "tutorial/1/overview.png",
+                "Steps": [
+                    {
+                        "title": "Step 1",
+                        "type": "javascript"
+                    },
+                    {
+                        "title": "Step 2",
+                        "type": "java"
+                    }]
+                }
+            }

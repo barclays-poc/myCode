@@ -20,7 +20,7 @@
 }
 
 .modalDialog > div {
-    width: 50%;
+    width: 40%;
     position: relative;
     margin: 10% auto;
     border-radius: 10px;
@@ -58,4 +58,28 @@
 #editor
 {
     height: 100%;
+}
+
+.tutorial-pane
+{
+    width: 50%;
+    height: 400px
+}
+
+.treeview
+{
+    margin-top: 10px;
+    height: 300px;
+    overflow-y: scroll;
+    border-width: thin;
+    border-style: solid;
+    border-color: #666;
+    padding: 10px;
+}
+
+.treeview ul
+{
+    font-size: 90%;
+    font-family: ExpertSans,verdana,arial,sans-serif;
+    color: #666;
 }

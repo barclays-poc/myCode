@@ -1,13 +1,16 @@
-function populateSections()
-{   
-    var selector = document.getElementById( 'platform-selector' );
-    var platformId = selector.options[selector.selectedIndex].value;
-	
-	if(platformId != null && platformId != 1)
+function init()
+{
+    populatePlatforms();
+    populateSections(null);
+}
+
+function populateSections( assetId)
+{
+	if(assetId != null)
 	{
 	$("#webbody").slideDown("slow");
     /* Insert API call here */
-    $.getJSON("http://localhost:8888/api/contents/"+ platformId, function(data) {
+    $.getJSON("http://localhost:8888/api/contents/"+ assetId, function(data) {
     populateSection('requirements', data.requirements.content, data.requirements.information, data.requirements.additional, data.requirements.tutorial);
     populateSection('design', data.design.content, data.design.information, data.design.additional, data.design.tutorial);
     populateSection('build', data.build.content, data.build.information, data.build.additional, data.build.tutorial);
@@ -34,6 +37,8 @@ function populateMenu(divName, links)
        div.removeChild(div.lastChild);
     }
     
+    alert(1);
+    
     /* Loops the data and creates links */
     if(links!=null && links.length > 0)
     {
@@ -47,6 +52,13 @@ function populateMenu(divName, links)
             {
                 anchor.setAttribute('target', links[i].target);    
             }
+            
+            if(typeof links[i].tutorialId != 'undefined')
+            {
+                click = "populateTutorial(" + links[i].tutorialId + ");"
+                anchor.setAttribute('onclick', click)
+            }
+            
             div.appendChild( anchor );
         }
     }
@@ -57,3 +69,39 @@ function populateContent(divName, content)
     var div = document.getElementById( divName );  
     div.innerHTML = content;
 }
+
+function populateTutorial(id)
+{   
+    <!-- API Endpoint-->
+    var url = "/data/tutorials/" + 1 + "/content.json";
+       
+    $.getJSON( url, function( data ) 
+    {
+        <!-- Bind here -->
+    });
+}
+
+function populatePlatforms()
+{
+    <!-- Provide API Endpoint-->
+    $('#assetTree').tree({
+        dataUrl: '/data/platforms.json',
+        autoOpen: 0,
+        closedIcon: '+',
+        openedIcon: '-'
+    });
+    
+    // bind 'tree.click' event
+    $('#assetTree').bind(
+        'tree.click',
+        function(event) {
+            // The clicked node is 'event.node'
+            var node = event.node;
+            if( node.assetId != 'undefined')
+            {
+                populateSections( node.assetId );
+            }
+        }
+    );
+}
+

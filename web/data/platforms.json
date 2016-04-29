@@ -1,0 +1,26 @@
+[
+        {
+            "label": "Payments & Common Engines",
+            "id": "1",
+            "children": [
+                {
+                    "label": "Decision Management",
+                    "id": "2"
+                },
+                {
+                    "label": "Pricing & Billing",
+                    "id": 3,
+                    "children": [
+                    {
+                        "label": "Personal miRevenue",
+                        "id": 5,
+                        "assetId" : 1
+                    }]
+                },
+                {
+                    "label": "Robotic Automation",
+                    "id": 4
+                }
+            ]
+        }
+    ]
