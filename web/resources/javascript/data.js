@@ -8,15 +8,15 @@ function populateSections( assetId)
 {
 	if(assetId != null)
 	{
-	$("#webbody").slideDown("slow");
-    /* Insert API call here */
-    $.getJSON("http://localhost:8888/api/contents/"+ assetId, function(data) {
-    populateSection('requirements', data.requirements.content, data.requirements.information, data.requirements.additional, data.requirements.tutorial);
-    populateSection('design', data.design.content, data.design.information, data.design.additional, data.design.tutorial);
-    populateSection('build', data.build.content, data.build.information, data.build.additional, data.build.tutorial);
-    populateSection('test', data.test.content, data.test.information, data.test.additional, data.test.tutorial);
-	})}else {
-		$("#webbody").slideUp("slow");
+        $("#webbody").slideDown("slow");
+
+        $.getJSON("http://localhost:8888/api/contents/"+ assetId, function(data) {
+        populateSection('requirements', data.requirements.content, data.requirements.information, data.requirements.additional, data.requirements.tutorial);
+        populateSection('design', data.design.content, data.design.information, data.design.additional, data.design.tutorial);
+        populateSection('build', data.build.content, data.build.information, data.build.additional, data.build.tutorial);
+        populateSection('test', data.test.content, data.test.information, data.test.additional, data.test.tutorial);
+        })}else {
+            $("#webbody").slideUp("slow");
 	}
 }
 
@@ -36,9 +36,7 @@ function populateMenu(divName, links)
    while (div.hasChildNodes()) {
        div.removeChild(div.lastChild);
     }
-    
-    alert(1);
-    
+
     /* Loops the data and creates links */
     if(links!=null && links.length > 0)
     {
