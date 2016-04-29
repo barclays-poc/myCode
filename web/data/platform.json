@@ -1,0 +1,20 @@
+/* http://mycode.barclays.com/platform/[ID] (GET) */
+
+{
+    "platformId": 1,
+    "title": "Pricing & Billing",
+    "content": "Pricing & Billing Description",
+    "picture": "/platforms/1",
+    "resources": [
+        {
+            "title": "Jira",
+            "target": "_blank",
+            "url": "https://www.atlassian.com/software/jira"
+        },
+        {
+            "title": "Confluence",
+            "target": "_blank",
+            "url": "https://www.atlassian.com/software/confluence"
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "id": 1,
+    "name": "Add Staging Table",
+    "requirement" :
+    {
+        "new": "Create an account stage table",
+        "example" : "Create a customer staging table"
+    },
+    "design" : "",
+    "build" :
+    {
+        "Steps": [
+        {
+            "id": 1,
+            "text": "Step 1",
+            "input": "javascript",
+            "example": ""
+        },
+        {
+            "id": 2,
+            "text": "Step 2",
+            "input": "javascript",
+            "example": ""
+        }]
+    },
+    "test" :
+    {
+        "text" : "",
+        "jUnit" : true,
+        "gherkin" : true
+    }
+}
