@@ -4,36 +4,64 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="resources/css/style.css" />
-        <link rel="stylesheet" type="text/css" href="resources/css/modal.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/normalize.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/grid.css" />
         <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css" />
-        <link rel="stylesheet" type="text/css" href="vendors/jqtree/jqtree.css" />
-		
+        
 		<script type="text/javascript" src="resources/javascript/data.js" charset="utf-8"></script>
         <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8"></script>
-        <link rel="shortcut icon" href="resources/images/favicon.ico">
+        <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8" ></script>
 		
         <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="resources/javascript/data.js" charset="utf-8"></script>
-        <script type="text/javascript" src="vendors/jqtree/tree.jquery.js" charset="utf-8"></script>
         <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8"></script>
         <link rel="shortcut icon" href="resources/images/favicon.ico">
         <title>Barclays myCode</title>
     </head>
 
     <body onload="javascript: init(null, null);">
-        
-        <!-- Navigation -->
-        <nav>
-            <div class="nav-row">
-                <a href="#platformAssets">
-                    <i class="ion-gear-b icon-medium"></i>
-                    Tutorials
-                </a>
-            </div>
-        </nav>
+
+        <style>
+          .item {
+            cursor: pointer;
+          }
+          ul {
+            padding-left: 1em;
+            line-height: 1.5em;
+            list-style-type: none;
+          }
+        </style>
+    <script src="vue.js"></script>
+
+    <!-- item template -->
+    <script type="text/x-template" id="item-template">
+      <li>
+        <div
+          :class="{bold: isFolder}"
+          @click="toggle"
+          @dblclick="changeType">
+          {{model.name}}
+          <span v-if="isFolder"></span>
+        </div>
+        <ul v-show="open" v-if="isFolder">
+          <item
+            class="item"
+            v-for="model in model.children"
+            :model="model">
+          </item>
+        </ul>
+      </li>
+    </script>
+
+    <!-- the demo root element -->
+    <div class="tutorial">
+        <ul id="demo">
+          <item
+            class="item"
+            :model="treeData">
+          </item>
+        </ul>
+    </div>
         
         <!-- Header section -->
         <header>
@@ -44,145 +72,38 @@
         </header>
         
         <!-- Capabilities Description -->
-        <section class="section-capability">
+        <section class="section-how-to">
             <div class="row">
-                <div class="col span-1-of-2">
-                    <i class="ion-ios-lightbulb-outline icon-medium"></i>
-                    <h3>Requirements</h3>
-                    <p class="capability-text">Utinam libris ceteros ne duo, et nec molestie luptatum. His ei dicant possim partiendo, nonumes detracto cu pri. Mazim postulant repudiare ad mei. Nulla patrioque at pro. 
-                    <a class="more" href="#requirements">More</a>
-                    </p>
-                </div>  
-                <div class="col span-1-of-2">
-                    <i class="ion-compose icon-medium"></i>
-                    <h3>Design</h3>
-                    <p class="capability-text">In nulla senserit vim. Utroque nusquam ne has, saepe alienum no vix. Ex quo volumus copiosae erroribus. Labore graecis qui in, vix everti utamur pericula te, etiam aliquando usu et.
-                    <a class="more" href="#design">More</a>
-                    </p>
-                </div>   
-            </div>
-            <div class="row clearFix">
-                <div class="col span-1-of-2">
-                    <i class="ion-code icon-medium"></i>
-                    <h3>Build</h3>
-                    <p class="capability-text">Utinam libris ceteros ne duo, et nec molestie luptatum. His ei dicant possim partiendo, nonumes detracto cu pri. Mazim postulant repudiare ad mei. Nulla patrioque at pro. 
-                    <a class="more" href="#build">More</a>
-                    </p>
-                </div>  
-                <div class="col span-1-of-2">
-                    <i class="ion-ios-list-outline icon-medium"></i>
-                    <h3>Test</h3>
-                    <p class="capability-text">In nulla senserit vim. Utroque nusquam ne has, saepe alienum no vix. Ex quo volumus copiosae erroribus. <a class="more" href="#test">More</a></p>
-                </div>   
-            </div>
-        </section>
-        
-	<div id="webbody" style="display:none">
-        <!-- Requirements Section-->
-        <section id="requirements" class="section">
-            <h2>Requirements</h2>
-            <div class="row">
-                <div class="row">
-                    <div class="col span-1-of-5">
-                        <div class="content-left">
-                            <h4>Information</h4>
-                            <div id="requirements-information-links" class="links"></div>
-                            <h4>Useful Links</h4>
-                            <div id="requirements-additional-links" class="links"></div>
+                <div class="how-to">
+                    <div class="how-to">
+                        <div class="works-step clearFix">
+                            <div class="how-to-bullet"><i class="ion-gear-b how-to-icon"></i></div>
+                            <p class="how-to-text">Select the tutorial</p>
+                        </div> 
+                        <div class="works-step clearFix">
+                            <div class="how-to-bullet"><i class="ion-ios-lightbulb-outline how-to-icon"></i></div>
+                            <p class="how-to-text">Understand the requirement</p>
                         </div>
-                    </div>  
-                    <div class="col span-3-of-5">
-                        <div id="requirements-content" class="content"></div>
-                    </div>   
-                    <div class="col span-1-of-5">
-                        <h4>Tutorials</h4>
-                        <div id="requirements-tutorial-links" class="links"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Design Section-->
-        <section id="design" class="section">
-            <h2>Design</h2>
-            <div class="row">
-                <div class="row">
-                    <div class="col span-1-of-5">
-                        <div class="content-left">
-                            <h4>Information</h4>
-                            <div id="design-information-links" class="links"></div>
-                            <h4>Useful Links</h4>
-                            <div id="design-additional-links" class="links"></div>
+                        <div class="works-step clearFix">
+                            <div class="how-to-bullet"><i class="ion-compose how-to-icon"></i></div>
+                            <p class="how-to-text">Design the components</p>
                         </div>
-                    </div>  
-                    <div class="col span-3-of-5">
-                        <div id="design-content" class="content"></div>
-                    </div>   
-                    <div class="col span-1-of-5">
-                        <h4>Tutorials</h4>
-                        <div id="design-tutorial-links" class="links"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Build Section-->
-        <section id="build" class="section">
-            <h2>Build</h2>
-            <div class="row">
-                <div class="row">
-                    <div class="col span-1-of-5">
-                        <div class="content-left">
-                            <h4>Information</h4>
-                            <div id="build-information-links" class="links"></div>
-                            <h4>Useful Links</h4>
-                            <div id="build-additional-links" class="links"></div>
+                        <div class="works-step clearFix">
+                            <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
+                            <p class="how-to-text">Code the components</p>
                         </div>
-                    </div>  
-                    <div class="col span-3-of-5">
-                        <div id="build-content" class="content"></div>
-                    </div>   
-                    <div class="col span-1-of-5">
-                        <h4>Tutorials</h4>
-                        <div id="build-tutorial-links" class="links"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="test" class="section-test">
-            <div class="row">
-                <h2>Test</h2>
-                <div class="row">
-                    <div class="col span-1-of-5">
-                        <div class="content-left">
-                            <h4>Information</h4>
-                            <div id="test-information-links" class="links"></div>
-                            <h4>Useful Links</h4>
-                            <div id="test-additional-links" class="links"></div>
+                        <div class="works-step clearFix">
+                            <div class="how-to-bullet"><i class="ion-clipboard how-to-icon"></i></div>
+                            <p class="how-to-text">Test the components</p>
+                        </div> 
+                        <div class="works-step clearFix">
+                            <div class="how-to-bullet"><i class="ion-arrow-return-left how-to-icon"></i></div>
+                            <p class="how-to-text">Put it all together</p>
                         </div>
-                    </div>  
-                    <div class="col span-3-of-5">
-                        <div id="test-content" class="content"></div>
-                    </div>   
-                    <div class="col span-1-of-5">
-                        <h4>Tutorials</h4>
-                        <div id="test-tutorial-links" class="links"></div>
                     </div>
+                    <a href="Video.html?v=/how-to" traget="_blank"></a>
                 </div>
             </div>
         </section>
-    </div>
-
-        <div id="platformAssets" class="modalDialog">
-            <div id="overview">
-                <a href="#close" title="Close" class="close">X</a>
-                <h3 id="">Platform Assets</h3>
-                <div class="treeview">
-                    <div id="assetTree"></div>
-                </div>
-            </div>
-        </div>
-        
     </body>
 </html>
