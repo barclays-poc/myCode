@@ -21,7 +21,8 @@
             "text": "Step 2",
             "input": "javascript",
             "example": ""
-        }]
+        }],
+        "video" : "/video"
     },
     "test" :
     {
