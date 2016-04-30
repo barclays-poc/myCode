@@ -17,10 +17,13 @@
         <!-- item template -->
         <script type="text/x-template" id="item-template">
           <li>
-            <div
-              @click="toggle">
-              {{model.name}}
-              <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
+            <div v-if="model.id > 0" @click="toggle">
+                <a href="#page" class="tutorial-link" onclick="javascript: populateTutorial({{model.id}});">{{model.name}}</a>
+                <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
+            </div>
+            <div v-else @click="toggle" v-else>
+                {{model.name}}
+                <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
             <ul v-show="open" v-if="isFolder">
               <item
@@ -37,20 +40,21 @@
         
     </head>
 
-    <body onload="javascript: init(null, null);">
+    <body onload="javascript: populateTutorials();">
 
         <!-- the demo root element -->
-        <div class="tutorial">
+        <div class="tutorials">
             <ul id="tutorial-tree">
               <item
                 class="item"
                 :model="treeData">
               </item>
             </ul>
+            <i class="ion-close-circled tutorials-close" onclick="javascript: populateTutorials();"></i>
         </div>
         
         <!-- Header section -->
-        <header>
+        <header id="#top">
             <div class="row">
                 <img class="img-logo" src="resources/images/barclays.png" alt="Barclays logo" />
             </div>
@@ -61,27 +65,27 @@
         <section class="section-how-to">
             <div class="row">
                 <div class="how-to">
-                    <div class="works-step clearFix">
+                    <div id="works-step-1" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-gear-b how-to-icon"></i></div>
                         <p class="how-to-text">Select the asset tutorial</p>
                     </div> 
-                    <div class="works-step clearFix">
+                    <div id="works-step-2" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-ios-lightbulb-outline how-to-icon"></i></div>
                         <p class="how-to-text">Understand the requirement</p>
                     </div>
-                    <div class="works-step clearFix">
+                    <div id="works-step-3" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-compose how-to-icon"></i></div>
                         <p class="how-to-text">Design the components</p>
                     </div>
-                    <div class="works-step clearFix">
+                    <div id="works-step-4" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
                         <p class="how-to-text">Develop the components</p>
                     </div>
-                    <div class="works-step clearFix">
+                    <div id="works-step-5" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-clipboard how-to-icon"></i></div>
                         <p class="how-to-text">Test the components</p>
                     </div> 
-                    <div class="works-step clearFix">
+                    <div id="works-step-6" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-arrow-return-left how-to-icon"></i></div>
                         <p class="how-to-text">Put it all together</p>
                     </div>
@@ -90,7 +94,7 @@
         </section>
         
         <!-- Asset -->
-        <div class="page">
+        <div id="page" class="page">
             <section>
                 <div class="row">
                     <div class="h1-container">  
@@ -99,33 +103,31 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col span-3-of-7" >
-                        <div class="content">    
+                    <div class="col span-1-of-12"></div>
+                    <div class="col span-4-of-12">
+                        <div class="asset-content">    
                             <h2>Context</h2>
                             <a id="asset-diagram-link" target="_blank">
                                 <img id="asset-diagram" class="asset-image"/>
                             </a>
                         </div>
                     </div>
-                    <div class="col span-3-of-7">
-                        <div class="content">
+                    <div class="col span-5-of-12">
+                        <div class="asset-content">
                             <h2>Narrative</h2>
                             <div id="asset-content"></div>
                         </div>
                     </div>
-                    <div class="col span-1-of-7">
-                        <div class="content">
+                    <div class="col span-1-of-12">
+                        <div class="asset-content">
                             <h2>Resources</h2>
                             <div id="asset-links" class="asset-links">
-                                <ul class="asset-links">
-                                    <li>
-                                        <a href="http://www.google.com" target="_blank">Confluence</a>
-                                    </li>
-                                    <li><a href="#">Jira</a></li>
-                                </ul>
+                                <a href="http://www.google.com" target="_blank" class="asset-link">Confluence</a>
+                                <a href="http://www.amazon.co.uk" target="_blank" class="asset-link">Jira</a>
                             </div>
                         </div>
                     </div>
+                    <div class="col span-1-of-12"></div>
                 </div>
             </section>
 
@@ -136,6 +138,8 @@
                         <i class="ion-ios-lightbulb-outline h1-icon"></i>
                         <h1>Requirments</h1>
                     </div>
+                    <div id="requirement-new-text"></div>
+                    <div id="requirement-example-text"></div>
                 </div>
             </section>
 
