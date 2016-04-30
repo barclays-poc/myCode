@@ -1,8 +1,4 @@
-function init(assetId, tutorialId)
-{
-    populateTutorials();
-    populateTutorial(1);               
-}
+$( "#works-step-1" ).fadeIn( 1000, function(){});
 
 function populateTutorials()
 {
@@ -28,6 +24,9 @@ function populateTutorials()
           return this.model.children &&
             this.model.children.length
         },
+        isTutorial: function () {
+          return this.model.id != 'undefined';
+        },
       },
       methods: {
         toggle: function () {
@@ -50,12 +49,29 @@ function populateTutorials()
         treeData: data
       }
     })
+    
+    $(document).ready(function(){
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
     });
+    });
+    
+    $( ".works-step-1" ).fadeIn( 1000, function(){});
 }
 
 function populateTutorial(id)
 {
-    hidePage();
+    $( ".page" ).fadeOut( 500, function(){});
     
     if(id != null)
     {
@@ -68,18 +84,12 @@ function populateTutorial(id)
             $("#asset-diagram").attr("src", data.asset.diagram);
             $("#asset-diagram-link").attr("href", data.asset.diagram);
             $("#asset-content").html(data.asset.content);
+            $("#requirement-new-text").html(data.requirement.new);
+            $("#requirement-example-text").html(data.requirement.example);
         });
+        
+        $( ".page" ).fadeIn( 1250, function(){});
+        
+        return true;
     }
-    
-    showPage();
-}
-
-function showPage()
-{
-    $( ".page" ).fadeIn( 2000, function(){});
-}
-
-function hidePage()
-{
-    $( ".page" ).fadeOut( 100, function(){});
 }

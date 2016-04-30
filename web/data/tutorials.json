@@ -12,10 +12,12 @@
                     "name": "Personal miReveune",
                     "children": [
                         {
-                            "name": "Add New Data Source"
+                            "name": "Add New Data Source",
+                            "id" : "1"
                         },
                         {
-                            "name": "Add New Charging Policy"
+                            "name": "Add New Charging Policy",
+                            "id" : "2"
                         }
                     ]
                 },
