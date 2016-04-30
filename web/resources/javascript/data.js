@@ -1,58 +1,17 @@
 function init(assetId, tutorialId)
 {
-    populatePlatforms();
-    populateAsset(assetId);
-    populateTutorial(tutorialId)
+    populateTutorials();
+    populateTutorial(1);               
 }
 
-
-function populatePlatforms()
+function populateTutorials()
 {
     <!-- Provide API Endpoint-->
-    var url = "/data/platforms.json";
-
+    var url = "/data/tutorials.json";
+    
     $.getJSON( url, function( data ) 
     {
-        initTutorials(data);
-    });
-}
-
-
-function populateAsset(id)
-{   
-    if(id != null)
-    {
-        <!-- Provide API Endpoint-->
-        var url = "/data/asset.json";
-
-        $.getJSON( url, function( data ) 
-        {
-            <!-- Bind here -->
-            alert(data);
-        });
-    }
-}
-
-
-function populateTutorial(id)
-{   
-    if(id != null)
-    {
-        <!-- Provide API Endpoint-->
-        var url = "/data/tutorial.json";
-
-        $.getJSON( url, function( data ) 
-        {
-            <!-- Bind here -->
-            alert(data);
-        });
-    }
-}
-
-function initTutorials(data)
-{
-   
-    // define the item component
+        // define the item component
     Vue.component('item', {
       template: '#item-template',
       replace: true,
@@ -68,19 +27,12 @@ function initTutorials(data)
         isFolder: function () {
           return this.model.children &&
             this.model.children.length
-        }
+        },
       },
       methods: {
         toggle: function () {
           if (this.isFolder) {
             this.open = !this.open
-          }
-        },
-        changeType: function () {
-          if (!this.isFolder) {
-            Vue.set(this.model, 'children', [])
-            this.addChild()
-            this.open = true
           }
         },
         addChild: function () {
@@ -90,12 +42,44 @@ function initTutorials(data)
         }
       }
     })
-
+        
     // boot up the demo
     var demo = new Vue({
-      el: '#demo',
+      el: '#tutorial-tree',
       data: {
         treeData: data
       }
     })
+    });
+}
+
+function populateTutorial(id)
+{
+    hidePage();
+    
+    if(id != null)
+    {
+        <!-- Provide API Endpoint-->
+        var url = "/data/tutorial.json";
+
+        $.getJSON( url, function( data ) 
+        {
+            $("#asset-title").text(data.name);
+            $("#asset-diagram").attr("src", data.asset.diagram);
+            $("#asset-diagram-link").attr("href", data.asset.diagram);
+            $("#asset-content").html(data.asset.content);
+        });
+    }
+    
+    showPage();
+}
+
+function showPage()
+{
+    $( ".page" ).fadeIn( 2000, function(){});
+}
+
+function hidePage()
+{
+    $( ".page" ).fadeOut( 100, function(){});
 }

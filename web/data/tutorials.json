@@ -1,0 +1,31 @@
+{
+    "name": "Tutorials",
+    "children": [
+        {
+          "name": "Decision Management"  
+        },
+        {
+            "name": "Pricing & Billing",
+            "children": 
+            [
+                {
+                    "name": "Personal miReveune",
+                    "children": [
+                        {
+                            "name": "Add New Data Source"
+                        },
+                        {
+                            "name": "Add New Charging Policy"
+                        }
+                    ]
+                },
+                {
+                    "name": "Personal Reconcilation"
+                }
+            ]
+        },
+        {
+            "name": "Robotic Automation"
+        }
+    ]
+}

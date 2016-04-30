@@ -18,11 +18,9 @@
         <script type="text/x-template" id="item-template">
           <li>
             <div
-              :class="{bold: isFolder}"
-              @click="toggle"
-              @dblclick="changeType">
+              @click="toggle">
               {{model.name}}
-              <span v-if="isFolder"></span>
+              <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
             <ul v-show="open" v-if="isFolder">
               <item
@@ -43,7 +41,7 @@
 
         <!-- the demo root element -->
         <div class="tutorial">
-            <ul id="demo">
+            <ul id="tutorial-tree">
               <item
                 class="item"
                 :model="treeData">
@@ -63,35 +61,113 @@
         <section class="section-how-to">
             <div class="row">
                 <div class="how-to">
-                    <div class="how-to">
-                        <div class="works-step clearFix">
-                            <div class="how-to-bullet"><i class="ion-gear-b how-to-icon"></i></div>
-                            <p class="how-to-text">Select the tutorial</p>
-                        </div> 
-                        <div class="works-step clearFix">
-                            <div class="how-to-bullet"><i class="ion-ios-lightbulb-outline how-to-icon"></i></div>
-                            <p class="how-to-text">Understand the requirement</p>
-                        </div>
-                        <div class="works-step clearFix">
-                            <div class="how-to-bullet"><i class="ion-compose how-to-icon"></i></div>
-                            <p class="how-to-text">Design the components</p>
-                        </div>
-                        <div class="works-step clearFix">
-                            <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
-                            <p class="how-to-text">Code the components</p>
-                        </div>
-                        <div class="works-step clearFix">
-                            <div class="how-to-bullet"><i class="ion-clipboard how-to-icon"></i></div>
-                            <p class="how-to-text">Test the components</p>
-                        </div> 
-                        <div class="works-step clearFix">
-                            <div class="how-to-bullet"><i class="ion-arrow-return-left how-to-icon"></i></div>
-                            <p class="how-to-text">Put it all together</p>
-                        </div>
+                    <div class="works-step clearFix">
+                        <div class="how-to-bullet"><i class="ion-gear-b how-to-icon"></i></div>
+                        <p class="how-to-text">Select the asset tutorial</p>
+                    </div> 
+                    <div class="works-step clearFix">
+                        <div class="how-to-bullet"><i class="ion-ios-lightbulb-outline how-to-icon"></i></div>
+                        <p class="how-to-text">Understand the requirement</p>
                     </div>
-                    <a href="Video.html?v=/how-to" traget="_blank"></a>
+                    <div class="works-step clearFix">
+                        <div class="how-to-bullet"><i class="ion-compose how-to-icon"></i></div>
+                        <p class="how-to-text">Design the components</p>
+                    </div>
+                    <div class="works-step clearFix">
+                        <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
+                        <p class="how-to-text">Develop the components</p>
+                    </div>
+                    <div class="works-step clearFix">
+                        <div class="how-to-bullet"><i class="ion-clipboard how-to-icon"></i></div>
+                        <p class="how-to-text">Test the components</p>
+                    </div> 
+                    <div class="works-step clearFix">
+                        <div class="how-to-bullet"><i class="ion-arrow-return-left how-to-icon"></i></div>
+                        <p class="how-to-text">Put it all together</p>
+                    </div>
                 </div>
             </div>
         </section>
+        
+        <!-- Asset -->
+        <div class="page">
+            <section>
+                <div class="row">
+                    <div class="h1-container">  
+                        <i class="ion-gear-b h1-icon"></i>
+                        <h1 id="asset-title"></h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col span-3-of-7" >
+                        <div class="content">    
+                            <h2>Context</h2>
+                            <a id="asset-diagram-link" target="_blank">
+                                <img id="asset-diagram" class="asset-image"/>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col span-3-of-7">
+                        <div class="content">
+                            <h2>Narrative</h2>
+                            <div id="asset-content"></div>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-7">
+                        <div class="content">
+                            <h2>Resources</h2>
+                            <div id="asset-links" class="asset-links">
+                                <ul class="asset-links">
+                                    <li>
+                                        <a href="http://www.google.com" target="_blank">Confluence</a>
+                                    </li>
+                                    <li><a href="#">Jira</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Requirements -->
+            <section>
+                <div class="row">
+                    <div class="h1-container">  
+                        <i class="ion-ios-lightbulb-outline h1-icon"></i>
+                        <h1>Requirments</h1>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Design -->
+            <section>
+                <div class="row">
+                    <div class="h1-container">  
+                        <i class="ion-compose h1-icon"></i>
+                        <h1>Design</h1>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Build -->
+            <section>
+                <div class="row">
+                    <div class="h1-container">  
+                        <i class="ion-code h1-icon"></i>
+                        <h1>Develop</h1>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Test -->
+            <section>
+                <div class="row">
+                    <div class="h1-container">  
+                        <i class="ion-clipboard h1-icon"></i>
+                        <h1>Test</h1>
+                    </div>
+                </div>
+            </section>
+        </div>
     </body>
 </html>
