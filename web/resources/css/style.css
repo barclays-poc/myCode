@@ -42,6 +42,14 @@ section
     text-align: center;
 }
 
+.last-row
+{
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
 .centre-container
 {
     display: inline-block;
