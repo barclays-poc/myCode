@@ -25,30 +25,22 @@
     },
     "design": "To be decided",
     "code": {
-        "steps" : [
-            {"text" : "Xml"},
-            {"text" : "Sql"},
-            {"text" : "java"}
-        ],
         "segments": [
             {
                 "id": 1,
-                "title": "write the javascript code",
-                "text": "Step 1",
+                "command": "Add the XML configuration file entry for account",
                 "mode": "xml",
                 "example": "<note>\n\t<to>Tove</to>\n\t<from>Jani</from>\n\t<heading>Reminder</heading>\n\t<body>Do not forget me this weekend!</body>\n</note>"
             },
             {
                 "id": 2,
-                "title": "write the javascript code",
-                "text": "Step 2",
+                "command": "Create the new account table using Sql",
                 "mode": "sql",
                 "example": "CREATE TABLE Customer\n(\n\tPersonID int,\n\tLastName varchar(255),\n\tFirstName varchar(255),\n\tAddress varchar(255),\n\tCity varchar(255)\n);"
             },
             {
                 "id": 3,
-                "title": "write the javascript code",
-                "text": "Step 2",
+                "command": "Define the new java class for the account",
                 "mode": "java",
                 "example": "public class Cube {\n\n\tint length;\n\tint breadth;\n\tint height;\n\tpublic int;\n\tgetVolume() {\n\t\treturn (length * breadth * height);\n\t}\n}"
             }
@@ -56,8 +48,20 @@
         "video": "/video"
     },
     "test": {
-        "text": "",
-        "jUnit": true,
-        "gherkin": true
+        "segments": [
+            {
+                "id": 1,
+                "command": "Write a unit test using jUnit",
+                "mode": "java",
+                "example": "public class MyUnitTest {\n\t@Test\n\tpublic void testConcatenate(){\n\t\tMyUnit myUnit = new MyUnit();\n\n\t\tString result = myUnit.concatenate(one, two);\n\n\t\tassertEquals(onetwo, result);\n\t}\n}"
+            },
+            {
+                "id": 2,
+                "command": "Write a functional test using Gherkin",
+                "mode": "gherkin",
+                "example": "Feature: Refund item\n\nScenario: Jeff returns a faulty microwave\n\n\tGiven Jeff has bought a microwave for $100\n\tAnd he has a receipt\n\tWhen he returns the microwave\n\tThen Jeff should be refunded $100"
+            }
+        ],
+        "video": "/video"
     }
 }
