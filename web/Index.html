@@ -15,12 +15,12 @@
         
         <!-- item template -->
         <script type="text/x-template" id="item-template">        
-          <li id="tree-item-{{model.id}}">
+          <li>
             <div v-if="model.id > 0" @click="toggle">
-                <a href="#page" class="tutorial-link" onclick="javascript: populateTutorial({{model.id}});">{{model.name}}</a>
+                <a href="#asset-section" class="tutorial-link" onclick="javascript: populateTutorial({{model.id}});">{{model.name}}</a>
                 <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
-            <div v-else @click="toggle" v-else>
+            <div v-else @click="toggle">
                 {{model.name}}
                 <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
@@ -93,8 +93,8 @@
         </section>
         
         <!-- Asset -->
-        <div id="page" class="page">
-            <section>
+        <div class="page">
+            <section id="asset-section">
                 <div class="row">
                     <div class="centre-container">  
                         <i class="ion-gear-b h2-icon"></i>
@@ -130,7 +130,7 @@
                 <div class="row">
                     <div class="centre-container">  
                         <i class="ion-lightbulb h2-icon"></i>
-                        <h2>Requirments</h2>
+                        <h2>Requirements</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -156,12 +156,12 @@
                 <div class="row">
                     <div class="centre-container">  
                         <i class="ion-compose h2-icon"></i>
-                        <h2>Designing</h2>
+                        <h2>Design</h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col span-1-of-12">
-                        <i class="ion-help-circled help-button"></i>
+                        <i class="ion-help-circled help-button" onclick="javascript: showHelp('design');"></i>
                     </div>
                     <div class="col span-5-of-12">
                         <div class="box">  
@@ -178,21 +178,19 @@
             </section>
 
             <!-- Build -->
-            <section>
+            <section id="code-section">
                 <div class="row">
                     <div class="centre-container">  
                         <i class="ion-code h2-icon"></i>
-                        <h2>Coding</h2>
+                        <h2>Code</h2>
                     </div>
                     <div class="centre-container commands">
-                        <div>
-                            <ol id="code-commands"></ol>
-                        </div>
+                        <div id="code-commands"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col span-1-of-12">
-                        <i class="ion-help-circled help-button"></i>
+                        <i class="ion-help-circled help-button" onclick="javascript: showHelp('code');"></i>
                     </div>
                     <div class="col span-5-of-12">
                         <div class="box"> 
@@ -211,21 +209,19 @@
             </section>
 
             <!-- Test -->
-            <section>
+            <section id="test-section">
                 <div class="row">
                     <div class="centre-container">  
                         <i class="ion-clipboard h2-icon"></i>
-                        <h2>Testing</h2>
+                        <h2>Test</h2>
                     </div>
                     <div class="centre-container commands">
-                        <div>
-                            <ol id="test-commands"></ol>
-                        </div>
+                        <div id="test-commands"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col span-1-of-12">
-                        <i class="ion-help-circled help-button"></i>
+                        <i class="ion-help-circled help-button" onclick="javascript: showHelp('test');"></i>
                     </div>
                     <div class="col span-5-of-12">
                         <div class="box">
@@ -243,7 +239,9 @@
                 </div>
             </section>
             <div class="last-row">
-                <i class="ion-play play-button"></i>
+                <a href="#page" onclick="javascript: execute();">
+                    <i class="ion-play play-button"></i>
+                </a>
             </div>
         </div>
     </body>

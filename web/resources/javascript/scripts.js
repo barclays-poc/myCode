@@ -1,10 +1,13 @@
+/* Global variable holding the tutorial */
+var tutorial = null;
+
 function initialize()
 {
     /* Populates the Tutorial tree */
     populateTutorials();
     
     /* Pre-populates for testing */
-    /*populateTutorial(1);*/
+    populateTutorial(1);
     
     /* Fades the body in once content loaded */
     $(document).ready(function()
@@ -41,7 +44,7 @@ function populateTutorials()
                   return this.model.id != 'undefined';
                 },
                 isRoot: function(){
-                    return this.model.isRoot != 'undefined';
+                    return this.model.id == 0;
                 }
               },
               methods: {
@@ -64,7 +67,7 @@ function populateTutorials()
           data: {
             treeData: data
           }
-        })
+        });
         
         $(document).ready(function(){
         $('a[href^="#"]').on('click',function (e) {
@@ -101,6 +104,9 @@ function populateTutorial(id)
             populateRequirements( data );
             populateCode( data );
             populateTest( data);
+            
+            /* adds as global variable */
+            tutorial = data;
         });
         
         /* Fades the new content in */
@@ -155,7 +161,7 @@ function populateCode(data)
 function addCodeCommand(segment)
 {
     /* Add a command into the list */
-    jQuery('<li/>', {
+    jQuery('<p/>', {
         text: segment.command
     }).appendTo("#code-commands");
 }
@@ -184,7 +190,7 @@ function populateTest(data)
 function addTestCommand(segment)
 {
     /* Add a command into the list */
-    jQuery('<li/>', {
+    jQuery('<p/>', {
         text: segment.command
     }).appendTo("#test-commands");
 }
@@ -217,4 +223,40 @@ function addCodeEditor(segment, selector, type, isExample)
     editor.setTheme("ace/theme/textmate");
     editor.setReadOnly(isExample);
     editor.getSession().setMode(mode);
+}
+
+function showHelp(id)
+{
+    alert(id);
+}
+
+function execute()
+{   
+    var hasErrors = false;
+    var errorAnchor = "#code-section"
+    
+    /* checks that all segments have code */
+    for ( var i in tutorial.code.segments)
+    {
+        var segment = tutorial.code.segments[i]
+        var id = "tutorial-code-" + segment.id;
+        var editor = ace.edit(id);
+        var value = editor.getValue().trim();
+        if( value == null || value == "")
+        {
+            hasErrors = true;
+            editor.setTheme("ace/theme/textmate-error");
+            editor.getSession().setMode(segment.mode);
+        }
+    };
+    
+    if(hasErrors) 
+    {
+        location.href = errorAnchor;
+        return false;
+    }
+    else
+    {    
+        location.assign("result.html");
+    }
 }

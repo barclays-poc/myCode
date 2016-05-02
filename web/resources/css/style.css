@@ -98,7 +98,7 @@ section
 p, blockquote
 {
     font-size: 85%;
-    font-weight: 100;
+    font-weight: thin;
     text-align: left;
 }
 
@@ -317,21 +317,19 @@ h3
 {
     margin-top: 5px;
     display: inline-block;
+    text-align: center;
 }
 
-.commands div
+.commands p
 {
-    display: inline-block;
-    text-align: left;
-    font-size: 85%;
-    color: #666;
+    text-align: center;
 }
 
 .code 
 {
     margin-bottom: 20px;
     height: 150px;
-    max-width: 95%;
+    max-width: 100%;
     border-style: solid;
     border-width: 1px;
     border-color: #dcdcdc;
