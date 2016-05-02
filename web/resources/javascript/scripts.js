@@ -52,8 +52,8 @@ function populateTutorials()
               methods: {
                 select: function () {
                     
-                    closeTutorials();
                     populateTutorial(this.model.id);
+                    closeTutorials();
                 },
                 toggle: function () {
                   if (this.isFolder) {
