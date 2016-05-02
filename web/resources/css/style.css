@@ -41,12 +41,12 @@ html
     visibility: hidden;
 }
 
-p
+p, blockquote
 {
-    font-size: 70%;
-    font-weight: thin;
+    font-size: 80%;
+    font-weight: 100;
     margin-bottom: 5px;
-    color: #34495e;
+    color: #7f8c8d;
 }
 
 /* Headings */
@@ -67,15 +67,14 @@ h1
 
 h2
 {
-    margin-bottom: 15px;
+    font-size: 150%;
+    display: inline;
 }
 
 h3
 {
-    padding-left: 0;
-    margin-left: 0;
-    margin-bottom: 5px;
-    font-size: 110%;
+    margin-top: 3px;
+    font-size: 100%;
 }
 
 h4
@@ -85,19 +84,17 @@ h4
 
 .h1-icon
 {
-    
-    font-size: 200%; 
+    font-size: 150%; 
     margin-top: 20px;
-    margin-right: 15px;
+    margin-right: 7px;
 }
 
-.h1-container
+.centre-container
 {
     display: block;
     width: 100%;
-    height: 40px;
     text-align: center;
-    margin: 35px 0px 20px 0px;
+    margin: 30px 0px 20px 0px;
 }
 
 /*  Header Section */
@@ -129,7 +126,7 @@ h4
     padding: 10px;
     font-size: 80%;
     width: 300px;
-    background-color: #f39c12;
+    background-color: #00adef;
     color: #ffffff;
     position: fixed;
     right: 40px;
@@ -237,54 +234,93 @@ tutorial:hover
 
 /* Asset Links */
 
-.asset-content
+.box
 {
-    padding-right: 50px;
+    position: relative;
+    padding: 0px 20px 0px 0px;;
     width: 100%;
     line-height: 1.25em;
-    max-width: 95%;
-    font-size: 110%;
 }
 
 .asset-image
 {
+    margin-top: 8px;
     max-width: 95%;
     max-height: 100%;
     text-align: center;
     vertical-align: middle;
 }
 
-.asset-links
-{
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-}
-
-.asset-links li
-{
-	text-indent: -1.75em;
-    font-size: 100%;
-}
-
-.asset-link
+.asset-links a
 {
     font-size: 70%;
     font-weight: 100;
     text-decoration: none;
-    color: #f39c12;
-    margin: 0;
-    padding: 0;
+    color: #f5b042;
+    display: inline;
+    float:left; 
+    clear:left;
 }
 
-.asset-link:link, 
-.asset-link:visited
+.asset-links a:link, 
+.asset-links a:visited
 {
-    transition: font-weight 1;
+    transition: font-weight 0.5s;
 }
 
-.asset-link:hover, 
-.assset-link:active
+.asset-links a:hover, 
+.asset-links a:active
 {
     font-weight: 500;
+    color: #f39c12;
+}
+
+.help-button
+{
+    color: #00adef;
+    font-size: 150%;
+    float: right;
+}
+
+.help-button:hover
+{
+    cursor: pointer;
+}
+
+blockquote
+{
+    margin-top: 15px;
+    padding-left: 20px;
+    font-style: italic;
+    line-height: 145%;
+    position: relative;
+    float: left;
+}
+
+blockquote:before
+{
+    content: '\201C';
+    font-size: 300%;
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: -3px;
+}
+
+.code 
+{ 
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 30px;
+    height: 150px;
+    max-width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dcdcdc;
+}
+
+.play-button
+{
+    font-size: 500%;
+    color: #00adef;
 }

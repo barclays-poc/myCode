@@ -1,8 +1,7 @@
 {
     "id": 1,
     "name": "Add New Data Source",
-    "asset": 
-    {
+    "asset": {
         "id": 1,
         "name": "Personal miRevenue",
         "content": "<p>Ut eos lorem detracto definitionem. Sed dicam sapientem moderatius at. Nam dico mediocritatem ea. Eam libris ullamcorper ut.</p><p>In usu laudem consulatu, iusto soleat libris sea ea. Vis probo adversarium ei. In sit petentium principes, hinc constituam ex sea. Ne omnes civibus qui.</p>",
@@ -20,33 +19,45 @@
             }
         ]
     },
-    "requirement" :
-    {
-        "new": "Create an account stage table",
-        "example" : "Create a customer staging table"
+    "requirement": {
+        "new": "As the Pricing & Billing system, I want to recieve a new data source of customer information coantining the account balance, account open date and account status",
+        "example": "As the Pricing & Billing system, I want to recieve a new data source of account information containing the customer age, customer name and customer status"
     },
-    "design" : "To be decided",
-    "build" :
-    {
-        "Steps": [
-        {
-            "id": 1,
-            "text": "Step 1",
-            "input": "javascript",
-            "example": ""
-        },
-        {
-            "id": 2,
-            "text": "Step 2",
-            "input": "javascript",
-            "example": ""
-        }],
-        "video" : "/video"
+    "design": "To be decided",
+    "code": {
+        "steps" : [
+            {"text" : "Xml"},
+            {"text" : "Sql"},
+            {"text" : "java"}
+        ],
+        "segments": [
+            {
+                "id": 1,
+                "title": "write the javascript code",
+                "text": "Step 1",
+                "mode": "xml",
+                "example": "<note>\n\t<to>Tove</to>\n\t<from>Jani</from>\n\t<heading>Reminder</heading>\n\t<body>Do not forget me this weekend!</body>\n</note>"
+            },
+            {
+                "id": 2,
+                "title": "write the javascript code",
+                "text": "Step 2",
+                "mode": "sql",
+                "example": "CREATE TABLE Customer\n(\n\tPersonID int,\n\tLastName varchar(255),\n\tFirstName varchar(255),\n\tAddress varchar(255),\n\tCity varchar(255)\n);"
+            },
+            {
+                "id": 3,
+                "title": "write the javascript code",
+                "text": "Step 2",
+                "mode": "java",
+                "example": "public class Cube {\n\n\tint length;\n\tint breadth;\n\tint height;\n\tpublic int;\n\tgetVolume() {\n\t\treturn (length * breadth * height);\n\t}\n}"
+            }
+        ],
+        "video": "/video"
     },
-    "test" :
-    {
-        "text" : "",
-        "jUnit" : true,
-        "gherkin" : true
+    "test": {
+        "text": "",
+        "jUnit": true,
+        "gherkin": true
     }
 }

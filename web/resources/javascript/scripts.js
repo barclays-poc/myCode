@@ -1,4 +1,8 @@
-$( "#works-step-1" ).fadeIn( 1000, function(){});
+function initialize()
+{
+    populateTutorials();
+    populateTutorial(1);
+}
 
 function populateTutorials()
 {
@@ -65,8 +69,6 @@ function populateTutorials()
         });
     });
     });
-    
-    $( ".works-step-1" ).fadeIn( 1000, function(){});
 }
 
 function populateTutorial(id)
@@ -80,16 +82,71 @@ function populateTutorial(id)
 
         $.getJSON( url, function( data ) 
         {
-            $("#asset-title").text(data.name);
-            $("#asset-diagram").attr("src", data.asset.diagram);
-            $("#asset-diagram-link").attr("href", data.asset.diagram);
-            $("#asset-content").html(data.asset.content);
-            $("#requirement-new-text").html(data.requirement.new);
-            $("#requirement-example-text").html(data.requirement.example);
+            populateAsset( data );
+            populateRequirements( data );
+            populateCode( data );
         });
         
         $( ".page" ).fadeIn( 1250, function(){});
         
-        return true;
+        return false;
     }
+}
+
+/* Section Population */
+function populateAsset(data)
+{
+    $("#asset-title").text(data.name);
+    $("#asset-diagram").attr("src", data.asset.diagram);
+    $("#asset-diagram-link").attr("href", data.asset.diagram);
+    $("#asset-content").html(data.asset.content);
+    $("#asset-links" ).empty();
+    data.asset.resources.forEach(addAssetLink);
+}
+
+function addAssetLink(resource)
+{
+    var div = document.getElementById("asset-links");
+    var anchor = document.createElement("a");
+    anchor.setAttribute("href", resource.url);
+    anchor.setAttribute("target", resource.target);
+    anchor.innerHTML = resource.title;
+    div.appendChild(anchor);
+}
+
+function populateRequirements(data)
+{   
+    $("#requirement-new-text").html(data.requirement.new);
+    $("#requirement-example-text").html(data.requirement.example);
+}
+
+function populateCode(data)
+{
+    $("#tutorial-code" ).empty();
+    $("#example-code" ).empty();
+    data.code.segments.forEach(addSegment)
+}
+
+function addSegment(segment)
+{    
+    addCodeEditor(segment, "#tutorial-code", "tutorial", false);
+    addCodeEditor(segment, "#example-code", "example", true);
+}
+
+function addCodeEditor(segment, selector, type, isExample)
+{
+    var id = type + "-editor-" + segment.id;
+    var mode = "ace/mode/" + segment.mode;
+    var text = isExample ? segment.example : "";
+    
+    jQuery('<div/>', {
+        id: id,
+        class: "code",
+        text: text
+    }).appendTo(selector);
+    
+    var editor = ace.edit(id);
+    editor.setTheme("ace/theme/textmate");
+    editor.setReadOnly(isExample);
+    editor.getSession().setMode(mode);
 }

@@ -9,9 +9,8 @@
         <link rel="stylesheet" type="text/css" href="vendors/css/ionicons.min.css" />
         
         <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="resources/javascript/data.js" charset="utf-8"></script>
+        <script type="text/javascript" src="resources/javascript/scripts.js" charset="utf-8"></script>
         <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8" ></script>
-        <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="vendors/javascript/vue.js" charset="utf-8"></script>
         
         <!-- item template -->
@@ -40,7 +39,7 @@
         
     </head>
 
-    <body onload="javascript: populateTutorials();">
+    <body onload="javascript: initialize();">
 
         <!-- the demo root element -->
         <div class="tutorials">
@@ -79,7 +78,7 @@
                     </div>
                     <div id="works-step-4" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
-                        <p class="how-to-text">Develop the components</p>
+                        <p class="how-to-text">Code the components</p>
                     </div>
                     <div id="works-step-5" class="works-step clearFix">
                         <div class="how-to-bullet"><i class="ion-clipboard how-to-icon"></i></div>
@@ -94,84 +93,171 @@
         </section>
         
         <!-- Asset -->
-        <div id="page" class="page">
+        <div id="page" class="page"></div>
             <section>
                 <div class="row">
-                    <div class="h1-container">  
+                    <div class="centre-container">  
                         <i class="ion-gear-b h1-icon"></i>
-                        <h1 id="asset-title"></h1>
+                        <h2 id="asset-title"></h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col span-1-of-12"></div>
-                    <div class="col span-4-of-12">
-                        <div class="asset-content">    
-                            <h2>Context</h2>
+                    <div class="col span-5-of-12">
+                        <div class="box">    
+                            <h3>Context Diagram</h3>
                             <a id="asset-diagram-link" target="_blank">
                                 <img id="asset-diagram" class="asset-image"/>
                             </a>
                         </div>
                     </div>
-                    <div class="col span-5-of-12">
-                        <div class="asset-content">
-                            <h2>Narrative</h2>
+                    <div class="col span-4-of-12">
+                        <div class="box">
+                            <h3>Overview</h3>
                             <div id="asset-content"></div>
                         </div>
                     </div>
                     <div class="col span-1-of-12">
-                        <div class="asset-content">
-                            <h2>Resources</h2>
-                            <div id="asset-links" class="asset-links">
-                                <a href="http://www.google.com" target="_blank" class="asset-link">Confluence</a>
-                                <a href="http://www.amazon.co.uk" target="_blank" class="asset-link">Jira</a>
-                            </div>
+                        <div class="box">
+                            <h3>Resources</h3>
+                            <div id="asset-links" class="asset-links"></div>
                         </div>
                     </div>
                     <div class="col span-1-of-12"></div>
                 </div>
             </section>
-
+        
             <!-- Requirements -->
             <section>
                 <div class="row">
-                    <div class="h1-container">  
+                    <div class="centre-container">  
                         <i class="ion-ios-lightbulb-outline h1-icon"></i>
-                        <h1>Requirments</h1>
+                        <h2>Requirments</h2>
                     </div>
-                    <div id="requirement-new-text"></div>
-                    <div id="requirement-example-text"></div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-12"></div>
+                    <div class="col span-5-of-12">
+                        <div class="box"> 
+                            <h3>Example Requirement</h3>
+                            <blockquote id="requirement-example-text"></blockquote>
+                        </div>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box "> 
+                            <h3>Tutorial Requirment</h3>
+                            <blockquote id="requirement-new-text"></blockquote>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-12"></div>
                 </div>
             </section>
 
             <!-- Design -->
             <section>
                 <div class="row">
-                    <div class="h1-container">  
+                    <div class="centre-container">  
                         <i class="ion-compose h1-icon"></i>
-                        <h1>Design</h1>
+                        <h2>Designing</h2>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-12">
+                        <i class="ion-help-circled help-button"></i>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box">  
+                            <h3>Example Design</h3>
+                        </div>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box">  
+                            <h3>Tutorial Design</h3>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-12"></div>
                 </div>
             </section>
 
             <!-- Build -->
             <section>
                 <div class="row">
-                    <div class="h1-container">  
+                    <div class="centre-container">  
                         <i class="ion-code h1-icon"></i>
-                        <h1>Develop</h1>
+                        <h2>Coding</h2>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-12">
+                        <i class="ion-help-circled help-button"></i>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box"> 
+                            <h3>Example Code</h3>
+                        </div>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box"> 
+                            <h3>Tutorial Code</h3>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-12"></div>
+                    <div class="col span-10-of-12">
+                        <ul id="code-steps"></ul>
+                    </div>
+                    <div class="col span-1-of-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-12"></div>
+                    <div class="col span-5-of-12">
+                        <div id="example-code" class="box"></div>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div id="tutorial-code" class="box"></div>
+                    </div>
+                    <div class="col span-1-of-12"></div>
                 </div>
             </section>
 
             <!-- Test -->
             <section>
                 <div class="row">
-                    <div class="h1-container">  
+                    <div class="centre-container">  
                         <i class="ion-clipboard h1-icon"></i>
-                        <h1>Test</h1>
+                        <h2>Testing</h2>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col span-1-of-12">
+                        <i class="ion-help-circled help-button"></i>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box">
+                            <h3>Example Test</h3>
+                        </div>
+                    </div>
+                    <div class="col span-5-of-12">
+                        <div class="box">
+                            <h3>Tutorial Test</h3>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-12"></div>
+                </div>
             </section>
-        </div>
+        
+            <!-- Run It -->
+            <section>
+                <div class="row">
+                    <div class="centre-container">
+                        <div class="play-button">
+                            <i class="ion-play play"></i>
+                        </div>
+                    </div>
+                </div>
+                    
+            </section>
     </body>
 </html>
