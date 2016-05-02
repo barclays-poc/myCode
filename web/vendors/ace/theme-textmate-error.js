@@ -1,5 +1,4 @@
-define("ace/theme/textmate",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
-define("ace/theme/textmate",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
+define("ace/theme/textmate-error",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 "use strict";
 
 exports.isDark = false;
@@ -13,10 +12,10 @@ width: 1px;\
 background: #e8e8e8;\
 }\
 .ace-tm .ace_fold {\
-background-color: #6B72E6;\
+background-color: red;\
 }\
 .ace-tm {\
-background-color: #FFFFFF;\
+background-color: red;\
 color: black;\
 }\
 .ace-tm .ace_cursor {\
