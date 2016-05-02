@@ -7,17 +7,22 @@ function initialize()
     populateTutorials();
     
     /* Pre-populates for testing */
-    populateTutorial(1);
+    /*populateTutorial(1);*/
     
     /* Fades the body in once content loaded */
     $(document).ready(function()
     {
        $("body").fadeIn(750);
     });
+    
+    /* Associates smooth scrolling */
+    smoothScroll();
 }
 
 function populateTutorials()
-{    
+{   
+    /* $("#tutorials-tree").empty(); */
+    
     <!-- Provide API Endpoint-->
     var url = "/data/tutorials.json";
     
@@ -42,12 +47,14 @@ function populateTutorials()
                 },
                 isTutorial: function () {
                   return this.model.id != 'undefined';
-                },
-                isRoot: function(){
-                    return this.model.id == 0;
                 }
               },
               methods: {
+                select: function () {
+                    
+                    closeTutorials();
+                    populateTutorial(this.model.id);
+                },
                 toggle: function () {
                   if (this.isFolder) {
                     this.open = !this.open
@@ -69,28 +76,19 @@ function populateTutorials()
           }
         });
         
-        $(document).ready(function(){
-        $('a[href^="#"]').on('click',function (e) {
-            e.preventDefault();
-
-            var target = this.hash;
-            var $target = $(target);
-
-            $('html, body').stop().animate({
-                'scrollTop': $target.offset().top
-            }, 900, 'swing', function () {
-                window.location.hash = target;
-            });
-        });
+        /* Smooth scrolling */
+        smoothScroll();
     });
-    });
+}
+
+function closeTutorials()
+{
+    var div = document.getElementById("tutorial-id-0");
+    div.click();
 }
 
 function populateTutorial(id)
 {
-    /* Fades the old content out */
-    $( ".page" ).fadeOut( 100, function(){});
-    
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
@@ -110,7 +108,7 @@ function populateTutorial(id)
         });
         
         /* Fades the new content in */
-        $( ".page" ).fadeIn(750, function(){});
+        $( ".page" ).fadeIn(300, function(){});
         return false;
     }
 }
@@ -225,11 +223,6 @@ function addCodeEditor(segment, selector, type, isExample)
     editor.getSession().setMode(mode);
 }
 
-function showHelp(id)
-{
-    alert(id);
-}
-
 function execute()
 {   
     var hasErrors = false;
@@ -251,12 +244,29 @@ function execute()
     };
     
     if(hasErrors) 
-    {
-        location.href = errorAnchor;
-        return false;
+    {        
+        return true;
     }
     else
     {    
         location.assign("result.html");
     }
+}
+
+function smoothScroll()
+{
+    $(document).ready(function(){
+        $('a[href^="#"]').on('click',function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+            
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 900, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    });
 }

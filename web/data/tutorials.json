@@ -1,4 +1,5 @@
 {
+    "id": 0,
     "name": "Tutorials",
     "children": [
         {
@@ -29,6 +30,5 @@
         {
             "name": "Robotic Automation"
         }
-    ],
-    "id": 0
+    ]
 }

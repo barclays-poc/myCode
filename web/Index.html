@@ -16,12 +16,13 @@
         <!-- item template -->
         <script type="text/x-template" id="item-template">        
           <li>
-            <div v-if="model.id > 0" @click="toggle">
-                <a href="#asset-section" class="tutorial-link" onclick="javascript: populateTutorial({{model.id}});">{{model.name}}</a>
+            <div v-if="model.id > -1" @click="toggle" id="tutorial-id-{{model.id}}">
+                <a v-if="model.id > 0" href="#asset-section" class="tutorial-link" @click="select">{{model.name}}</a>
+                <span v-if="model.id == 0">{{model.name}}</a>
                 <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
             <div v-else @click="toggle">
-                {{model.name}}
+                {{model.name}}{{model.id}}
                 <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
             <ul v-show="open" v-if="isFolder" class="tutorials-ul">
@@ -49,7 +50,7 @@
                 :model="treeData">
               </item>
             </ul>
-            <i class="ion-close-circled" onclick="javascript: populateTutorials();"></i>
+            <i class="ion-close-circled" onclick="javascript: closeTutorials();"></i>
         </div>
         
         <!-- Header section -->
@@ -160,9 +161,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col span-1-of-12">
-                        <i class="ion-help-circled help-button" onclick="javascript: showHelp('design');"></i>
-                    </div>
+                    <div class="col span-1-of-12"></div>
                     <div class="col span-5-of-12">
                         <div class="box">  
                             <h3>Example Design</h3>
@@ -189,9 +188,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col span-1-of-12">
-                        <i class="ion-help-circled help-button" onclick="javascript: showHelp('code');"></i>
-                    </div>
+                    <div class="col span-1-of-12"></div>
                     <div class="col span-5-of-12">
                         <div class="box"> 
                             <h3>Example Code</h3>
@@ -216,13 +213,11 @@
                         <h2>Test</h2>
                     </div>
                     <div class="centre-container commands">
-                        <div id="test-commands"></div>
+                        <div id="test-commands" ></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col span-1-of-12">
-                        <i class="ion-help-circled help-button" onclick="javascript: showHelp('test');"></i>
-                    </div>
+                    <div class="col span-1-of-12"></div>
                     <div class="col span-5-of-12">
                         <div class="box">
                             <h3>Example Test</h3>
@@ -239,7 +234,7 @@
                 </div>
             </section>
             <div class="last-row">
-                <a href="#page" onclick="javascript: execute();">
+                <a href="#code-section" onclick="javascript: execute();">
                     <i class="ion-play play-button"></i>
                 </a>
             </div>
