@@ -1,5 +1,6 @@
 /* Global variable holding the tutorial */
 var tutorial = null;
+var isTest = $.QueryString["mode"] == "t";
 
 function initialize()
 {
@@ -7,7 +8,10 @@ function initialize()
     populateTutorials();
     
     /* Pre-populates for testing */
-    /*populateTutorial(1);*/
+    if(isTest)
+    {
+        populateTutorial(1);
+    }
     
     /* Fades the body in once content loaded */
     $(document).ready(function()
@@ -231,10 +235,13 @@ function execute()
     /* checks that all segments have code */
     for ( var i in tutorial.code.segments)
     {
+        /* local variables */
         var segment = tutorial.code.segments[i]
         var id = "tutorial-code-" + segment.id;
         var editor = ace.edit(id);
         var value = editor.getValue().trim();
+        
+        /* Executes the tutorial if checks are passed */
         if( value == null || value == "")
         {
             hasErrors = true;
@@ -256,12 +263,15 @@ function execute()
 function smoothScroll()
 {
     $(document).ready(function(){
-        $('a[href^="#"]').on('click',function (e) {
+        $('a[href^="#"]').on('click',function (e) 
+        {
+            /* Surpresses usual behaviour */
             e.preventDefault();
-
+                
             var target = this.hash;
             var $target = $(target);
             
+            /* changes Html and bodybehaviours */
             $('html, body').stop().animate({
                 'scrollTop': $target.offset().top
             }, 900, 'swing', function () {
