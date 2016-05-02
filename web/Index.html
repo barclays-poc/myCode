@@ -14,8 +14,8 @@
         <script type="text/javascript" src="vendors/javascript/vue.js" charset="utf-8"></script>
         
         <!-- item template -->
-        <script type="text/x-template" id="item-template">
-          <li>
+        <script type="text/x-template" id="item-template">        
+          <li id="tree-item-{{model.id}}">
             <div v-if="model.id > 0" @click="toggle">
                 <a href="#page" class="tutorial-link" onclick="javascript: populateTutorial({{model.id}});">{{model.name}}</a>
                 <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
@@ -24,7 +24,7 @@
                 {{model.name}}
                 <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
             </div>
-            <ul v-show="open" v-if="isFolder">
+            <ul v-show="open" v-if="isFolder" class="tutorials-ul">
               <item
                 class="item"
                 v-for="model in model.children"
@@ -43,13 +43,13 @@
 
         <!-- the demo root element -->
         <div class="tutorials">
-            <ul id="tutorial-tree">
+            <ul id="tutorials-tree">
               <item
                 class="item"
                 :model="treeData">
               </item>
             </ul>
-            <i class="ion-close-circled tutorials-close" onclick="javascript: populateTutorials();"></i>
+            <i class="ion-close-circled" onclick="javascript: populateTutorials();"></i>
         </div>
         
         <!-- Header section -->
@@ -63,41 +63,41 @@
         <!-- Capabilities Description -->
         <section class="section-how-to">
             <div class="row">
-                <div class="how-to">
-                    <div id="works-step-1" class="works-step clearFix">
+                <div class="how-to-box">
+                    <div class="clearFix">
                         <div class="how-to-bullet"><i class="ion-gear-b how-to-icon"></i></div>
                         <p class="how-to-text">Select the asset tutorial</p>
                     </div> 
-                    <div id="works-step-2" class="works-step clearFix">
-                        <div class="how-to-bullet"><i class="ion-ios-lightbulb-outline how-to-icon"></i></div>
+                    <div class="clearFix">
+                        <div class="how-to-bullet"><i class="ion-lightbulb how-to-icon"></i></div>
                         <p class="how-to-text">Understand the requirement</p>
                     </div>
-                    <div id="works-step-3" class="works-step clearFix">
+                    <div class="clearFix">
                         <div class="how-to-bullet"><i class="ion-compose how-to-icon"></i></div>
                         <p class="how-to-text">Design the components</p>
                     </div>
-                    <div id="works-step-4" class="works-step clearFix">
+                    <div class="clearFix">
                         <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
                         <p class="how-to-text">Code the components</p>
                     </div>
-                    <div id="works-step-5" class="works-step clearFix">
+                    <div class="clearFix">
                         <div class="how-to-bullet"><i class="ion-clipboard how-to-icon"></i></div>
                         <p class="how-to-text">Test the components</p>
                     </div> 
-                    <div id="works-step-6" class="works-step clearFix">
-                        <div class="how-to-bullet"><i class="ion-arrow-return-left how-to-icon"></i></div>
-                        <p class="how-to-text">Put it all together</p>
+                    <div class="clearFix">
+                        <div class="how-to-bullet"><i class="ion-play how-to-icon"></i></div>
+                        <p class="how-to-text">Execute the code and tests!</p>
                     </div>
                 </div>
             </div>
         </section>
         
         <!-- Asset -->
-        <div id="page" class="page"></div>
+        <div id="page" class="page">
             <section>
                 <div class="row">
                     <div class="centre-container">  
-                        <i class="ion-gear-b h1-icon"></i>
+                        <i class="ion-gear-b h2-icon"></i>
                         <h2 id="asset-title"></h2>
                     </div>
                 </div>
@@ -106,9 +106,7 @@
                     <div class="col span-5-of-12">
                         <div class="box">    
                             <h3>Context Diagram</h3>
-                            <a id="asset-diagram-link" target="_blank">
-                                <img id="asset-diagram" class="asset-image"/>
-                            </a>
+                            <img id="asset-diagram" class="asset-image"/>
                         </div>
                     </div>
                     <div class="col span-4-of-12">
@@ -131,7 +129,7 @@
             <section>
                 <div class="row">
                     <div class="centre-container">  
-                        <i class="ion-ios-lightbulb-outline h1-icon"></i>
+                        <i class="ion-lightbulb h2-icon"></i>
                         <h2>Requirments</h2>
                     </div>
                 </div>
@@ -157,7 +155,7 @@
             <section>
                 <div class="row">
                     <div class="centre-container">  
-                        <i class="ion-compose h1-icon"></i>
+                        <i class="ion-compose h2-icon"></i>
                         <h2>Designing</h2>
                     </div>
                 </div>
@@ -183,8 +181,13 @@
             <section>
                 <div class="row">
                     <div class="centre-container">  
-                        <i class="ion-code h1-icon"></i>
+                        <i class="ion-code h2-icon"></i>
                         <h2>Coding</h2>
+                    </div>
+                    <div class="centre-container commands">
+                        <div>
+                            <ol id="code-commands"></ol>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -194,29 +197,14 @@
                     <div class="col span-5-of-12">
                         <div class="box"> 
                             <h3>Example Code</h3>
+                            <div id="example-code" class="box"></div>
                         </div>
                     </div>
                     <div class="col span-5-of-12">
                         <div class="box"> 
                             <h3>Tutorial Code</h3>
+                            <div id="tutorial-code" class="box"></div>
                         </div>
-                    </div>
-                    <div class="col span-1-of-12"></div>
-                </div>
-                <div class="row">
-                    <div class="col span-1-of-12"></div>
-                    <div class="col span-10-of-12">
-                        <ul id="code-steps"></ul>
-                    </div>
-                    <div class="col span-1-of-12"></div>
-                </div>
-                <div class="row">
-                    <div class="col span-1-of-12"></div>
-                    <div class="col span-5-of-12">
-                        <div id="example-code" class="box"></div>
-                    </div>
-                    <div class="col span-5-of-12">
-                        <div id="tutorial-code" class="box"></div>
                     </div>
                     <div class="col span-1-of-12"></div>
                 </div>
@@ -226,8 +214,13 @@
             <section>
                 <div class="row">
                     <div class="centre-container">  
-                        <i class="ion-clipboard h1-icon"></i>
+                        <i class="ion-clipboard h2-icon"></i>
                         <h2>Testing</h2>
+                    </div>
+                    <div class="centre-container commands">
+                        <div>
+                            <ol id="test-commands"></ol>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -237,11 +230,13 @@
                     <div class="col span-5-of-12">
                         <div class="box">
                             <h3>Example Test</h3>
+                            <div id="example-test" class="box"></div>
                         </div>
                     </div>
                     <div class="col span-5-of-12">
                         <div class="box">
                             <h3>Tutorial Test</h3>
+                            <div id="tutorial-test" class="box"></div>
                         </div>
                     </div>
                     <div class="col span-1-of-12"></div>
@@ -252,12 +247,10 @@
             <section>
                 <div class="row">
                     <div class="centre-container">
-                        <div class="play-button">
-                            <i class="ion-play play"></i>
-                        </div>
+                        <a class="play-button"><i class="ion-play"></i></a>
                     </div>
                 </div>
-                    
             </section>
+        </div>
     </body>
 </html>
