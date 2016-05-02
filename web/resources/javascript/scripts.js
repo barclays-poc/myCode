@@ -7,7 +7,7 @@ function initialize()
     populateTutorials();
     
     /* Pre-populates for testing */
-    populateTutorial(1);
+    /*populateTutorial(1);*/
     
     /* Fades the body in once content loaded */
     $(document).ready(function()
