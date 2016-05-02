@@ -12,7 +12,7 @@ function initialize()
     /* Fades the body in once content loaded */
     $(document).ready(function()
     {
-       $("body").fadeIn(750);
+       $("body").fadeIn(1000);
     });
     
     /* Associates smooth scrolling */
@@ -108,7 +108,7 @@ function populateTutorial(id)
         });
         
         /* Fades the new content in */
-        $( ".page" ).fadeIn(300, function(){});
+        $( ".page" ).fadeIn(1000, function(){});
         return false;
     }
 }
