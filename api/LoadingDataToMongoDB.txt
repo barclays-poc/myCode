@@ -13,4 +13,119 @@ db.contents.insert({"_id" : "4","platformGroup": "Payments & Common Engines","pl
 "title": "Test Add Staging Table","url": "#openModal"}]}
 })
 
-6 - to display all json objects within a collection run 'db.contents.find().pretty()'
+6 - to display all json objects within a collection run 'db.contents.find().pretty()'.
+------------------------------------------------------------------------------------------------------
+New Platform collection
+------------------------------------------------------------------------------------------------------
+1 - use api
+2 - db.createCollection('platforms')
+3 - insert data:
+db.platforms.insert({
+"_id": 0,
+"name": "Tutorials",
+"children": [
+{
+  "name": "Decision Management"  
+},
+{
+"name": "Pricing & Billing",
+"children": 
+[
+{
+"name": "Personal miReveune",
+"children": [
+{
+"name": "Add New Data Source",
+"id" : "1"
+},
+{
+"name": "Add New Charging Policy",
+"id" : "2"
+}
+]
+},
+{
+"name": "Personal Reconcilation"
+}
+]
+},
+{
+"name": "Robotic Automation"
+}
+]
+})
+
+------------------------------------------------------------------------------------------------------
+New Tutorials
+------------------------------------------------------------------------------------------------------
+1 - use api
+2 - db.createCollection('tutorials')
+3 - insert data:
+db.tutorials.insert({
+"_id": 1,
+"name": "Add New Data Source",
+"asset": {
+"id": 1,
+"name": "Personal miRevenue",
+"content": "<p>Ut eos lorem detracto definitionem. Sed dicam sapientem moderatius at. Nam dico mediocritatem ea. Eam libris ullamcorper ut.</p><p>In usu laudem consulatu, iusto soleat libris sea ea. Vis probo adversarium ei. In sit petentium principes, hinc constituam ex sea. Ne omnes civibus qui.</p>",
+"diagram": "/data/architecture.jpg",
+"resources": [
+{
+"title": "Jira",
+"target": "_blank",
+"url": "https://www.atlassian.com/software/jira"
+},
+{
+"title": "Confluence",
+"target": "_blank",
+"url": "https://www.atlassian.com/software/confluence"
+}
+]
+},
+"requirement": {
+"new": "As the Pricing & Billing system, I want to recieve a new data source of customer information coantining the account balance, account open date and account status",
+"example": "As the Pricing & Billing system, I want to recieve a new data source of account information containing the customer age, customer name and customer status"
+},
+"design": "To be decided",
+"code": {
+"segments": [
+{
+"id": 1,
+"command": "Add the XML configuration file entry for account",
+"mode": "xml",
+"example": "<note>\n\t<to>Tove</to>\n\t<from>Jani</from>\n\t<heading>Reminder</heading>\n\t<body>Do not forget me this weekend!</body>\n</note>"
+},
+{
+"id": 2,
+"command": "Create the new account table using Sql",
+"mode": "sql",
+"example": "CREATE TABLE Customer\n(\n\tPersonID int,\n\tLastName varchar(255),\n\tFirstName varchar(255),\n\tAddress varchar(255),\n\tCity varchar(255)\n);"
+},
+{
+"id": 3,
+"command": "Define the new java class for the account",
+"mode": "java",
+"example": "public class Cube {\n\n\tint length;\n\tint breadth;\n\tint height;\n\tpublic int;\n\tgetVolume() {\n\t\treturn (length * breadth * height);\n\t}\n}"
+}
+],
+"video": "/video"
+},
+"test": {
+"segments": [
+{
+"id": 1,
+"command": "Write a unit test using jUnit",
+"mode": "java",
+"example": "public class MyUnitTest {\n\t@Test\n\tpublic void testConcatenate(){\n\t\tMyUnit myUnit = new MyUnit();\n\n\t\tString result = myUnit.concatenate(one, two);\n\n\t\tassertEquals(onetwo, result);\n\t}\n}"
+},
+{
+"id": 2,
+"command": "Write a functional test using Gherkin",
+"mode": "gherkin",
+"example": "Feature: Refund item\n\nScenario: Jeff returns a faulty microwave\n\n\tGiven Jeff has bought a microwave for $100\n\tAnd he has a receipt\n\tWhen he returns the microwave\n\tThen Jeff should be refunded $100"
+}
+],
+"video": "/video"
+}
+})
+-----------------------------------------------------------------------------------------------------------
