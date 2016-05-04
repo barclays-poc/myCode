@@ -28,7 +28,7 @@ function populateTutorials()
     /* $("#tutorials-tree").empty(); */
     
     <!-- Provide API Endpoint-->
-    var url = "/data/tutorials.json";
+    var url = "http://localhost:8888/api/tutorials/0";
     
     $.getJSON( url, function( data ) 
     {
@@ -97,7 +97,7 @@ function populateTutorial(id)
     if(id != null)
     {
         /* Provide API Endpoint */
-        var url = "/data/tutorial.json";
+        var url = "http://localhost:8888/api/tutorial/"+id;
         
         /* Retrieves the API data and populates */ 
         $.getJSON( url, function( data ) 
