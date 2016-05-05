@@ -1,6 +1,7 @@
 /* Global variable holding the tutorial */
 var tutorial = null;
 var isTest = $.QueryString["mode"] == "t";
+var tutorialResult = "";
 
 function initialize()
 {
@@ -229,17 +230,26 @@ function addCodeEditor(segment, selector, type, isExample)
 
 function execute()
 {   
+    tutorialResult = '{"tutorial": [';
+    
     var hasErrors = false;
     var errorAnchor = "#code-section"
     
     /* checks that all segments have code */
     for ( var i in tutorial.code.segments)
     {
+        
         /* local variables */
         var segment = tutorial.code.segments[i]
         var id = "tutorial-code-" + segment.id;
         var editor = ace.edit(id);
         var value = editor.getValue().trim();
+        console.log(segment);
+        /* Create json for each tutorial*/
+        tutorialResult += '{"id" : "'+id+'",'
+                            +'"command":"'+segment.command+'",'
+                            +'"value" : "'+value+'" },'
+        
         
         /* Executes the tutorial if checks are passed */
         if( value == null || value == "")
@@ -250,13 +260,19 @@ function execute()
         }
     };
     
+    tutorialResult = tutorialResult.slice(0, -1);
+    tutorialResult += ']}';
+    
     if(hasErrors) 
     {        
         return true;
     }
     else
     {    
-        location.assign("result.html");
+        //location.assign("result.html");
+       $("#pre-view-dark").fadeIn(1000);      
+       $("#pre-view .prev").text(tutorialResult)
+       $("#pre-view").fadeIn(2000);
     }
 }
 
@@ -278,5 +294,24 @@ function smoothScroll()
                 window.location.hash = target;
             });
         });
+    });
+}
+
+function writeToFile() {
+
+    var url = "http://localhost:8888/api/writeToFile";
+
+    $.ajax({
+    url: url,
+    type: 'post',
+    data: tutorialResult,
+    headers: {"Content-Type": 'application/json' },
+    dataType: 'json',
+    success: function (data) {
+        json = JSON.parse(data);
+        console.info(json['status']);
+        $("#pre-view-dark").fadeOut(100);      
+        $("#pre-view").fadeOut(200);
+    }
     });
 }

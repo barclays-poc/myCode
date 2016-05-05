@@ -1,0 +1,1 @@
+{"tutorial":[{"id":"tutorial-code-1","command":"Add the XML configuration file entry for account","value":"sfasd"},{"id":"tutorial-code-2","command":"Create the new account table using Sql","value":"sfaas"},{"id":"tutorial-code-3","command":"Define the new java class for the account","value":"asfasd"}]}

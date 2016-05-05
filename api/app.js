@@ -102,6 +102,21 @@ app.post('/api/tutorial', function(request, response){
 });
 
 
+//add tutorials to db
+app.post('/api/writeToFile', function(request, response){
+
+   var tutorialResponse = request.body;
+   console.log(JSON.stringify(tutorialResponse));
+    
+    var fs = require('fs');
+    
+   fs.writeFile('../test.txt', JSON.stringify(tutorialResponse) , (err) => {
+      if (err) throw err;
+      console.log('Written to the file');
+    });
+    
+    response.json('{"status":"successfull"}');
+});
 
 //API PUT calls 
 /*//updates content in db
