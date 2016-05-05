@@ -111,7 +111,7 @@ app.post('/api/writeToFile', function(request, response){
     var fs = require('fs');
     
    fs.writeFile('../test.txt', JSON.stringify(tutorialResponse) , (err) => {
-      if (err) throw err;
+      if (err) response.json('{"status":"Error"}');;
       console.log('Written to the file');
     });
     

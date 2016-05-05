@@ -374,8 +374,33 @@ h3
     display:none;
 }
 
-#pre-view span.prev {
-    width: 90%;
+#pre-view div.prev {
+    width: 100%;
     height: auto;
-    min-height: 70%;
+    min-height: 76%;
+}
+
+.codeReview {
+    float: left;
+    height: auto;
+    width: 45%;
+    min-width: 30%;
+    max-width: 45%;
+    margin-right: 20px;
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+#pre-view input {
+    float:right;
+    margin: 10px;
+    width: 100px;
+    height: 50px;
+    font-size: 25px;
+    border-radius: 5px;
+    border: 1px solid #0074a6;
+    background: #00395d;
+    color: #fff;
 }

@@ -244,10 +244,12 @@
         </div>
         <div id="pre-view">
             <h1>Review Page</h1><br>
-            <span class="prev"></span>
+            <div class="prev"></div>
             <br>
             <input type="submit" value="Submit" id="submit-review" 
-                   onclick="javascript: writeToFile();"> 
+                   onclick="javascript: writeToFile();">
+            <input type="submit" value="Cancel" id="cancel-review" 
+                   onclick="javascript: cancelPrev();"> 
         </div>
     </body>
 </html>
