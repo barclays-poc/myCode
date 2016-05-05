@@ -192,7 +192,7 @@ h3
     overflow: hidden;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    z-index: 999;
+    z-index: 899;
     white-space: nowrap;
 }
 
@@ -348,4 +348,59 @@ h3
     font-size: 500%;
     color: #00adef;
     cursor: pointer;
+}
+
+#pre-view {
+    width: 80vw;
+    height: 80vh;
+    border-radius: 20px;
+    border: 3px solid #00395d;
+    position: fixed;
+    top:5vh;
+    left: 10vw;
+    background: #fff;
+    z-index: 901;
+    display:none;
+    padding: 20px;
+}
+#pre-view-dark {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top:0;
+    left:0;
+    background: rgba(0,0,0,0.7);
+    z-index: 900;
+    display:none;
+}
+
+#pre-view div.prev {
+    width: 100%;
+    height: auto;
+    min-height: 76%;
+}
+
+.codeReview {
+    float: left;
+    height: auto;
+    width: 45%;
+    min-width: 30%;
+    max-width: 45%;
+    margin-right: 20px;
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+#pre-view input {
+    float:right;
+    margin: 10px;
+    width: 100px;
+    height: 50px;
+    font-size: 25px;
+    border-radius: 5px;
+    border: 1px solid #0074a6;
+    background: #00395d;
+    color: #fff;
 }

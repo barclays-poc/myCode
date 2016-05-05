@@ -1,6 +1,7 @@
 /* Global variable holding the tutorial */
 var tutorial = null;
 var isTest = $.QueryString["mode"] == "t";
+var tutorialResult = "";
 
 function initialize()
 {
@@ -28,7 +29,7 @@ function populateTutorials()
     /* $("#tutorials-tree").empty(); */
     
     <!-- Provide API Endpoint-->
-    var url = "/data/tutorials.json";
+    var url = "http://localhost:8888/api/tutorials/0";
     
     $.getJSON( url, function( data ) 
     {
@@ -97,7 +98,7 @@ function populateTutorial(id)
     if(id != null)
     {
         /* Provide API Endpoint */
-        var url = "/data/tutorial.json";
+        var url = "http://localhost:8888/api/tutorial/"+id;
         
         /* Retrieves the API data and populates */ 
         $.getJSON( url, function( data ) 
@@ -229,17 +230,26 @@ function addCodeEditor(segment, selector, type, isExample)
 
 function execute()
 {   
+    tutorialResult = '{"tutorial": [';
+    
     var hasErrors = false;
     var errorAnchor = "#code-section"
     
     /* checks that all segments have code */
     for ( var i in tutorial.code.segments)
     {
+        
         /* local variables */
         var segment = tutorial.code.segments[i]
         var id = "tutorial-code-" + segment.id;
         var editor = ace.edit(id);
         var value = editor.getValue().trim();
+        console.log(segment);
+        /* Create json for each tutorial*/
+        tutorialResult += '{"id" : "'+id+'",'
+                            +'"command":"'+segment.command+'",'
+                            +'"value" : "'+value+'" },'
+        
         
         /* Executes the tutorial if checks are passed */
         if( value == null || value == "")
@@ -250,14 +260,20 @@ function execute()
         }
     };
     
-    if(hasErrors) 
+    tutorialResult = tutorialResult.slice(0, -1);
+    tutorialResult += ']}';
+    
+    /*if(hasErrors) 
     {        
         return true;
     }
     else
-    {    
-        location.assign("result.html");
-    }
+    {   */ 
+        //location.assign("result.html");
+       $("#pre-view-dark").fadeIn(1000);      
+       $("#pre-view .prev").html(formatReview(tutorialResult))
+       $("#pre-view").fadeIn(2000);
+    //}
 }
 
 function smoothScroll()
@@ -280,3 +296,36 @@ function smoothScroll()
         });
     });
 }
+
+function writeToFile() {
+
+    var url = "http://localhost:8888/api/writeToFile";
+
+    $.ajax({
+    url: url,
+    type: 'post',
+    data: tutorialResult,
+    headers: {"Content-Type": 'application/json' },
+    dataType: 'json',
+    success: function (data) {
+        json = JSON.parse(data);
+        alert(json['status']);
+        $("#pre-view-dark").fadeOut(100);      
+        $("#pre-view").fadeOut(200);
+    }
+    });
+}
+
+function formatReview(request) {
+    var json = JSON.parse(request);
+    var final = "";
+    var i ;
+    for(i in json['tutorial']) {
+        final += "<div class='codeReview'><h2>"+json['tutorial'][i]['command']+"</h2><br>"
+                 +json['tutorial'][i]['value']+"</div>";
+    }
+
+    return final;
+}
+
+function cancelPrev() { $("#pre-view").fadeOut(500);$("#pre-view-dark").fadeOut(500);}
