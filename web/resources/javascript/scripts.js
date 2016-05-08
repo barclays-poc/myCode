@@ -2,7 +2,8 @@
 var tutorial = null;
 var isTest = $.QueryString["mode"] == "t";
 var tutorialResult = "";
-
+var baseUrl = "http://192.168.99.100:8080"
+    
 function initialize()
 {
     /* Populates the Tutorial tree */
@@ -29,7 +30,7 @@ function populateTutorials()
     /* $("#tutorials-tree").empty(); */
     
     <!-- Provide API Endpoint-->
-    var url = "http://localhost:8888/api/tutorials/0";
+    var url = baseUrl + "/api/tutorials/0";
     
     $.getJSON( url, function( data ) 
     {
@@ -98,7 +99,7 @@ function populateTutorial(id)
     if(id != null)
     {
         /* Provide API Endpoint */
-        var url = "http://localhost:8888/api/tutorial/"+id;
+        var url = baseUrl + "/api/tutorial/" + id;
         
         /* Retrieves the API data and populates */ 
         $.getJSON( url, function( data ) 
@@ -299,7 +300,7 @@ function smoothScroll()
 
 function writeToFile() {
 
-    var url = "http://localhost:8888/api/writeToFile";
+    var url = baseUrl + "/api/writeToFile";
 
     $.ajax({
     url: url,

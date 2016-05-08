@@ -8,6 +8,8 @@ MAINTAINER M.Y. Jonathan Fenwick jmjfenwick@gmail.com
 
 # MongoDB
 
+  RUN echo "MongoDB installing..."
+
   # Import MongoDB public GPG key AND create a MongoDB list file
   RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
   RUN echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
@@ -21,20 +23,17 @@ MAINTAINER M.Y. Jonathan Fenwick jmjfenwick@gmail.com
   # Expose port 27017 from the container to the host
   EXPOSE 27017
 
-  CMD ["/usr/bin/mongod"]
-
-  # Confirms MongoDB completed
-  RUN echo "MongoDB installed in image"
-
 # Node.js
+
+  RUN echo "Node.js installing..."
 
   # Installs Node.js and NPM
   RUN apt-get install -y nodejs
   RUN apt-get install -y npm
 
-  RUN echo "Node.js installed in image"
-
 # Install App
+
+  RUN echo "API application deploying..."
 
   # Create app directory in the image
   RUN mkdir -p /usr/api
@@ -48,13 +47,20 @@ MAINTAINER M.Y. Jonathan Fenwick jmjfenwick@gmail.com
   COPY api /usr/api
 
   # Opens HTTP port
-  EXPOSE 8888
-
-  RUN echo "API application deployed into image"
+  EXPOSE 8080
 
 # Handles custom scripts
 
+  # Copies the data
+  RUN echo "Data copying..."
+  RUN mkdir -p /usr/data
+  COPY data /usr/data
+
   # Copies the scripts
+  RUN echo "Start scripts copying..."
+  RUN echo "Copies the start commands"
   RUN mkdir -p /usr/start
   COPY start /usr/start
-  RUN echo "Start up aretfacts copied to image"
+
+
+  CMD ["/bin/bash","/usr/start/start.sh"]
