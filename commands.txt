@@ -1,0 +1,16 @@
+<!-- Clears all local images and containers -->
+docker rm -f $(docker ps -a -q)
+docker rmi $(docker images -q)
+
+<!-- Rebuilds the image and starts the container -->
+docker build -t docker-mycode .
+docker run -d=true -p 27017:27017 -p 8888:8888 -w /usr/start --name myCode docker-mycode
+docker exec -i myCode mongo /usr/scripts/db.js
+docker exec -i -d myCode mongoimport --db api --collection tutorials --type json --file /usr/scripts/tutorials.js
+docker exec -i -d myCode mongoimport --db api --collection tutorial --type json --file /usr/scripts/tutorial.js
+docker exec -i -d myCode nodejs /usr/api/app.js
+
+<!-- Gets the containers networking info -->
+docker exec myCode cat /etc/hosts
+
+http://198.168.99.100:8888/api/tutorials
