@@ -40,7 +40,7 @@ var tutorialSchema = mongoose.Schema({
     video: {type: String}    
   },
     buildUrl : {type: String, required: true},
-    reviewSwitch : {type: boolean, default: true}
+    reviewSwitch : {type: Boolean, default: true}
 });
 
 //exposing the tutorial object for the whole api
