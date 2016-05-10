@@ -28,3 +28,9 @@ module.exports.getTutorials = function(callback, limit){
   Tutorials.find(callback).limit(limit);
 }
 
+module.exports.getTutorialsById = function(id, callback){
+  //Tutorial.findById(id, callback);
+  var condition = {id: id};
+  Tutorials.findOne(condition, callback);
+}
+

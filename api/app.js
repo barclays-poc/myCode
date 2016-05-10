@@ -51,6 +51,17 @@ app.get('/api/tutorial/:id', function(request, response){
   })
 });
 
+
+//Get Tutorials json by id
+app.get('/api/tutorials/:id', function(request, response){
+  Tutorials.getTutorialsById(request.params.id, function(err, tutorials){
+    if(err){
+      throw err;
+    }
+    response.json(tutorials);
+  })
+});
+
 //add tutorials to db
 app.post('/api/writeToFile', function(request, response){
 
