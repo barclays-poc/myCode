@@ -256,8 +256,13 @@ function execute()
         if( value == null || value == "")
         {
             hasErrors = true;
+            if(editor.setTheme("ace/theme/textmate-error"))
+                alert("yep");
             editor.setTheme("ace/theme/textmate-error");
+            console.log("Editor1: "+ editor);
             editor.getSession().setMode(segment.mode);
+            console.log("Editor2: "+ editor.getSession());
+            editor.setTheme
         }
     };
     
@@ -271,9 +276,9 @@ function execute()
     else
     {   */ 
         //location.assign("result.html");
-       $("#pre-view-dark").fadeIn(1000);      
+/*       $("#pre-view-dark").fadeIn(1000);      
        $("#pre-view .prev").html(formatReview(tutorialResult))
-       $("#pre-view").fadeIn(2000);
+       $("#pre-view").fadeIn(2000);*/
     //}
 }
 
