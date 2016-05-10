@@ -30,7 +30,7 @@ function populateTutorials()
     /* $("#tutorials-tree").empty(); */
     
     <!-- Provide API Endpoint-->
-    var url = baseUrl + "/api/tutorials/0";
+    var url = baseUrl + "/api/tutorials";
     
     $.getJSON( url, function( data ) 
     {

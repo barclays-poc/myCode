@@ -36,7 +36,7 @@ app.get('/api/tutorials', function(request, response){
      if(err){
       throw err;
      }
-     response.json(tutorials);
+     response.json(tutorials[0]) ;
     });
 });
 
@@ -48,17 +48,6 @@ app.get('/api/tutorial/:id', function(request, response){
       throw err;
     }
     response.json(tutorial);
-  })
-});
-
-
-//Get Tutorials json by id
-app.get('/api/tutorials/:id', function(request, response){
-  Tutorials.getTutorialsById(request.params.id, function(err, tutorials){
-    if(err){
-      throw err;
-    }
-    response.json(tutorials);
   })
 });
 
