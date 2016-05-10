@@ -1,3 +1,5 @@
+#dos2unix
+dos2unix ./start/start.sh
 #build
 docker build -t docker-mycode .
 #run
