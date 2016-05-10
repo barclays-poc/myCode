@@ -63,5 +63,7 @@
             }
         ],
         "video": "/video"
-    }
+    },
+	"buildUrl" : "http",
+    "reviewSwitch" : "true"
 }
