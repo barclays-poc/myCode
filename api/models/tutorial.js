@@ -38,17 +38,13 @@ var tutorialSchema = mongoose.Schema({
   test: {
     segments: [subSegmentSchema],
     video: {type: String}    
-  }
+  },
+    buildUrl : {type: String, required: true},
+    reviewSwitch : {type: Boolean, default: true}
 });
 
 //exposing the tutorial object for the whole api
 var Tutorial = module.exports = mongoose.model('Tutorial', tutorialSchema, 'tutorial');
-
-//get all tutorial from mongo
-//GET call
-module.exports.getTutorial = function(callback, limit){
-  Tutorial.find(callback).limit(limit);
-}
 
 //get tutorial by id
 //GET call
@@ -56,28 +52,5 @@ module.exports.getTutorialById = function(id, callback){
   //Tutorial.findById(id, callback);
   var condition = {id: id};
   Tutorial.findOne(condition, callback);
-}
-
-// Creates tutorial in DB
-//POST call
-module.exports.addTutorial = function(content, callback){
-  Tutorial.create(content, callback);
-}
-
-//updates tutorial in DB
-//PUT call
-module.exports.updateTutorial = function(content, callback){
-  var condition = {id: id};
-  var update = {
-     platformName: content.platform
-  }
-  Tutorial.findOneAndUpdate(condition, update, options, callback);
-}
-
-//Removes tutorial in DB
-//DELETE call
-module.exports.deleteTutorial = function(id, callback){
-  var condition = {id: id};
-  Tutorial.remove(condition, callback);
 }
 
