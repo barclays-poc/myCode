@@ -422,3 +422,10 @@ textarea {
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
+
+
+.ace_highlight {
+   position: absolute; /* without this positions will be erong */
+   background: #ff3300; /* color */ 
+   z-index: 1000; /* in front of all other markers */ 
+}

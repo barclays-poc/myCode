@@ -1,8 +1,0 @@
-{
-    "jscodehints.detectedExclusions": [
-        "C:/Users/Jonathan/Documents/GitHub/myCode/web/vendors/ace/worker-xquery.js",
-        "C:/Users/Jonathan/Documents/GitHub/myCode/web/vendors/ace/worker-xml.js",
-        "C:/Users/Jonathan/Documents/GitHub/myCode/web/vendors/ace/theme-textmate.js",
-        "C:/Users/Jonathan/Documents/GitHub/myCode/web/vendors/ace/theme-terminal.js"
-    ]
-}

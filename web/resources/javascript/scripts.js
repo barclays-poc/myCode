@@ -252,6 +252,20 @@ function execute()
                             +'"value" : "'+value+'" },'
         
         
+        var annot = editor.getSession().getAnnotations();
+        console.log(annot);
+
+        for (var key in annot){
+            console.log(key);
+            if (annot.hasOwnProperty(key)) {
+                console.log(annot[key].text + "on line " + " " + annot[key].row);
+                //var markerId = editor.renderer.addMarker(new Range(annot[key].row, 1, annot[key].row, 15),"warning", "text");
+                var Range = require("ace/range").Range
+                editor.session.addMarker(new Range(annot[key].row, 0, annot[key].row, 1), 'ace_highlight', 'fullLine');
+            }
+        }
+        
+        
         /* Executes the tutorial if checks are passed */
         if( value == null || value == "")
         {
