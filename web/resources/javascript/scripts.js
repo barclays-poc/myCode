@@ -297,7 +297,7 @@ function execute()
     }
     else
     {   var reviewOption = tutorial['reviewSwitch'];
-     alert(reviewOption);
+
        if(reviewOption) { 
             $("#pre-view-dark").fadeIn(1000);      
             $("#pre-view .prev").html(formatReview(tutorialResult))
