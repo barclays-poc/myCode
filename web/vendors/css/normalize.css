@@ -426,6 +426,7 @@ textarea {
 
 .ace_highlight {
    position: absolute; /* without this positions will be erong */
-   background: #ff3300; /* color */ 
+   background: red;/* color */ 
+   color: #fff;
    z-index: 1000; /* in front of all other markers */ 
 }

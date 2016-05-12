@@ -236,6 +236,12 @@ function execute()
     var hasErrors = false;
     var errorAnchor = "#code-section"
     
+    $('a[href^="#prevent"]').on('click',function (e) 
+    {
+        /* Surpresses usual behaviour */
+        e.preventDefault();
+    });
+    
     /* checks that all segments have code */
     for ( var i in tutorial.code.segments)
     {
@@ -245,23 +251,29 @@ function execute()
         var id = "tutorial-code-" + segment.id;
         var editor = ace.edit(id);
         var value = editor.getValue().trim();
-        console.log(segment);
+        
         /* Create json for each tutorial*/
         tutorialResult += '{"id" : "'+id+'",'
                             +'"command":"'+segment.command+'",'
                             +'"value" : "'+value+'" },'
         
+        /* Remove all line markers*/
+        for(var marker in editor.session.$backMarkers) {
+            if(editor.session.$backMarkers[marker]['clazz'] == 'ace_highlight') {
+                editor.session.removeMarker(marker);
+                hasErrors = false;
+            }
+        }
         
+        /* Mark line where annotation is present*/
         var annot = editor.getSession().getAnnotations();
-        console.log(annot);
-
+        
         for (var key in annot){
-            console.log(key);
             if (annot.hasOwnProperty(key)) {
-                console.log(annot[key].text + "on line " + " " + annot[key].row);
-                //var markerId = editor.renderer.addMarker(new Range(annot[key].row, 1, annot[key].row, 15),"warning", "text");
+                //console.error(annot[key].text + "on line " + " " + annot[key].row);
                 var Range = require("ace/range").Range
                 editor.session.addMarker(new Range(annot[key].row, 0, annot[key].row, 1), 'ace_highlight', 'fullLine');
+                hasErrors = true;
             }
         }
         
@@ -270,30 +282,28 @@ function execute()
         if( value == null || value == "")
         {
             hasErrors = true;
-            if(editor.setTheme("ace/theme/textmate-error"))
-                alert("yep");
-            editor.setTheme("ace/theme/textmate-error");
-            console.log("Editor1: "+ editor);
-            editor.getSession().setMode(segment.mode);
-            console.log("Editor2: "+ editor.getSession());
-            editor.setTheme
+            var Range = require("ace/range").Range
+            editor.session.addMarker(new Range(0, 0, 0, 1), 'ace_highlight', 'fullLine');
         }
     };
     
     tutorialResult = tutorialResult.slice(0, -1);
     tutorialResult += ']}';
     
-    /*if(hasErrors) 
+    if(hasErrors) 
     {        
+        setTimeout(function() {smoothScrolls(".ace_highlight");},100);
         return true;
     }
     else
-    {   */ 
-        //location.assign("result.html");
-/*       $("#pre-view-dark").fadeIn(1000);      
-       $("#pre-view .prev").html(formatReview(tutorialResult))
-       $("#pre-view").fadeIn(2000);*/
-    //}
+    {   var reviewOption = tutorial['reviewSwitch'];
+     alert(reviewOption);
+       if(reviewOption) { 
+            $("#pre-view-dark").fadeIn(1000);      
+            $("#pre-view .prev").html(formatReview(tutorialResult))
+            $("#pre-view").fadeIn(2000);
+       }
+    }
 }
 
 function smoothScroll()
@@ -305,6 +315,10 @@ function smoothScroll()
             e.preventDefault();
                 
             var target = this.hash;
+           
+            if(target == "#prevent")
+                return;
+            
             var $target = $(target);
             
             /* changes Html and bodybehaviours */
@@ -316,6 +330,18 @@ function smoothScroll()
         });
     });
 }
+
+function smoothScrolls(target)
+{
+
+    /* changes Html and bodybehaviours */
+    $('html, body').stop().animate({
+        'scrollTop': ($('.ace_highlight').offset().top - 50 )
+    }, 500, 'swing', function () {
+        window.location.hash = target;
+    });
+}
+
 
 function writeToFile() {
 
