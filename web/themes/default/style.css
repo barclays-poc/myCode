@@ -167,11 +167,12 @@ h3
     float: left;
     margin: 15px 0px 15px 40px;
     display: block;
+    padding: 0;
 }
 
 .img-work
 {
-    background-image: url(images/work.jpg);
+    background-image: url(banner.jpg);
     background-attachment: fixed;
     background-size: contain;
     height: 125px;

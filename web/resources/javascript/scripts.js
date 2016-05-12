@@ -1,11 +1,15 @@
 /* Global variable holding the tutorial */
 var tutorial = null;
 var isTest = $.QueryString["mode"] == "t";
+var theme = ($.QueryString["theme"] = "undefined") ? "default" : $.QueryString["theme"];
+
 var tutorialResult = "";
 var baseUrl = "http://192.168.99.100:8080"
     
 function initialize()
 {
+    setTheme();
+    
     /* Populates the Tutorial tree */
     populateTutorials();
     
@@ -23,7 +27,30 @@ function initialize()
     
     /* Associates smooth scrolling */
     smoothScroll();
+    
 }
+
+function setTheme() 
+{
+    /* Adds the favicon */
+    /*
+    var s = document.getElementById("style");
+    s.href = "themes/default/style.css";
+    */
+    
+    /* Adds the favicon */
+    var fav = document.createElement('link');
+    fav.type = "image/x-icon";
+    fav.rel = "shortcut icon";
+    fav.href = "themes/" + theme + "/favicon.ico";
+    document.getElementsByTagName("head")[0].appendChild(fav);
+        
+    /* Sets the logo image */
+    var logo = document.getElementById("logo");
+    logo.src = "themes/" + theme + "/logo.png";
+    
+    
+};
 
 function populateTutorials()
 {   
