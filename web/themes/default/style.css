@@ -362,7 +362,11 @@ h3
     background: #fff;
     z-index: 901;
     display: none;
-    padding: 6vh 6vw;
+    padding-top: 6vh;
+    padding-bottom: 5vh;
+    padding-left: 6vw;
+    padding-right: 5vw;
+    overflow-y: auto;
 }
 #pre-view-dark {
     width: 100vw;

@@ -279,10 +279,18 @@ function execute()
         var editor = ace.edit(id);
         var value = editor.getValue().trim();
         
+        
+        value = value.split('<').join('&lt;');
+        value = value.split('>').join('&gt;');
+        value = value.split('"').join('\"');
+        value = value.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+        value = value.replace(/\t/g, '%50%');
+        value = value.replace(/\s/g,"%20%");
+        
         /* Create json for each tutorial*/
         tutorialResult += '{"id" : "'+id+'",'
                             +'"command":"'+segment.command+'",'
-                            +'"value" : "'+value+'" },'
+                            +'"value" : "'+value.replace(/\s/g,"%20%")+'" },'
         
         /* Remove all line markers*/
         for(var marker in editor.session.$backMarkers) {
@@ -326,8 +334,7 @@ function execute()
     {   var reviewOption = tutorial['reviewSwitch'];
 
        if(reviewOption) { 
-            $("#pre-view-dark").fadeIn(1000);      
-            $("#pre-view .prev").html(formatReview(tutorialResult))
+            formatReview(tutorialResult);
             $("#pre-view").fadeIn(2000);
        }
     }
@@ -382,23 +389,63 @@ function writeToFile() {
     dataType: 'json',
     success: function (data) {
         json = JSON.parse(data);
-        alert(json['status']);
-        $("#pre-view-dark").fadeOut(100);      
+        alert(json['status']);  
         $("#pre-view").fadeOut(200);
     }
     });
 }
 
 function formatReview(request) {
+    try{
     var json = JSON.parse(request);
+    }
+    catch(e) {
+    console.log(request);
+    }
     var final = "";
     var i ;
+    
+    var finalHeight = 0;
+    
+    $("#pre-view .prev").html("");
+    
     for(i in json['tutorial']) {
-        final += "<div class='codeReview'><h2>"+json['tutorial'][i]['command']+"</h2><br>"
-                 +json['tutorial'][i]['value']+"</div>";
+
+        var value = json['tutorial'][i]['value'].split('%20%').join(' ');
+        value = value.split('%50%').join('   ');
+        
+        final = "<div class='codeReview'><h2>"+json['tutorial'][i]['command']+"</h2><br><pre>"
+                 +value+"</pre></div>";
+        
+        $("#pre-view .prev").append(final);
     }
 
-    return final;
+    setTimeout(function() {
+        size = $("#pre-view .prev .codeReview").size();
+        
+        for(id=0;id <= size; id++) {
+          if((id%2) == 0) {
+              
+              marginAndPadding = parseInt($("#pre-view .prev .codeReview").css("padding-top")) +  
+                                  parseInt($("#pre-view .prev .codeReview").css("margin-top"));
+              
+              console.log("Margin and Padding - "+marginAndPadding);
+              
+              value1 = $("#pre-view .prev .codeReview").eq(id).height();
+              
+              value2 = $("#pre-view .prev .codeReview").eq((id+1)).height();
+              
+              if(value1 > value2)
+                finalHeight +=  value1 + marginAndPadding;
+              else
+                finalHeight +=  value2 + marginAndPadding;
+          }
+            
+            if(id > 100) {console.error("id = "+id); break;}
+        }
+        
+        $("#pre-view .prev").height(finalHeight);
+    }, 100)
 }
 
 function cancelPrev() { $("#pre-view").fadeOut(500);$("#pre-view-dark").fadeOut(500);}
