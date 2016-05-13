@@ -43,7 +43,7 @@
     <body onload="javascript: initialize();">
 
         <!-- the demo root element -->
-        <div class="tutorials">
+        <div id="tutorials" class="tutorials">
             <ul id="tutorials-tree">
               <item
                 class="item"
@@ -56,13 +56,13 @@
         <!-- Header section -->
         <header id="#top">
             <div class="row">
-                <img id="logo" class="img-logo" />
+                <img id="logo" class="img-logo"/>
             </div>
             <div class="img-work" />
         </header>
         
         <!-- Capabilities Description -->
-        <section class="section-how-to">
+        <section id="section-how-to" class="section-how-to">
             <div class="row">
                 <div class="how-to-box">
                     <div class="clearFix">
@@ -93,8 +93,12 @@
             </div>
         </section>
         
+        <section id="error" class="error">
+            <div class="row">Unexpected error.  Please try again later.</div>
+        </section>
+        
         <!-- Asset -->
-        <div class="page">
+        <div id="tutorial-content" class="tutorial-content">
             <section id="asset-section">
                 <div class="row">
                     <div class="centre-container">  

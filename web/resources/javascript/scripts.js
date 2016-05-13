@@ -1,11 +1,18 @@
 /* Global variable holding the tutorial */
 var tutorial = null;
-var isTest = $.QueryString["mode"] == "t";
+
+/* Switches */
+var isTest = $.QueryString["mode"] == "test";
 var theme = ($.QueryString["theme"] = "undefined") ? "default" : $.QueryString["theme"];
 
 var tutorialResult = "";
 var baseUrl = "http://192.168.99.100:8080"
-setTheme();
+
+/* Sets the stylesheet */
+setStylesheet();
+
+/* Sets the Favicon */
+setFavicon();
 
 function initialize()
 {
@@ -29,28 +36,34 @@ function initialize()
     /* Associates smooth scrolling */
     smoothScroll();
     
+    /* Sets the logo based on the theme */
+    setLogo();
 }
 
-function setTheme() 
+function setStylesheet() 
 {
     var style = document.createElement('link');
     style.type = "text/css";
     style.rel = "stylesheet";
     style.href = "themes/default/style.css";
-    document.getElementsByTagName("head")[0].appendChild(style);
-    
+    document.getElementsByTagName("head")[0].appendChild(style);    
+};
+
+function setFavicon() 
+{
     /* Adds the favicon */
     var fav = document.createElement('link');
     fav.type = "image/x-icon";
     fav.rel = "shortcut icon";
     fav.href = "themes/" + theme + "/favicon.ico";
-    document.getElementsByTagName("head")[0].appendChild(fav);
-        
+    document.getElementsByTagName("head")[0].appendChild(fav);    
+};
+
+function setLogo() 
+{
     /* Sets the logo image */
     var logo = document.getElementById("logo");
-    logo.src = "themes/" + theme + "/logo.png";
-    
-    
+    logo.src = "themes/" + theme + "/logo.png";    
 };
 
 function populateTutorials()
@@ -112,7 +125,18 @@ function populateTutorials()
         
         /* Smooth scrolling */
         smoothScroll();
-    });
+    }).error(function() 
+             { 
+                onError();
+            });
+}
+
+function onError()
+{
+    $("#tutorials").fadeOut(200);
+    $("#tutorial-content").fadeOut(200);
+    $("#section-how-to").fadeOut(200);
+    $("#error").fadeIn(500);
 }
 
 function closeTutorials()
@@ -123,6 +147,8 @@ function closeTutorials()
 
 function populateTutorial(id)
 {
+    $("#tutorial-content").fadeOut(200);
+    
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
@@ -139,10 +165,13 @@ function populateTutorial(id)
             
             /* adds as global variable */
             tutorial = data;
-        });
+        }).error(function() 
+             { 
+                onError();
+            });
         
         /* Fades the new content in */
-        $( ".page" ).fadeIn(1000, function(){});
+        $( ".tutorial-content" ).fadeIn(1000, function(){});
         return false;
     }
 }

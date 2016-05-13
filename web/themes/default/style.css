@@ -29,7 +29,7 @@ section
     margin-top: 15px;
 }
 
-.page
+.tutorial-content
 {
     display: none;
 }
@@ -40,6 +40,12 @@ section
     margin: 0px auto;
     max-width: 100%;
     text-align: center;
+}
+
+.error
+{
+    margin-top: 50px;
+    display: none;
 }
 
 .last-row
