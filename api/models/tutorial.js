@@ -39,7 +39,7 @@ var tutorialSchema = mongoose.Schema({
     segments: [subSegmentSchema],
     video: {type: String}    
   },
-    buildUrl : {type: String, required: true},
+    dockerfile : {type: String, required: true},
     reviewSwitch : {type: Boolean, default: true}
 });
 

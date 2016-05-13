@@ -63,5 +63,7 @@
             }
         ],
         "video": "/video"
-    }
+    },
+    "dockerfile": "java",
+    "reviewSwitch" : "true" 
 }

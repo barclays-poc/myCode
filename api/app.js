@@ -52,7 +52,7 @@ app.get('/api/tutorial/:id', function(request, response){
 });
 
 //add tutorials to db
-app.post('/api/writeToFile', function(request, response){
+app.post('/api/tutorialOutput', function(request, response){
 
    var tutorialResponse = request.body;
    console.log(JSON.stringify(tutorialResponse));
