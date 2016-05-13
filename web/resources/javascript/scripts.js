@@ -123,8 +123,12 @@ function populateTutorials()
           }
         });
         
+        $("#tutorials").fadeIn(200);
+        $("#section-how-to").fadeIn(200);
+        
         /* Smooth scrolling */
         smoothScroll();
+        
     }).error(function() 
              { 
                 onError();

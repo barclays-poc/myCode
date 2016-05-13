@@ -201,6 +201,7 @@ h3
     border-bottom-right-radius: 12px;
     z-index: 899;
     white-space: nowrap;
+    display: none;
 }
 
 .tutorials i
@@ -247,6 +248,7 @@ h3
     margin-top: 0px;
     padding-bottom: 15px;
     font-size: 150%;
+    display: none;
 }
 
 .how-to-box
