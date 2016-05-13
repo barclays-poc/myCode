@@ -13,6 +13,5 @@ docker rmi $(docker images -q)
 # Docker command to get container info
 docker exec myCode cat /etc/hosts
 
-# Push Docker Image 
-docker tag docker-myCode jmjfenwick/myCode
-docker push jmjfenwick/myCode
+#Install kubectl
+docker build -t gcr.io/barclays-poc/barclays-mycode .
