@@ -5,10 +5,11 @@ var theme = ($.QueryString["theme"] = "undefined") ? "default" : $.QueryString["
 
 var tutorialResult = "";
 var baseUrl = "http://192.168.99.100:8080"
-    
+setTheme();
+
 function initialize()
 {
-    setTheme();
+    //setTheme();
     
     /* Populates the Tutorial tree */
     populateTutorials();
@@ -32,11 +33,11 @@ function initialize()
 
 function setTheme() 
 {
-    /* Adds the favicon */
-    /*
-    var s = document.getElementById("style");
-    s.href = "themes/default/style.css";
-    */
+    var style = document.createElement('link');
+    style.type = "text/css";
+    style.rel = "stylesheet";
+    style.href = "themes/default/style.css";
+    document.getElementsByTagName("head")[0].appendChild(style);
     
     /* Adds the favicon */
     var fav = document.createElement('link');
