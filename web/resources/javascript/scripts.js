@@ -1,22 +1,5 @@
 var tutorial = null;
 var tutorialResult = "";
-var config = null;
-
-/* Loads the config is sync to ensure loaded*/
-$.ajax({
-  url: "config.json",
-  async: false,
-  dataType: 'json',
-  success: function (data) 
-    {
-            config = {
-            "isTest": data.isTest,
-            "theme": data.theme,
-            "baseUrl": data.baseUrl,
-            "title" : data.title
-        };
-    }
-});
 
 /* Sets the stylesheet, favicon, title */
 setStylesheet();
@@ -27,12 +10,6 @@ function initialize()
 {
     /* Populates the Tutorial tree */
     populateTutorials();
-
-    /* Pre-populates for testing */
-    if(config.isTest)
-    {
-        populateTutorial(1);
-    }
 
     /* Fades the body in once content loaded */
     $(document).ready(function()
