@@ -6,6 +6,8 @@ FROM ubuntu:latest
 
 MAINTAINER M.Y. Jonathan Fenwick jmjfenwick@gmail.com
 
+RUN echo "Start Image Build"
+
 # MongoDB
 
   RUN echo "MongoDB installing..."
