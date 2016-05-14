@@ -1,11 +1,14 @@
 var tutorial = null;
-var tutorialResult = "";
-
+var buildInput = null;
+var fadeIn = 700;
+var fadeOut = 500;
+    
 /* Sets the stylesheet, favicon, title */
 setStylesheet();
 setFavicon();
 setTitle();
 
+/* Initialises the page */
 function initialize()
 {
     /* Populates the Tutorial tree */
@@ -14,9 +17,9 @@ function initialize()
     /* Fades the body in once content loaded */
     $(document).ready(function()
     {
-       $("body").fadeIn(1000);
+       $("body").fadeIn(fadeIn);
     });
-
+    
     /* Associates smooth scrolling */
     smoothScroll();
 
@@ -88,8 +91,8 @@ function populateTutorials()
     })
     .success(function()
     {
-        $(".tutorials").fadeIn(200);
-        $(".section-how-to").fadeIn(200);
+        $(".tutorials").fadeIn(fadeIn);
+        $(".section-how-to").fadeIn(fadeIn);
 
         /* Smooth scrolling */
         smoothScroll(); 
@@ -98,8 +101,8 @@ function populateTutorials()
 
 function onError()
 {
-    $(".errorHide").fadeOut(200);
-    $(".errorShow").fadeIn(500);
+    $(".errorHide").fadeOut(fadeOut);
+    $(".errorShow").fadeIn(fadeIn);
 }
 
 function closeTutorials()
@@ -110,13 +113,13 @@ function closeTutorials()
 
 function populateTutorial(id)
 {
-    $(".tutorial-content").fadeOut(200);
+    $(".tutorial-content").fadeOut(fadeOut);
 
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
         /* Provide API Endpoint */
-        var url = config.baseUrl + "/api/tutorial/" + id;
+        var url = config.baseUrl + "/api/tutorials/" + id;
         
         /* Retrieves the API data and populates */
         $.getJSON( url, function( data )
@@ -129,16 +132,14 @@ function populateTutorial(id)
             /* adds as global variable */
             tutorial = data;
             
-
-            
         }).error(function()
              {
                 onError();
             });
         
-                     /* Fades the new content in */
-            $( ".tutorial-content" ).fadeIn(1000, function(){});
-            return false;
+        /* Fades the new content in */
+        $( ".tutorial-content" ).fadeIn(fadeIn, function(){});
+        return false;
     }
 }
 
@@ -214,6 +215,8 @@ function populateTest(data)
     data.test.segments.forEach(addTestSegment);
 }
 
+
+/* Adds the Test commands */
 function addTestCommand(segment)
 {
     /* Add a command into the list */
@@ -222,6 +225,8 @@ function addTestCommand(segment)
     }).appendTo("#test-commands");
 }
 
+
+/* Adds the Test Segment */
 function addTestSegment(segment)
 {
     /* Creates the tutorial editable input */
@@ -231,13 +236,15 @@ function addTestSegment(segment)
     addCodeEditor(segment, "#example-test", "example-test", true);
 }
 
+
+/* Adds the required code editor */
 function addCodeEditor(segment, selector, type, isExample)
 {
     /* Calculates the attributes for teh editor */
     var id = type + "-" + segment.id;
     var mode = "ace/mode/" + segment.mode;
     var text = isExample ? segment.example : "";
-
+    
     /* Creates a code editor dynamically */
     jQuery('<div/>', {
         id: id,
@@ -248,199 +255,164 @@ function addCodeEditor(segment, selector, type, isExample)
     /* Initializes the dynamically created editor */
     var editor = ace.edit(id);
     editor.setTheme("ace/theme/textmate");
+    editor.setFontSize("70%");
+    editor.setOption("wrap", true);
     editor.setReadOnly(isExample);
+    editor.getSession().on('change', function(e) 
+    {
+        $("#review").fadeOut(fadeOut);
+    });
     editor.getSession().setMode(mode);
 }
 
-function execute()
+
+/* Initiates the run request */
+function run()
 {
-    tutorialResult = '{"tutorial": [';
-
-    var hasErrors = false;
-    var errorAnchor = "#code-section"
-
-    $('a[href^="#prevent"]').on('click',function (e)
-    {
-        /* Surpresses usual behaviour */
-        e.preventDefault();
-    });
-
-    /* checks that all segments have code */
-    for ( var i in tutorial.code.segments)
-    {
-
-        /* local variables */
-        var segment = tutorial.code.segments[i]
-        var id = "tutorial-code-" + segment.id;
-        var editor = ace.edit(id);
-        var value = editor.getValue().trim();
-
-
-        value = value.split('<').join('&lt;');
-        value = value.split('>').join('&gt;');
-        value = value.split('"').join('\"');
-        value = value.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-        value = value.replace(/\t/g, '%50%');
-        value = value.replace(/\s/g,"%20%");
-
-        /* Create json for each tutorial*/
-        tutorialResult += '{"id" : "'+id+'",'
-                            +'"command":"'+segment.command+'",'
-                            +'"value" : "'+value.replace(/\s/g,"%20%")+'" },'
-
-        /* Remove all line markers*/
-        for(var marker in editor.session.$backMarkers) {
-            if(editor.session.$backMarkers[marker]['clazz'] == 'ace_highlight') {
-                editor.session.removeMarker(marker);
-                hasErrors = false;
-            }
+    /* creates the result context */
+    var result = { "count": 0, "anchor": "", "inputs" : []};
+    
+    /* Performs the validations */
+    validateRun(result, "code", tutorial.code.segments);
+    validateRun(result, "test", tutorial.test.segments);
+    
+    /* Based on results takes next action */
+    if(result.count == 0)
+    {            
+        if(tutorial.review)
+        { 
+            /* Caches the inputs for later use */
+            buildInput = result.inputs;
+            displayReview(result.inputs);
+            
+            $("#review").fadeIn(fadeIn);
+            smoothScrolls("#review");
         }
-
-        /* Mark line where annotation is present*/
-        var annot = editor.getSession().getAnnotations();
-
-        for (var key in annot){
-            if (annot.hasOwnProperty(key)) {
-                //console.error(annot[key].text + "on line " + " " + annot[key].row);
-                var Range = require("ace/range").Range
-                editor.session.addMarker(new Range(annot[key].row, 0, annot[key].row, 1), 'ace_highlight', 'fullLine');
-                hasErrors = true;
-            }
-        }
-
-
-        /* Executes the tutorial if checks are passed */
-        if( value == null || value == "")
+        else
         {
-            hasErrors = true;
-            var Range = require("ace/range").Range
-            editor.session.addMarker(new Range(0, 0, 0, 1), 'ace_highlight', 'fullLine');
+            /* Kicks off the build */
+            build(result.inputs);
         }
-    };
-
-    tutorialResult = tutorialResult.slice(0, -1);
-    tutorialResult += ']}';
-
-    if(hasErrors)
-    {
-        setTimeout(function() {smoothScrolls(".ace_highlight");},100);
-        return true;
     }
     else
-    {   var reviewOption = tutorial['reviewSwitch'];
-
-       if(reviewOption) {
-            formatReview(tutorialResult);
-            $("#pre-view").fadeIn(2000);
-       }
+    {
+        /* Scroll back to error */
+        smoothScrolls(result.anchor);
+        return true;
     }
 }
 
-function smoothScroll()
+
+/* Validates the run request */
+function validateRun(result, type, segments)
 {
-    $(document).ready(function(){
-        $('a[href^="#"]').on('click',function (e)
+    $.each(segments, function(index, segment) 
+    {
+        var id = "tutorial-" + type + "-" + segment.id;
+        var idHash = "#" + id;
+        
+        /* Resets background */
+        setEditorBackground( idHash, "#ffffff");
+        
+        /* Gets editor reference */
+        var editor = ace.edit( id );
+
+        /* Checks the input length */
+        if( ! isEditorValid( editor ))
         {
-            /* Surpresses usual behaviour */
-            e.preventDefault();
-
-            var target = this.hash;
-
-            if(target == "#prevent")
-                return;
-
-            var $target = $(target);
-
-            /* changes Html and bodybehaviours */
-            $('html, body').stop().animate({
-                'scrollTop': $target.offset().top
-            }, 900, 'swing', function () {
-                window.location.hash = target;
-            });
-        });
-    });
+            setEditorBackground( idHash, "#f6bbb5");
+            result.count++;
+            
+            if( result.count == 1)
+            {
+                result.anchor = idHash;
+            }
+        }
+        else
+        {
+            /* Constructs the input object and adds to the array */
+            var input = {
+                id: id,
+                command: segment.command, 
+                value: editor.getValue()
+            };
+            
+            result.inputs.push(input);
+        }
+    }); 
 }
 
-function smoothScrolls(target)
+/* Sets editor background */
+function setEditorBackground(id, color)
 {
-    /* changes Html and bodybehaviours */
-    $('html, body').stop().animate({
-        'scrollTop': ($('.ace_highlight').offset().top - 50 )
-    }, 500, 'swing', function () {
-        window.location.hash = target;
+    /* Resets background */
+    $( id )
+        .find(".ace_scroller")
+        .css("background", color);
+}
+        
+
+/* Checks that an editor is actually valid */
+function isEditorValid(editor)
+{
+    /* checks that there is something in the textarea */
+    if(editor.getValue().trim().length ==0)
+    {
+        return false;
+    }
+        
+    /* TODO: Code to go in here */
+    return true;
+}
+
+
+/* Display the review content */
+function displayReview(inputs) 
+{
+    /* Clears previous preview */
+    $("#pre-view .prev").empty();
+    
+    /* Add the code section for each input*/
+    $.each(inputs, function(index, input) 
+    {
+        final = "<h3 class='commands'>" + input.command + "...</h3><div class='code-review'>" + htmlEscape(input.value) + "<a href='#' class='code-edit' onclick='javascript: editSegment(\"" + input.id + "\")'>edit</a></div>";
+
+        $("#review-segments").append(final);
     });
 }
 
 
-function writeToFile() {
+/* handles the edit segment call */
+function editSegment(id)
+{
+    smoothScrolls( "#" + id);
+    $("#review").fadeOut(fadeOut);
+}
 
-    var url = config.baseUrl + "/api/writeToFile";
+
+/* Invokes the build after review*/
+function buildAfterReview()
+{
+    build(buildInput);
+}
+
+
+/* Invokes the build direct*/
+function build(buildInput)
+{
+    var input = JSON.stringify(buildInput);
+    var url = config.baseUrl + "/api/tutorials/" + tutorial.id + "/build";
 
     $.ajax({
     url: url,
     type: 'post',
-    data: tutorialResult,
+    data: input,
     headers: {"Content-Type": 'application/json' },
     dataType: 'json',
     success: function (data) {
         json = JSON.parse(data);
         alert(json['status']);
-        $("#pre-view").fadeOut(200);
+        $("#pre-view").fadeOut(fadeOut);
     }
-    });
+    });  
 }
-
-function formatReview(request) {
-    try{
-    var json = JSON.parse(request);
-    }
-    catch(e) {
-    console.log(request);
-    }
-    var final = "";
-    var i ;
-
-    var finalHeight = 0;
-
-    $("#pre-view .prev").html("");
-
-    for(i in json['tutorial']) {
-
-        var value = json['tutorial'][i]['value'].split('%20%').join(' ');
-        value = value.split('%50%').join('   ');
-
-        final = "<div class='codeReview'><h2>"+json['tutorial'][i]['command']+"</h2><br><pre>"
-                 +value+"</pre></div>";
-
-        $("#pre-view .prev").append(final);
-    }
-
-    setTimeout(function() {
-        size = $("#pre-view .prev .codeReview").size();
-
-        for(id=0;id <= size; id++) {
-          if((id%2) == 0) {
-
-              marginAndPadding = parseInt($("#pre-view .prev .codeReview").css("padding-top")) +
-                                  parseInt($("#pre-view .prev .codeReview").css("margin-top"));
-
-              console.log("Margin and Padding - "+marginAndPadding);
-
-              value1 = $("#pre-view .prev .codeReview").eq(id).height();
-
-              value2 = $("#pre-view .prev .codeReview").eq((id+1)).height();
-
-              if(value1 > value2)
-                finalHeight +=  value1 + marginAndPadding;
-              else
-                finalHeight +=  value2 + marginAndPadding;
-          }
-
-            if(id > 100) {console.error("id = "+id); break;}
-        }
-
-        $("#pre-view .prev").height(finalHeight);
-    }, 100)
-}
-
-function cancelPrev() { $("#pre-view").fadeOut(500);$("#pre-view-dark").fadeOut(500);}

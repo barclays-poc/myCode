@@ -74,10 +74,6 @@
                         <p class="how-to-text">Understand the requirement</p>
                     </div>
                     <div class="clearFix">
-                        <div class="how-to-bullet"><i class="ion-compose how-to-icon"></i></div>
-                        <p class="how-to-text">Design the components</p>
-                    </div>
-                    <div class="clearFix">
                         <div class="how-to-bullet"><i class="ion-code how-to-icon"></i></div>
                         <p class="how-to-text">Code the components</p>
                     </div>
@@ -156,30 +152,6 @@
                 </div>
             </section>
 
-            <!-- Design -->
-            <section>
-                <div class="row">
-                    <div class="centre-container">  
-                        <i class="ion-compose h2-icon"></i>
-                        <h2>Design</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col span-1-of-12"></div>
-                    <div class="col span-5-of-12">
-                        <div class="box">  
-                            <h3>Example Design</h3>
-                        </div>
-                    </div>
-                    <div class="col span-5-of-12">
-                        <div class="box">  
-                            <h3>Tutorial Design</h3>
-                        </div>
-                    </div>
-                    <div class="col span-1-of-12"></div>
-                </div>
-            </section>
-
             <!-- Build -->
             <section id="code-section">
                 <div class="row">
@@ -238,20 +210,33 @@
                 </div>
             </section>
             <div class="last-row">
-                <a href="#prevent" onclick="javascript: execute();">
+                <a id="run-build" href="#prevent" onclick="javascript: run();">
                     <i class="ion-play play-button"></i>
                 </a>
             </div>
-        </div>
-        <div id="pre-view-dark"></div>
-        <div id="pre-view">
-            <h1>Review Page</h1><br>
-            <div class="prev"></div>
-            <br>
-            <input type="submit" value="Submit" id="submit-review" 
-                   onclick="javascript: writeToFile();">
-            <input type="submit" value="Edit" id="cancel-review" 
-                   onclick="javascript: cancelPrev();"> 
+            
+            <div id="review" class="review">
+                <section> 
+                    <div class="row">
+                        <div class="centre-container">  
+                            <i class="ion-checkmark h2-icon"></i>
+                            <h2>Review Your Code</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-2-of-12"></div>
+                        <div class="col span-8-of-12">
+                            <div id="review-segments"></div>
+                        </div>
+                        <div class="col span-2-of-12"></div>
+                    </div>
+                </section>
+                <div class="last-row">
+                    <a id="build-button" href="#prevent" onclick="javascript: buildAfterReview();">
+                        <i class="ion-play play-button"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </body>
 </html>

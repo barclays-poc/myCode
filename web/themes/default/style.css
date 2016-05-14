@@ -27,6 +27,7 @@ body
 section
 {
     margin-top: 15px;
+    margin-bottom: 0px
 }
 
 .tutorial-content
@@ -245,7 +246,7 @@ h3
 /* How To Section */
 .section-how-to
 {
-    margin-top: 0px;
+    margin-top: 30px;
     padding-bottom: 15px;
     font-size: 150%;
     display: none;
@@ -313,13 +314,13 @@ h3
 .asset-links a:link, 
 .asset-links a:visited
 {
-    transition: font-weight 0.5s;
+    transition: color 0.8s;
 }
 
 .asset-links a:hover, 
 .asset-links a:active
 {
-    font-weight: 500;
+    color: #00395d;
 }
 
 /* Code & Test section styling */
@@ -341,7 +342,7 @@ h3
 .code 
 {
     margin-bottom: 20px;
-    height: 150px;
+    height: 200px;
     max-width: 100%;
     border-style: solid;
     border-width: 1px;
@@ -357,63 +358,58 @@ h3
     font-size: 500%;
     color: #00adef;
     cursor: pointer;
+    transition: color 0.8s;
 }
 
-#pre-view {
-    width: 88vw;
-    height: 88vh;
-    border-radius: 10px;
-    border: 0px solid #00395d;
-    position: fixed;
-    top: 0;
-    left: -2px;
-    background: #fff;
-    z-index: 901;
+.play-button:hover
+{
+    color: #00395d;
+    cursor: pointer;
+}
+
+.review
+{
+    text-align: left;
     display: none;
-    padding-top: 6vh;
-    padding-bottom: 5vh;
-    padding-left: 6vw;
-    padding-right: 5vw;
-    overflow-y: auto;
-}
-#pre-view-dark {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top:0;
-    left:0;
-    background: rgba(0,0,0,0.7);
-    z-index: 900;
-    display:none;
 }
 
-#pre-view div.prev {
-    width: 100%;
+.code-review 
+{
+    font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro, monospace;
+    font-size: 80%;
+    text-align: left;
+    margin-bottom: 15px;
     height: auto;
-    min-height: 76%;
-}
-
-.codeReview {
-    float: left;
-    height: auto;
-    width: 45%;
-    min-width: 30%;
-    max-width: 45%;
-    margin-right: 20px;
-    margin-top: 15px;
     padding: 15px;
-    border: 1px solid grey;
-    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dcdcdc;
+    border-radius: 7px;
+    display: inline-block;
+    width: 80%;
+    white-space: pre-wrap;
+    position: relative;
 }
 
-#pre-view input {
-    float:right;
-    margin: 10px;
-    width: 100px;
-    height: 50px;
-    font-size: 25px;
-    border-radius: 5px;
-    border: 1px solid #0074a6;
-    background: #00395d;
-    color: #fff;
+.code-edit:link, 
+.code-edit:visited
+{
+    color: #00adef;
+    text-decoration: none;
+    font-family: helvetica, arial,sans-serif;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    transition: color 0.8s;
+}
+
+.code-edit:active, 
+.code-edit:hover
+{
+    color: #00395d;
+    text-decoration: none;
+    font-family: helvetica, arial,sans-serif;
+    position: absolute;
+    top: 15px;
+    right: 10px
 }

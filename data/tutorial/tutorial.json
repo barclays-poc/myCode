@@ -2,6 +2,8 @@
     "version": 1.0,
     "id": 1,
     "name": "Add New Data Source",
+    "dockerfile": "java",
+    "review" : "true",
     "asset": {
         "id": 1,
         "name": "Personal miRevenue",
@@ -64,7 +66,5 @@
             }
         ],
         "video": "/video"
-    },
-    "dockerfile": "java",
-    "reviewSwitch" : "true"
+    }
 }

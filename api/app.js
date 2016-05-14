@@ -24,7 +24,7 @@ var db = mongoose.connection;
 //API GET calls
 //api home page
 app.get('/', function(request, response){
-	response.send('Please use the /api/tutorials or /api/tutorial');
+	response.send('Please use the /api/tutorials');
 })
 
 
@@ -40,7 +40,7 @@ app.get('/api/tutorials', function(request, response){
 
 
 //Get Tutorials json by id
-app.get('/api/tutorial/:id', function(request, response){
+app.get('/api/tutorials/:id', function(request, response){
   Tutorial.getTutorialById(request.params.id, function(err, tutorial){
     if(err){
       throw err;
@@ -50,7 +50,7 @@ app.get('/api/tutorial/:id', function(request, response){
 });
 
 //add tutorials to db
-app.post('/api/tutorialOutput', function(request, response){
+app.post('/api/tutorials/:id/build', function(request, response){
 
    var tutorialResponse = request.body;
    console.log(JSON.stringify(tutorialResponse));
