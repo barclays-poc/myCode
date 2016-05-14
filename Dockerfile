@@ -6,6 +6,8 @@ FROM ubuntu:latest
 
 MAINTAINER M.Y. Jonathan Fenwick jmjfenwick@gmail.com
 
+RUN echo "Building the API Node Image"
+
 # MongoDB
 
   RUN echo "MongoDB installing..."
