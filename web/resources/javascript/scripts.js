@@ -2,8 +2,7 @@ var tutorial = null;
 var tutorialResult = "";
 var config = null;
 
-/* Loads the config */
-
+/* Loads the config is sync to ensure loaded*/
 $.ajax({
   url: "config.json",
   async: false,
@@ -26,8 +25,6 @@ setTitle();
 
 function initialize()
 {
-    //setTheme();
-
     /* Populates the Tutorial tree */
     populateTutorials();
 
@@ -49,39 +46,6 @@ function initialize()
     /* Sets the logo based on the theme */
     setLogo();
 }
-
-function setStylesheet()
-{
-    var style = document.createElement('link');
-    style.type = "text/css";
-    style.rel = "stylesheet";
-    style.href = "themes/" + config.theme + "/style.css";
-    document.getElementsByTagName("head")[0].appendChild(style);
-};
-
-function setFavicon()
-{
-    /* Adds the favicon */
-    var fav = document.createElement('link');
-    fav.type = "image/x-icon";
-    fav.rel = "shortcut icon";
-    fav.href = "themes/" + config.theme + "/favicon.ico";
-    document.getElementsByTagName("head")[0].appendChild(fav);
-};
-
-function setLogo()
-{
-    /* Sets the logo image */
-    var logo = document.getElementById("logo");
-    logo.src = "themes/" + config.theme + "/logo.png";
-};
-
-function setTitle()
-{
-    /* Sets the logo image */
-    var title = document.getElementById("title");
-    title.innerHTML = config.title;
-};
 
 function populateTutorials()
 {
@@ -140,24 +104,25 @@ function populateTutorials()
           }
         });
 
-        $("#tutorials").fadeIn(200);
-        $("#section-how-to").fadeIn(200);
+    })
+    .error(function()
+     {
+        onError();
+    })
+    .success(function()
+    {
+        $(".tutorials").fadeIn(200);
+        $(".section-how-to").fadeIn(200);
 
         /* Smooth scrolling */
-        smoothScroll();
-
-    }).error(function()
-             {
-                onError();
-            });
+        smoothScroll(); 
+    });
 }
 
 function onError()
 {
-    $("#tutorials").fadeOut(200);
-    $("#tutorial-content").fadeOut(200);
-    $("#section-how-to").fadeOut(200);
-    $("#error").fadeIn(500);
+    $(".errorHide").fadeOut(200);
+    $(".errorShow").fadeIn(500);
 }
 
 function closeTutorials()
@@ -168,14 +133,14 @@ function closeTutorials()
 
 function populateTutorial(id)
 {
-    $("#tutorial-content").fadeOut(200);
+    $(".tutorial-content").fadeOut(200);
 
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
         /* Provide API Endpoint */
         var url = config.baseUrl + "/api/tutorial/" + id;
-
+        
         /* Retrieves the API data and populates */
         $.getJSON( url, function( data )
         {
@@ -186,14 +151,17 @@ function populateTutorial(id)
 
             /* adds as global variable */
             tutorial = data;
+            
+
+            
         }).error(function()
              {
                 onError();
             });
-
-        /* Fades the new content in */
-        $( ".tutorial-content" ).fadeIn(1000, function(){});
-        return false;
+        
+                     /* Fades the new content in */
+            $( ".tutorial-content" ).fadeIn(1000, function(){});
+            return false;
     }
 }
 

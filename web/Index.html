@@ -10,6 +10,7 @@
         
         <script type="text/javascript" src="vendors/javascript/jquery-2.2.3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="resources/javascript/common.js" charset="utf-8"></script>
+        <script type="text/javascript" src="resources/javascript/theme.js" charset="utf-8"></script>
         <script type="text/javascript" src="resources/javascript/scripts.js" charset="utf-8"></script>
         <script type="text/javascript" src="vendors/ace/ace.js" charset="utf-8" ></script>
         <script type="text/javascript" src="vendors/javascript/vue.js" charset="utf-8"></script>
@@ -40,8 +41,8 @@
 
     <body onload="javascript: initialize();">
 
-        <!-- the demo root element -->
-        <div id="tutorials" class="tutorials">
+        <!-- Navigation -->
+        <nav class="tutorials errorHide">
             <ul id="tutorials-tree">
               <item
                 class="item"
@@ -49,7 +50,7 @@
               </item>
             </ul>
             <i class="ion-close-circled" onclick="javascript: closeTutorials();"></i>
-        </div>
+        </nav>
         
         <!-- Header section -->
         <header id="#top">
@@ -60,7 +61,7 @@
         </header>
         
         <!-- Capabilities Description -->
-        <section id="section-how-to" class="section-how-to">
+        <section id="section-how-to" class="section-how-to errorHide">
             <div class="row">
                 <div class="how-to-box">
                     <div class="clearFix">
@@ -91,12 +92,12 @@
             </div>
         </section>
         
-        <section id="error" class="error">
+        <section class="error errorShow">
             <div class="row">Unexpected error.  Please try again later.</div>
         </section>
         
         <!-- Asset -->
-        <div id="tutorial-content" class="tutorial-content">
+        <div class="tutorial-content errorHide">
             <section id="asset-section">
                 <div class="row">
                     <div class="centre-container">  
