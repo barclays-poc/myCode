@@ -21,8 +21,6 @@ var Tutorial = require ('./models/tutorial');
 mongoose.connect('mongodb://localhost/api');
 var db = mongoose.connection;
 
-
-
 //API GET calls
 //api home page
 app.get('/', function(request, response){
@@ -56,14 +54,14 @@ app.post('/api/tutorialOutput', function(request, response){
 
    var tutorialResponse = request.body;
    console.log(JSON.stringify(tutorialResponse));
-    
+
     var fs = require('fs');
-    
+
    fs.writeFile('../test.txt', JSON.stringify(tutorialResponse) , (err) => {
       if (err) response.json('{"status":"Error"}');;
       console.log('Written to the file');
     });
-    
+
     response.json('{"status":"successfull"}');
 });
 

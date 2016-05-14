@@ -1,79 +1,96 @@
-/* Global variable holding the tutorial */
 var tutorial = null;
-
-/* Switches */
-var isTest = $.QueryString["mode"] == "test";
-var theme = ($.QueryString["theme"] = "undefined") ? "default" : $.QueryString["theme"];
-
 var tutorialResult = "";
-var baseUrl = "http://192.168.99.100:8080"
+var config = null;
 
-/* Sets the stylesheet */
+/* Loads the config */
+
+$.ajax({
+  url: "config.json",
+  async: false,
+  dataType: 'json',
+  success: function (data) 
+    {
+            config = {
+            "isTest": data.isTest,
+            "theme": data.theme,
+            "baseUrl": data.baseUrl,
+            "title" : data.title
+        };
+    }
+});
+
+/* Sets the stylesheet, favicon, title */
 setStylesheet();
-
-/* Sets the Favicon */
 setFavicon();
+setTitle();
 
 function initialize()
 {
     //setTheme();
-    
+
     /* Populates the Tutorial tree */
     populateTutorials();
-    
+
     /* Pre-populates for testing */
-    if(isTest)
+    if(config.isTest)
     {
         populateTutorial(1);
     }
-    
+
     /* Fades the body in once content loaded */
     $(document).ready(function()
     {
        $("body").fadeIn(1000);
     });
-    
+
     /* Associates smooth scrolling */
     smoothScroll();
-    
+
     /* Sets the logo based on the theme */
     setLogo();
 }
 
-function setStylesheet() 
+function setStylesheet()
 {
     var style = document.createElement('link');
     style.type = "text/css";
     style.rel = "stylesheet";
-    style.href = "themes/default/style.css";
-    document.getElementsByTagName("head")[0].appendChild(style);    
+    style.href = "themes/" + config.theme + "/style.css";
+    document.getElementsByTagName("head")[0].appendChild(style);
 };
 
-function setFavicon() 
+function setFavicon()
 {
     /* Adds the favicon */
     var fav = document.createElement('link');
     fav.type = "image/x-icon";
     fav.rel = "shortcut icon";
-    fav.href = "themes/" + theme + "/favicon.ico";
-    document.getElementsByTagName("head")[0].appendChild(fav);    
+    fav.href = "themes/" + config.theme + "/favicon.ico";
+    document.getElementsByTagName("head")[0].appendChild(fav);
 };
 
-function setLogo() 
+function setLogo()
 {
     /* Sets the logo image */
     var logo = document.getElementById("logo");
-    logo.src = "themes/" + theme + "/logo.png";    
+    logo.src = "themes/" + config.theme + "/logo.png";
+};
+
+function setTitle()
+{
+    /* Sets the logo image */
+    var title = document.getElementById("title");
+    title.innerHTML = config.title;
 };
 
 function populateTutorials()
-{   
+{
     /* $("#tutorials-tree").empty(); */
-    
+
     <!-- Provide API Endpoint-->
-    var url = baseUrl + "/api/tutorials";
-    
-    $.getJSON( url, function( data ) 
+    var url = config.baseUrl + "/api/tutorials";
+
+    $.getJSON( url, function( data )
     {
         // define the item component
         Vue.component('item', {
@@ -98,7 +115,7 @@ function populateTutorials()
               },
               methods: {
                 select: function () {
-                    
+
                     populateTutorial(this.model.id);
                     closeTutorials();
                 },
@@ -114,7 +131,7 @@ function populateTutorials()
                 }
               }
             })
-        
+
         // Populate the tree
         var demo = new Vue({
           el: '#tutorials-tree',
@@ -122,15 +139,15 @@ function populateTutorials()
             treeData: data
           }
         });
-        
+
         $("#tutorials").fadeIn(200);
         $("#section-how-to").fadeIn(200);
-        
+
         /* Smooth scrolling */
         smoothScroll();
-        
-    }).error(function() 
-             { 
+
+    }).error(function()
+             {
                 onError();
             });
 }
@@ -152,28 +169,28 @@ function closeTutorials()
 function populateTutorial(id)
 {
     $("#tutorial-content").fadeOut(200);
-    
+
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
         /* Provide API Endpoint */
-        var url = baseUrl + "/api/tutorial/" + id;
-        
-        /* Retrieves the API data and populates */ 
-        $.getJSON( url, function( data ) 
+        var url = config.baseUrl + "/api/tutorial/" + id;
+
+        /* Retrieves the API data and populates */
+        $.getJSON( url, function( data )
         {
             populateAsset( data );
             populateRequirements( data );
             populateCode( data );
             populateTest( data);
-            
+
             /* adds as global variable */
             tutorial = data;
-        }).error(function() 
-             { 
+        }).error(function()
+             {
                 onError();
             });
-        
+
         /* Fades the new content in */
         $( ".tutorial-content" ).fadeIn(1000, function(){});
         return false;
@@ -188,7 +205,7 @@ function populateAsset(data)
     $("#asset-diagram").attr("src", data.asset.diagram);
     $("#asset-diagram-link").attr("href", data.asset.diagram);
     $("#asset-content").html(data.asset.content);
-    
+
     /* Populates the asset resource links */
     $("#asset-links" ).empty();
     data.asset.resources.forEach(addAssetLink);
@@ -205,7 +222,7 @@ function addAssetLink(resource)
 }
 
 function populateRequirements(data)
-{   
+{
     /* Adds the example and new requirements */
     $("#requirement-new-text").html(data.requirement.new);
     $("#requirement-example-text").html(data.requirement.example);
@@ -217,7 +234,7 @@ function populateCode(data)
     $("#code-commands").empty();
     $("#tutorial-code").empty();
     $("#example-code").empty();
-    
+
     /* Adds the dynamic code content */
     data.code.segments.forEach(addCodeCommand)
     data.code.segments.forEach(addCodeSegment)
@@ -232,10 +249,10 @@ function addCodeCommand(segment)
 }
 
 function addCodeSegment(segment)
-{   
+{
     /* Creates the tutorial editable input */
     addCodeEditor(segment, "#tutorial-code", "tutorial-code", false);
-    
+
     /* Creates the example readonly input */
     addCodeEditor(segment, "#example-code", "example-code", true);
 }
@@ -246,7 +263,7 @@ function populateTest(data)
     $("#test-commands").empty();
     $("#tutorial-test" ).empty();
     $("#example-test" ).empty();
-    
+
     /* Dynamically adds the test segments */
     data.test.segments.forEach(addTestCommand)
     data.test.segments.forEach(addTestSegment);
@@ -261,10 +278,10 @@ function addTestCommand(segment)
 }
 
 function addTestSegment(segment)
-{    
+{
     /* Creates the tutorial editable input */
     addCodeEditor(segment, "#tutorial-test", "tutorial-test", false);
-    
+
     /* Creates the example readonly input */
     addCodeEditor(segment, "#example-test", "example-test", true);
 }
@@ -275,14 +292,14 @@ function addCodeEditor(segment, selector, type, isExample)
     var id = type + "-" + segment.id;
     var mode = "ace/mode/" + segment.mode;
     var text = isExample ? segment.example : "";
-    
+
     /* Creates a code editor dynamically */
     jQuery('<div/>', {
         id: id,
         class: "code",
         text: text
     }).appendTo(selector);
-    
+
     /* Initializes the dynamically created editor */
     var editor = ace.edit(id);
     editor.setTheme("ace/theme/textmate");
@@ -291,41 +308,41 @@ function addCodeEditor(segment, selector, type, isExample)
 }
 
 function execute()
-{   
+{
     tutorialResult = '{"tutorial": [';
-    
+
     var hasErrors = false;
     var errorAnchor = "#code-section"
-    
-    $('a[href^="#prevent"]').on('click',function (e) 
+
+    $('a[href^="#prevent"]').on('click',function (e)
     {
         /* Surpresses usual behaviour */
         e.preventDefault();
     });
-    
+
     /* checks that all segments have code */
     for ( var i in tutorial.code.segments)
     {
-        
+
         /* local variables */
         var segment = tutorial.code.segments[i]
         var id = "tutorial-code-" + segment.id;
         var editor = ace.edit(id);
         var value = editor.getValue().trim();
-        
-        
+
+
         value = value.split('<').join('&lt;');
         value = value.split('>').join('&gt;');
         value = value.split('"').join('\"');
         value = value.replace(/(?:\r\n|\r|\n)/g, '<br/>');
         value = value.replace(/\t/g, '%50%');
         value = value.replace(/\s/g,"%20%");
-        
+
         /* Create json for each tutorial*/
         tutorialResult += '{"id" : "'+id+'",'
                             +'"command":"'+segment.command+'",'
                             +'"value" : "'+value.replace(/\s/g,"%20%")+'" },'
-        
+
         /* Remove all line markers*/
         for(var marker in editor.session.$backMarkers) {
             if(editor.session.$backMarkers[marker]['clazz'] == 'ace_highlight') {
@@ -333,10 +350,10 @@ function execute()
                 hasErrors = false;
             }
         }
-        
+
         /* Mark line where annotation is present*/
         var annot = editor.getSession().getAnnotations();
-        
+
         for (var key in annot){
             if (annot.hasOwnProperty(key)) {
                 //console.error(annot[key].text + "on line " + " " + annot[key].row);
@@ -345,8 +362,8 @@ function execute()
                 hasErrors = true;
             }
         }
-        
-        
+
+
         /* Executes the tutorial if checks are passed */
         if( value == null || value == "")
         {
@@ -355,19 +372,19 @@ function execute()
             editor.session.addMarker(new Range(0, 0, 0, 1), 'ace_highlight', 'fullLine');
         }
     };
-    
+
     tutorialResult = tutorialResult.slice(0, -1);
     tutorialResult += ']}';
-    
-    if(hasErrors) 
-    {        
+
+    if(hasErrors)
+    {
         setTimeout(function() {smoothScrolls(".ace_highlight");},100);
         return true;
     }
     else
     {   var reviewOption = tutorial['reviewSwitch'];
 
-       if(reviewOption) { 
+       if(reviewOption) {
             formatReview(tutorialResult);
             $("#pre-view").fadeIn(2000);
        }
@@ -377,18 +394,18 @@ function execute()
 function smoothScroll()
 {
     $(document).ready(function(){
-        $('a[href^="#"]').on('click',function (e) 
+        $('a[href^="#"]').on('click',function (e)
         {
             /* Surpresses usual behaviour */
             e.preventDefault();
-                
+
             var target = this.hash;
-           
+
             if(target == "#prevent")
                 return;
-            
+
             var $target = $(target);
-            
+
             /* changes Html and bodybehaviours */
             $('html, body').stop().animate({
                 'scrollTop': $target.offset().top
@@ -401,7 +418,6 @@ function smoothScroll()
 
 function smoothScrolls(target)
 {
-
     /* changes Html and bodybehaviours */
     $('html, body').stop().animate({
         'scrollTop': ($('.ace_highlight').offset().top - 50 )
@@ -413,7 +429,7 @@ function smoothScrolls(target)
 
 function writeToFile() {
 
-    var url = baseUrl + "/api/writeToFile";
+    var url = config.baseUrl + "/api/writeToFile";
 
     $.ajax({
     url: url,
@@ -423,7 +439,7 @@ function writeToFile() {
     dataType: 'json',
     success: function (data) {
         json = JSON.parse(data);
-        alert(json['status']);  
+        alert(json['status']);
         $("#pre-view").fadeOut(200);
     }
     });
@@ -438,46 +454,46 @@ function formatReview(request) {
     }
     var final = "";
     var i ;
-    
+
     var finalHeight = 0;
-    
+
     $("#pre-view .prev").html("");
-    
+
     for(i in json['tutorial']) {
 
         var value = json['tutorial'][i]['value'].split('%20%').join(' ');
         value = value.split('%50%').join('   ');
-        
+
         final = "<div class='codeReview'><h2>"+json['tutorial'][i]['command']+"</h2><br><pre>"
                  +value+"</pre></div>";
-        
+
         $("#pre-view .prev").append(final);
     }
 
     setTimeout(function() {
         size = $("#pre-view .prev .codeReview").size();
-        
+
         for(id=0;id <= size; id++) {
           if((id%2) == 0) {
-              
-              marginAndPadding = parseInt($("#pre-view .prev .codeReview").css("padding-top")) +  
+
+              marginAndPadding = parseInt($("#pre-view .prev .codeReview").css("padding-top")) +
                                   parseInt($("#pre-view .prev .codeReview").css("margin-top"));
-              
+
               console.log("Margin and Padding - "+marginAndPadding);
-              
+
               value1 = $("#pre-view .prev .codeReview").eq(id).height();
-              
+
               value2 = $("#pre-view .prev .codeReview").eq((id+1)).height();
-              
+
               if(value1 > value2)
                 finalHeight +=  value1 + marginAndPadding;
               else
                 finalHeight +=  value2 + marginAndPadding;
           }
-            
+
             if(id > 100) {console.error("id = "+id); break;}
         }
-        
+
         $("#pre-view .prev").height(finalHeight);
     }, 100)
 }
