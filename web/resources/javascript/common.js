@@ -42,7 +42,7 @@ function smoothScrolls(target)
 {
     /* changes Html and bodybehaviours */
     $('html, body').stop().animate({
-        'scrollTop': ($(target).offset().top - 60 )
+        'scrollTop': ($(target).offset().top - 40 )
     }, 1000, 'swing', function () {
         window.location.hash = target;
     });

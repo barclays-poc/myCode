@@ -1,7 +1,7 @@
 var tutorial = null;
 var buildInput = null;
-var fadeIn = 1000;
-var fadeOut = 600;
+var fadeIn = 1500;
+var fadeOut = 100;
 
 /* Sets the stylesheet, favicon, title */
 setStylesheet();
@@ -98,8 +98,10 @@ function populateTutorials()
 /* Error handling */
 function onError()
 {
-    $(".errorHide").fadeOut(100);
-    $(".errorShow").fadeIn(800);
+    $(".errorHide").fadeOut(fadeOut, function()
+    {
+        $(".errorShow").fadeIn(fadeIn);
+    });
 }
 
 
@@ -116,6 +118,8 @@ $(function ()
 /* Populates a tutorial detail */
 function populateTutorial(id)
 {
+    var hasData = false;
+    
     /* Only actions if actually changes */
     if( tutorial != null && id == tutorial.id) return false;
     
@@ -124,18 +128,33 @@ function populateTutorial(id)
     {
         /* Provide API Endpoint */
         var url = config.baseUrl + "/api/tutorials/" + id;
-
+        
+        /* Sets to be sync */
+        $.ajaxSetup({
+            async: false
+        });
+        
         /* Retrieves the API data and populates */
         $.getJSON( url, function( data )
         {
-            populateAsset( data );
-            populateRequirements( data );
-            populateCode( data );
-            populateTest( data);
+            if(data != null)
+            {
+                populateAsset( data );
+                populateRequirements( data );
+                populateCode( data );
+                populateTest( data);
 
-            /* adds as global variable */
-            tutorial = data;
-            console.log("set: " + tutorial);
+                /* adds as global variable */
+                tutorial = data;
+                console.log("set: " + tutorial);
+                
+                hasData = true;
+            }
+            else
+            {
+                hasData = false;
+                onError();
+            }
 
         }).error(function()
              {
@@ -143,8 +162,16 @@ function populateTutorial(id)
                 tutorial = null;
             });
         
-        $(".tutorial-content" ).fadeIn(fadeIn, function(){});
-        return false;
+         /* Sets to be async */
+        $.ajaxSetup({
+            async: true
+        });
+        
+        if( hasData)
+        {
+            $(".tutorial-content" ).fadeIn(fadeIn);
+            return false;
+        }
     }
 }
 
