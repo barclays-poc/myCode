@@ -30,6 +30,7 @@ function smoothScroll()
             if(target == "#prevent")
                 return;
             
+            console.log(target);
             smoothScrolls( target );
         });
     });
@@ -69,6 +70,7 @@ function htmlUnescape(value){
         .replace(/&amp;/g, '&');
 }
 
+/*
 function windowChange()
 {
     window.onorientationchange = function() 
@@ -76,4 +78,4 @@ function windowChange()
             window.location.reload(); 
         };
 }
-
+*/

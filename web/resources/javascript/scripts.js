@@ -8,33 +8,26 @@ setStylesheet();
 setFavicon();
 setTitle();
 
-/* Initialises the page */
-function initialize()
-{
+
+/* Once ocument is ready */
+$(window).load(function()
+{ 
     /* Populates the Tutorial tree */
     populateTutorials();
-
-    /* Fades the body in once content loaded */
-    $(document).ready(function()
-    {
-       $("body").fadeIn(fadeIn);
-    });
 
     /* Associates smooth scrolling */
     smoothScroll();
 
     /* Sets the logo based on the theme */
     setLogo();
+    
+    $("body").fadeIn(fadeIn);
+});
 
-    /* Handles orientation change */
-    windowChange();
-}
 
+/* Populates Tutorials menu */
 function populateTutorials()
 {
-    /* $("#tutorials-tree").empty(); */
-
-    <!-- Provide API Endpoint-->
     var url = config.baseUrl + "/api/tutorials";
 
     $.getJSON( url, function( data )
@@ -62,9 +55,8 @@ function populateTutorials()
               },
               methods: {
                 select: function () {
-
                     populateTutorial(this.model.id);
-                    closeTutorials();
+                    $("#tutorial-id-0").click();
                 },
                 toggle: function () {
                   if (this.isFolder) {
@@ -102,22 +94,31 @@ function populateTutorials()
     });
 }
 
+
+/* Error handling */
 function onError()
 {
-    $(".errorHide").fadeOut(fadeOut);
-    $(".errorShow").fadeIn(fadeIn);
+    $(".errorHide").fadeOut(100);
+    $(".errorShow").fadeIn(800);
 }
 
-function closeTutorials()
+
+/* Hooks up the Tutorials close button */
+$(function ()
 {
-    var div = document.getElementById("tutorial-id-0");
-    div.click();
-}
+    $("#close-button").click(function()
+    {
+       $("#tutorial-id-0").click(); 
+    });
+});
 
+
+/* Populates a tutorial detail */
 function populateTutorial(id)
 {
-    $(".tutorial-content").fadeOut(fadeOut);
-
+    /* Only actions if actually changes */
+    if( tutorial != null && id == tutorial.id) return false;
+    
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
@@ -134,17 +135,24 @@ function populateTutorial(id)
 
             /* adds as global variable */
             tutorial = data;
+            console.log("set: " + tutorial);
 
-        }).error(function()
+        }).success(function()
              {
+                console.log("fade In: ");
+        })
+        .error(function()
+             {
+                console.log("Error: " + tutorial);
                 onError();
+                tutorial = null;
             });
-
-        /* Fades the new content in */
-        $( ".tutorial-content" ).fadeIn(fadeIn, function(){});
+        
+        $(".tutorial-content" ).fadeIn(fadeIn, function(){});
         return false;
     }
 }
+
 
 /* Section Population */
 function populateAsset(data)
@@ -157,10 +165,12 @@ function populateAsset(data)
 
     /* Populates the asset resource links */
     $("#asset-links" ).empty();
-    data.asset.resources.forEach(addAssetLink);
+    data.asset.resources.forEach(addAdditionalResource);
 }
 
-function addAssetLink(resource)
+
+/* Populates the additional resources */ 
+function addAdditionalResource(resource)
 {
     /* Adds the asset link */
     jQuery('<a/>', {
@@ -170,6 +180,8 @@ function addAssetLink(resource)
     }).appendTo("#asset-links");
 }
 
+
+/* Populates the requirements */
 function populateRequirements(data)
 {
     /* Adds the example and new requirements */
@@ -177,6 +189,8 @@ function populateRequirements(data)
     $("#requirement-example-text").html(data.requirement.example);
 }
 
+
+/* Populates the code section */
 function populateCode(data)
 {
     /* Clears the dynamic code content */
@@ -189,6 +203,8 @@ function populateCode(data)
     data.code.segments.forEach(addCodeSegment)
 }
 
+
+/* Adds a code command*/
 function addCodeCommand(segment)
 {
     /* Add a command into the list */
@@ -197,6 +213,8 @@ function addCodeCommand(segment)
     }).appendTo("#code-commands");
 }
 
+
+/* Adds the code segments */
 function addCodeSegment(segment)
 {
     /* Creates the tutorial editable input */
@@ -206,6 +224,8 @@ function addCodeSegment(segment)
     addCodeEditor(segment, "#example-code", "example-code", true);
 }
 
+
+/*Populate Test */
 function populateTest(data)
 {
     /* Clears the dynamic test content */
@@ -269,41 +289,44 @@ function addCodeEditor(segment, selector, type, isExample)
 }
 
 
-/* Initiates the run request */
-function run()
+/* Links up the run Run Button */
+$(function() 
 {
-    /* creates the result context */
-    var result = { "count": 0, "anchor": "", "inputs" : []};
-
-    /* Performs the validations */
-    validateRun(result, "code", tutorial.code.segments);
-    validateRun(result, "test", tutorial.test.segments);
-
-    /* Based on results takes next action */
-    if(result.count == 0)
+    $("#run-button" ).click(function()
     {
-        if(tutorial.review)
-        {
-            /* Caches the inputs for later use */
-            buildInput = result.inputs;
-            displayReview(result.inputs);
+        /* creates the result context */
+        var result = { "count": 0, "anchor": "", "inputs" : []};
 
-            $("#review").fadeIn(fadeIn);
-            smoothScrolls("#review");
+        /* Performs the validations */
+        validateRun(result, "code", tutorial.code.segments);
+        validateRun(result, "test", tutorial.test.segments);
+
+        /* Based on results takes next action */
+        if(result.count == 0)
+        {
+            if(tutorial.review)
+            {
+                /* Caches the inputs for later use */
+                buildInput = result.inputs;
+                displayReview(result.inputs);
+
+                $("#review").fadeIn(fadeIn);
+                smoothScrolls("#review");
+            }
+            else
+            {
+                /* Kicks off the build */
+                build(result.inputs);
+            }
         }
         else
         {
-            /* Kicks off the build */
-            build(result.inputs);
+            /* Scroll back to error */
+            smoothScrolls(result.anchor);
+            return true;
         }
-    }
-    else
-    {
-        /* Scroll back to error */
-        smoothScrolls(result.anchor);
-        return true;
-    }
-}
+    });
+});
 
 
 /* Validates the run request */
@@ -345,6 +368,7 @@ function validateRun(result, type, segments)
     });
 }
 
+
 /* Sets editor background */
 function addEditorHighlight(id)
 {
@@ -354,6 +378,7 @@ function addEditorHighlight(id)
         .css("background", config.highlight);
 }
 
+
 /* Sets editor background */
 function removeEditorHighlight(id)
 {
@@ -362,6 +387,7 @@ function removeEditorHighlight(id)
         .find(".ace_scroller")
         .css("background", "");
 }
+
 
 /* Checks that an editor is actually valid */
 function isEditorValid(editor)
@@ -402,10 +428,13 @@ function editSegment(id)
 
 
 /* Invokes the build after review*/
-function buildAfterReview()
+$(function() 
 {
-    build(buildInput);
-}
+    $("#build-button" ).click(function()
+    {
+        build(buildInput);
+    });
+ });
 
 
 /* Invokes the build direct*/
