@@ -51,14 +51,24 @@ app.get('/api/tutorials', function(request, response){
 //Get Tutorials json by id
 app.get('/api/tutorials/:id', function(request, response){
 
-  Tutorial.getTutorialById(request.params.id, function(err, tutorial){
-    if(err){
-      throw err;
-    }
+  try
+  {
 
-    log(request, "Response", tutorial);
-    response.json(tutorial);
-  })
+    Tutorial.getTutorialById(request.params.id, function(err, tutorial){
+      if(err){
+        throw err;
+      }
+
+      log(request, "Response", tutorial);
+      response.json(tutorial);
+    })
+
+  } catch (e) {
+
+  } finally {
+
+  }
+
 });
 
 //add tutorials to db
