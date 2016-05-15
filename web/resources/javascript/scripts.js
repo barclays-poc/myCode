@@ -28,6 +28,9 @@ function initialize()
     
     /* Handles orientation change */
     windowChange();
+    
+    /* */
+    populateTutorial(1);
 }
 
 function populateTutorials()
@@ -254,11 +257,11 @@ function addCodeEditor(segment, selector, type, isExample)
         class: "code",
         text: text
     }).appendTo(selector);
-
+    
     /* Initializes the dynamically created editor */
     var editor = ace.edit(id);
-    editor.setTheme("ace/theme/textmate");
     editor.setFontSize("70%");
+    editor.setTheme("ace/theme/" + config.editorTheme);
     editor.setOption("wrap", true);
     editor.setReadOnly(isExample);
     editor.getSession().on('change', function(e) 
@@ -315,7 +318,7 @@ function validateRun(result, type, segments)
         var idHash = "#" + id;
         
         /* Resets background */
-        setEditorBackground( idHash, "#ffffff");
+        removeEditorHighlight( idHash );
         
         /* Gets editor reference */
         var editor = ace.edit( id );
@@ -323,7 +326,7 @@ function validateRun(result, type, segments)
         /* Checks the input length */
         if( ! isEditorValid( editor ))
         {
-            setEditorBackground( idHash, "#f6bbb5");
+            addEditorHighlight( idHash );
             result.count++;
             
             if( result.count == 1)
@@ -346,14 +349,22 @@ function validateRun(result, type, segments)
 }
 
 /* Sets editor background */
-function setEditorBackground(id, color)
+function addEditorHighlight(id)
 {
     /* Resets background */
     $( id )
         .find(".ace_scroller")
-        .css("background", color);
+        .css("background", config.highlight);
 }
-        
+
+/* Sets editor background */
+function removeEditorHighlight(id)
+{
+    /* Resets background */
+    $( id )
+        .find(".ace_scroller")
+        .css("background", "");
+}
 
 /* Checks that an editor is actually valid */
 function isEditorValid(editor)
