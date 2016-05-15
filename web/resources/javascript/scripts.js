@@ -137,13 +137,8 @@ function populateTutorial(id)
             tutorial = data;
             console.log("set: " + tutorial);
 
-        }).success(function()
+        }).error(function()
              {
-                console.log("fade In: ");
-        })
-        .error(function()
-             {
-                console.log("Error: " + tutorial);
                 onError();
                 tutorial = null;
             });
