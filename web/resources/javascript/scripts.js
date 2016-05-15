@@ -2,7 +2,7 @@ var tutorial = null;
 var buildInput = null;
 var fadeIn = 1000;
 var fadeOut = 600;
-    
+
 /* Sets the stylesheet, favicon, title */
 setStylesheet();
 setFavicon();
@@ -19,18 +19,15 @@ function initialize()
     {
        $("body").fadeIn(fadeIn);
     });
-    
+
     /* Associates smooth scrolling */
     smoothScroll();
 
     /* Sets the logo based on the theme */
     setLogo();
-    
+
     /* Handles orientation change */
     windowChange();
-    
-    /* */
-    populateTutorial(1);
 }
 
 function populateTutorials()
@@ -101,7 +98,7 @@ function populateTutorials()
         $(".section-how-to").fadeIn(fadeIn);
 
         /* Smooth scrolling */
-        smoothScroll(); 
+        smoothScroll();
     });
 }
 
@@ -126,7 +123,7 @@ function populateTutorial(id)
     {
         /* Provide API Endpoint */
         var url = config.baseUrl + "/api/tutorials/" + id;
-        
+
         /* Retrieves the API data and populates */
         $.getJSON( url, function( data )
         {
@@ -137,12 +134,12 @@ function populateTutorial(id)
 
             /* adds as global variable */
             tutorial = data;
-            
+
         }).error(function()
              {
                 onError();
             });
-        
+
         /* Fades the new content in */
         $( ".tutorial-content" ).fadeIn(fadeIn, function(){});
         return false;
@@ -250,21 +247,21 @@ function addCodeEditor(segment, selector, type, isExample)
     var id = type + "-" + segment.id;
     var mode = "ace/mode/" + segment.mode;
     var text = isExample ? segment.example : "";
-    
+
     /* Creates a code editor dynamically */
     jQuery('<div/>', {
         id: id,
         class: "code",
         text: text
     }).appendTo(selector);
-    
+
     /* Initializes the dynamically created editor */
     var editor = ace.edit(id);
     editor.setFontSize("70%");
     editor.setTheme("ace/theme/" + config.editorTheme);
     editor.setOption("wrap", true);
     editor.setReadOnly(isExample);
-    editor.getSession().on('change', function(e) 
+    editor.getSession().on('change', function(e)
     {
         $("#review").fadeOut(fadeOut);
     });
@@ -277,20 +274,20 @@ function run()
 {
     /* creates the result context */
     var result = { "count": 0, "anchor": "", "inputs" : []};
-    
+
     /* Performs the validations */
     validateRun(result, "code", tutorial.code.segments);
     validateRun(result, "test", tutorial.test.segments);
-    
+
     /* Based on results takes next action */
     if(result.count == 0)
-    {            
+    {
         if(tutorial.review)
-        { 
+        {
             /* Caches the inputs for later use */
             buildInput = result.inputs;
             displayReview(result.inputs);
-            
+
             $("#review").fadeIn(fadeIn);
             smoothScrolls("#review");
         }
@@ -312,14 +309,14 @@ function run()
 /* Validates the run request */
 function validateRun(result, type, segments)
 {
-    $.each(segments, function(index, segment) 
+    $.each(segments, function(index, segment)
     {
         var id = "tutorial-" + type + "-" + segment.id;
         var idHash = "#" + id;
-        
+
         /* Resets background */
         removeEditorHighlight( idHash );
-        
+
         /* Gets editor reference */
         var editor = ace.edit( id );
 
@@ -328,7 +325,7 @@ function validateRun(result, type, segments)
         {
             addEditorHighlight( idHash );
             result.count++;
-            
+
             if( result.count == 1)
             {
                 result.anchor = idHash;
@@ -339,13 +336,13 @@ function validateRun(result, type, segments)
             /* Constructs the input object and adds to the array */
             var input = {
                 id: id,
-                command: segment.command, 
+                command: segment.command,
                 value: editor.getValue()
             };
-            
+
             result.inputs.push(input);
         }
-    }); 
+    });
 }
 
 /* Sets editor background */
@@ -374,20 +371,20 @@ function isEditorValid(editor)
     {
         return false;
     }
-        
+
     /* TODO: Code to go in here */
     return true;
 }
 
 
 /* Display the review content */
-function displayReview(inputs) 
+function displayReview(inputs)
 {
     /* Clears previous preview */
     $("#pre-view .prev").empty();
-    
+
     /* Add the code section for each input*/
-    $.each(inputs, function(index, input) 
+    $.each(inputs, function(index, input)
     {
         final = "<h3 class='commands'>" + input.command + "...</h3><div class='code-review'>" + htmlEscape(input.value) + "<a href='#prevent' class='code-edit' onclick='javascript: editSegment(\"" + input.id + "\")'>edit</a></div>";
 
@@ -428,5 +425,5 @@ function build(buildInput)
         alert(json['status']);
         $("#pre-view").fadeOut(fadeOut);
     }
-    });  
+    });
 }
