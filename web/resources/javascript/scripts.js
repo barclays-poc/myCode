@@ -1,7 +1,7 @@
 var tutorial = null;
 var buildInput = null;
-var fadeIn = 700;
-var fadeOut = 500;
+var fadeIn = 1000;
+var fadeOut = 600;
     
 /* Sets the stylesheet, favicon, title */
 setStylesheet();
@@ -25,6 +25,9 @@ function initialize()
 
     /* Sets the logo based on the theme */
     setLogo();
+    
+    /* Handles orientation change */
+    windowChange();
 }
 
 function populateTutorials()
@@ -375,7 +378,7 @@ function displayReview(inputs)
     /* Add the code section for each input*/
     $.each(inputs, function(index, input) 
     {
-        final = "<h3 class='commands'>" + input.command + "...</h3><div class='code-review'>" + htmlEscape(input.value) + "<a href='#' class='code-edit' onclick='javascript: editSegment(\"" + input.id + "\")'>edit</a></div>";
+        final = "<h3 class='commands'>" + input.command + "...</h3><div class='code-review'>" + htmlEscape(input.value) + "<a href='#prevent' class='code-edit' onclick='javascript: editSegment(\"" + input.id + "\")'>edit</a></div>";
 
         $("#review-segments").append(final);
     });

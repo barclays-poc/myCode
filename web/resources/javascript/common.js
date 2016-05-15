@@ -1,3 +1,5 @@
+
+
 /* Gets query string parameters */
 (function($) {
     $.QueryString = (function(a) {
@@ -40,7 +42,7 @@ function smoothScrolls(target)
     /* changes Html and bodybehaviours */
     $('html, body').stop().animate({
         'scrollTop': ($(target).offset().top - 60 )
-    }, 600, 'swing', function () {
+    }, 1000, 'swing', function () {
         window.location.hash = target;
     });
 }
@@ -65,5 +67,13 @@ function htmlUnescape(value){
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
         .replace(/&amp;/g, '&');
+}
+
+function windowChange()
+{
+    window.onorientationchange = function() 
+        { 
+            window.location.reload(); 
+        };
 }
 
