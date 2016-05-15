@@ -40,7 +40,7 @@
         
     </head>
 
-    <body onload="javascript: initialize();">
+    <body>
 
         <!-- Navigation -->
         <nav class="tutorials errorHide">
@@ -50,7 +50,7 @@
                 :model="treeData">
               </item>
             </ul>
-            <i class="ion-close-circled" onclick="javascript: closeTutorials();"></i>
+            <i Id="close-button" class="ion-close-circled" onclick="javascript: closeTutorials();"></i>
         </nav>
         
         <!-- Header section -->
@@ -108,19 +108,18 @@
                         <div class="box">    
                             <h3>Context Diagram</h3>
                             <img id="asset-diagram" class="asset-image"/>
+                            <h3>Additional Resources</h3>
+                            <div id="asset-links" class="asset-links"></div>
                         </div>
                     </div>
-                    <div class="col span-4-of-12">
+                    <div class="col span-5-of-12">
                         <div class="box">
                             <h3>Overview</h3>
                             <div id="asset-content"></div>
                         </div>
                     </div>
                     <div class="col span-1-of-12">
-                        <div class="box">
-                            <h3>Resources</h3>
-                            <div id="asset-links" class="asset-links"></div>
-                        </div>
+                        
                     </div>
                     <div class="col span-1-of-12"></div>
                 </div>
@@ -210,7 +209,7 @@
                 </div>
             </section>
             <div class="last-row">
-                <a id="run-build" href="#prevent" onclick="javascript: run();">
+                <a id="run-button" href="#prevent">
                     <i class="ion-play play-button"></i>
                 </a>
             </div>
@@ -232,7 +231,7 @@
                     </div>
                 </section>
                 <div class="last-row">
-                    <a id="build-button" href="#prevent" onclick="javascript: buildAfterReview();">
+                    <a id="build-button" href="#prevent">
                         <i class="ion-play play-button"></i>
                     </a>
                 </div>
