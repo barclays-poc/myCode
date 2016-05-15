@@ -21,6 +21,13 @@ var Tutorial = require ('./models/tutorial');
 mongoose.connect('mongodb://localhost/api');
 var db = mongoose.connection;
 
+function log( request, messageType, object)
+{
+  console.log("");
+  console.log(request.protocol + '://' + request.get('host') + request.originalUrl + " - " + messageType);
+  console.log(JSON.stringify(object, null, 2));
+}
+
 //API GET calls
 //api home page
 app.get('/', function(request, response){
@@ -34,6 +41,8 @@ app.get('/api/tutorials', function(request, response){
      if(err){
       throw err;
      }
+
+     log(request, "Response", tutorials[0]);
      response.json(tutorials[0]) ;
     });
 });
@@ -41,10 +50,13 @@ app.get('/api/tutorials', function(request, response){
 
 //Get Tutorials json by id
 app.get('/api/tutorials/:id', function(request, response){
+
   Tutorial.getTutorialById(request.params.id, function(err, tutorial){
     if(err){
       throw err;
     }
+
+    log(request, "Response", tutorial);
     response.json(tutorial);
   })
 });
@@ -52,14 +64,13 @@ app.get('/api/tutorials/:id', function(request, response){
 //add tutorials to db
 app.post('/api/tutorials/:id/build', function(request, response){
 
-   var tutorialResponse = request.body;
-   console.log(JSON.stringify(tutorialResponse));
+    var tutorialRequest = request.body;
+    log(request, "Request", tutorialRequest);
 
     var fs = require('fs');
 
-   fs.writeFile('../test.txt', JSON.stringify(tutorialResponse) , (err) => {
-      if (err) response.json('{"status":"Error"}');;
-      console.log('Written to the file');
+    fs.writeFile('../test.txt', JSON.stringify(tutorialRequest) , (err) => {
+        if (err) response.json('{"status":"Error"}');;
     });
 
     response.json('{"status":"successfull"}');
