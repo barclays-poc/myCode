@@ -351,6 +351,12 @@ h3
     text-align: left;
 }
 
+
+.editor-highlight
+{
+    background-color: #f6bbb5;
+}
+
 /* Play Button */
 
 .play-button
