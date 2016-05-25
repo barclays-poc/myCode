@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var subResourceSchema = mongoose.Schema({
       title: {type: String, required: true},
       target: {type: String},
-      url: {type: String}, 
+      url: {type: String},
     }, {_id: false });
 
 //sub schema required for sub segments
@@ -12,11 +12,12 @@ var subSegmentSchema = mongoose.Schema({
       id: {type: Number, required: true},
       command: {type: String, required: true},
       mode: {type: String, required: true} ,
-      example: {type: String}, 
+      example: {type: String},
     }, {_id: false});
 
 //tutorial schema required for api
 var tutorialSchema = mongoose.Schema({
+  version: {type: Number, required: true},
   id: {type: Number, required:true},
   name: {type: String, required: true},
   asset: {
@@ -37,10 +38,10 @@ var tutorialSchema = mongoose.Schema({
   },
   test: {
     segments: [subSegmentSchema],
-    video: {type: String}    
+    video: {type: String}
   },
     dockerfile : {type: String, required: true},
-    reviewSwitch : {type: Boolean, default: true}
+    review : {type: Boolean, default: true}
 });
 
 //exposing the tutorial object for the whole api
@@ -53,4 +54,3 @@ module.exports.getTutorialById = function(id, callback){
   var condition = {id: id};
   Tutorial.findOne(condition, callback);
 }
-

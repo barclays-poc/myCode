@@ -13,9 +13,17 @@ app.use(function(req, res, next){
 //tells to parse the body of a request as json
 app.use(bodyParser.json());
 
+//variables
+var port = 8080;
+var domain = 'localhost';
+
 //assign model
 var Tutorials = require ('./models/tutorials');
 var Tutorial = require ('./models/tutorial');
+var Swagger = require('./swagger.js');
+
+//configure swagger
+Swagger.configureSwagger(app, port, domain);
 
 //connect to mongoose
 mongoose.connect('mongodb://localhost/api');

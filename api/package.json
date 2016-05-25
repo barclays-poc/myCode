@@ -6,10 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-    "dependencies":{
-  	"express":"*",
-  	"body-parser":"*",
-  	"mongoose":"*"
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "minimist": "*",
+    "mongoose": "*",
+    "swagger-node-express": "*"
   },
   "author": "Aran",
   "license": "ISC"

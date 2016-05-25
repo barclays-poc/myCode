@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 
 //tutorials schema required for api
 var tutorialsSchema = mongoose.Schema({
+  version: {type: Number, required: true},
   id: {type: Number, required: true},
   name: {type: String, required: true},
   children: [new mongoose.Schema({
-      name: {type: String},
       name: {type: String},
       children: [new mongoose.Schema({
           name: {type: String},
@@ -27,5 +27,3 @@ var Tutorials = module.exports = mongoose.model('Tutorials', tutorialsSchema, 't
 module.exports.getTutorials = function(callback, limit){
   Tutorials.find(callback).limit(limit);
 }
-
-
