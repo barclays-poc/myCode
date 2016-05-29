@@ -45,7 +45,7 @@ module.exports.configureSwagger = function (app, port, domain){
   }
 
   //set and display the application URL
-  var applicationUrl = 'http://'+ domain + ':' + port;
+  var applicationUrl = 'https://'+ domain + ':' + port;
   console.log('API running on ' + applicationUrl);
 
   //configure application to swagger

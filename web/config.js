@@ -1,6 +1,6 @@
 var config = {
     "version": 1.0,
-    "baseUrl": "http://192.168.99.100:8080",
+    "baseUrl": "https://192.168.99.100:8080",
 
     /*
     // Barclays Theme

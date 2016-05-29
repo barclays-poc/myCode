@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var https = require('https');
+var fs = require('fs');
+
 
 app.use(function(req, res, next){
   res.header('Access-Control-Allow-Origin', "*");
@@ -94,5 +97,9 @@ app.post('/api/tutorials/:id/build', function(request, response){
     response.json('{"status":"successfull"}');
 });
 
-app.listen(8080);
+//app.listen(8080);
+https.createServer({
+  key: fs.readFileSync(__dirname + '/ssl/key.pem'),
+  cert: fs.readFileSync(__dirname + '/ssl/cert.pem')
+}, app).listen(8080);
 console.log("Server running on port 8080.....");
