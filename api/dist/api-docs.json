@@ -7,7 +7,7 @@
       "termsOfService": "http://swagger.io/terms/"
     },
     "schemes": [
-        "http"
+        "https"
     ],
     "basePath": "/",
     "tags": [
@@ -46,21 +46,21 @@
                 }
             }
         },
-        "/api/tutorial/{id}": {
+        "/api/tutorials/{id}": {
             "get": {
                 "summary": "Application Tutorial",
                 "description": "The Tutorial endpoint returns the selected tutorial. The response will include information about the application,\n tutorial for developers with examples and dedicated sections to try out the code.<br><br>The response json object will be used to dynamically generate the body of the website.",
+                "tags": [
+                    "Developer Website API"
+                ],
                 "parameters": [
                     {
                         "name": "id",
+                        "type": "number",
+                        "required": true,
                         "in": "path",
-                        "type": "integer",
-                        "format": "int32",
                         "description": "ID of the tutorial to be returned."
                     }
-                ],
-                "tags": [
-                    "Developer Website API"
                 ],
                 "responses": {
                     "200": {
@@ -77,44 +77,18 @@
                     }
                 }
             }
-        },
-        "/api/tutorial/{id}/build": {
-          "post": {
-            "summary": "Tutorial Build",
-            "description": "The Tutorial Build endpoint builds the tutorial code based on the tutorial id provided in the path. The response will be  description stating wether the build process has started.",
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "ID of the tutorial to be built."
-                }
-            ],
-            "tags":[
-              "Developer Website API"
-            ],
-            "responses": {
-                "200": {
-                    "description": "Tutorial Build process started..."
-                },
-                "default": {
-                    "description": "Unexpected error",
-                    "schema": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-          }
         }
     },
-
-    "definitions": {
+  "definitions": {
       "Tutorials": {
           "type": "object",
           "properties": {
+            "version": {
+              "type": "number",
+              "description": "Version of Tutorial"
+            },
               "id": {
-                  "type": "string",
+                  "type": "number",
                   "description": "Unique identifier representing a Tutorial."
               },
               "name": {
@@ -166,47 +140,13 @@
                 }
               }
             },
-       "subResourceSchema" : {
-         "type": "object",
-         "properties":{
-           "title" : {
-             "type": "string",
-             "description" : "Name of resource."
-           },
-           "target": {
-             "type" : "string",
-             "description":""
-           },
-           "url": {
-             "type": "string",
-             "description": "Url for Resource."
-           }
-         }
-       },
-       "subSegmentSchema": {
-         "type": "object",
-         "properties": {
-           "id": {
-             "type": "number",
-             "description": "ID of Segment."
-           },
-           "command": {
-             "type": "string",
-             "description": "Command for Segment."
-           },
-           "mode": {
-             "type": "string",
-             "description": "Segment mode."
-           },
-           "example": {
-             "type": "string",
-             "description": "Segment example."
-           }
-         }
-       },
         "Tutorial": {
             "type": "object",
             "properties": {
+                "version": {
+                  "type": "number",
+                  "description": "Version of Tutorial"
+                },
                 "id": {
                     "type": "number",
                     "description": "ID of Tutorial."
@@ -236,8 +176,25 @@
                       "description": "Asset diagram."
                     },
                     "resouces": {
+                      "type": "array",
                       "description": "Asset available resources.",
-                      "$ref": "#/definitions/subResourceSchema"
+                      "items": {
+                        "type": "object",
+                        "properties":{
+                          "title" : {
+                            "type": "string",
+                            "description" : "Name of resource."
+                          },
+                          "target": {
+                            "type" : "string",
+                            "description":""
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Url for Resource."
+                          }
+                        }
+                      }
                     }
                   }
                 },
@@ -263,9 +220,30 @@
                     "description": "Contains Coding components required for Tutorial.",
                     "properties": {
                         "segments": {
+                            "type": "array",
                             "description": "Contains the code segments required for Tutorial.",
-                            "$ref": "#/definitions/subSegmentSchema"
-                        } ,
+                            "items":{
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number",
+                                  "description": "ID of Segment."
+                                },
+                                "command": {
+                                  "type": "string",
+                                  "description": "Command for Segment."
+                                },
+                                "mode": {
+                                  "type": "string",
+                                  "description": "Segment mode."
+                                },
+                                "example": {
+                                  "type": "string",
+                                  "description": "Segment example."
+                                }
+                              }
+                            }
+                        },
                         "video":{
                           "type": "string",
                           "description": "Video provided by Team."
@@ -275,9 +253,30 @@
                   "test": {
                     "type": "object",
                     "properties": {
-                      "segments": {
-                          "description": "Contains the test segments required for Tutorial.",
-                          "$ref": "#/definitions/subSegmentSchema"
+                       "segments": {
+                          "type": "array",
+                          "description": "Contains the code segments required for Tutorial.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number",
+                                "description": "ID of Segment."
+                              },
+                              "command": {
+                                "type": "string",
+                                "description": "Command for Segment."
+                              },
+                              "mode": {
+                                "type": "string",
+                                "description": "Segment mode."
+                              },
+                              "example": {
+                                "type": "string",
+                                "description": "Segment example."
+                              }
+                            }
+                          }
                       } ,
                       "video":{
                         "type": "string",
@@ -290,7 +289,7 @@
                     "description": "Contains the dockerfile required to deploy the tutorial output."
                   },
                   "review": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "Flag to determine whether the review section is visible to end user."
                   }
                 }

@@ -2,18 +2,15 @@ var argv = require('minimist')(process.argv.slice(2));
 var swagger = require('swagger-node-express');
 var bodyParser = require('body-parser');
 var express = require('express');
+var path = require('path');
 
 module.exports.configureSwagger = function (app, port, domain){
-  //subpath for swagger to avoid route overlaps
-  var subPath = express();
-
-  app.use("/swagger", subPath);
 
   //coupling subpath with swagger
-  swagger.setAppHandler(subPath);
+  swagger.setAppHandler(app);
 
   //serve static files
-  app.use(express.static('dist'));
+  app.use(express.static(path.join(__dirname + '/dist')));
 
   //setting api info
   swagger.setApiInfo({
@@ -22,13 +19,13 @@ module.exports.configureSwagger = function (app, port, domain){
   });
 
   //getting the /dist/index.html for swagger UI
-  subPath.get('/', function(request, response){
-    response.sendFile(__dirname + '/dist/index.html');
+  app.get('/swagger', function(request, response){
+    response.sendFile(path.join(__dirname + '/dist/index.html'));
     console.log(__dirname + '/dist/index.html');
   });
 
   //set api-doc path
-  swagger.configureSwaggerPaths("", "api-docs", "");
+  //swagger.configureSwaggerPaths('', path.join(__dirname + '/dist/index.htm'), '');
 
   //configure the api domain
   if(argv.domain !== undefined){

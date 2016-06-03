@@ -11,7 +11,7 @@ setTitle();
 
 /* Once ocument is ready */
 $(window).load(function()
-{ 
+{
     /* Populates the Tutorial tree */
     populateTutorials();
 
@@ -20,7 +20,7 @@ $(window).load(function()
 
     /* Sets the logo based on the theme */
     setLogo();
-    
+
     $("body").fadeIn(fadeIn);
 });
 
@@ -110,7 +110,7 @@ $(function ()
 {
     $("#close-button").click(function()
     {
-       $("#tutorial-id-0").click(); 
+       $("#tutorial-id-0").click();
     });
 });
 
@@ -119,21 +119,21 @@ $(function ()
 function populateTutorial(id)
 {
     var hasData = false;
-    
+
     /* Only actions if actually changes */
     if( tutorial != null && id == tutorial.id) return false;
-    
+
     /* Retrieves the tutorial if an id is provided */
     if(id != null)
     {
         /* Provide API Endpoint */
         var url = config.baseUrl + "/api/tutorials/" + id;
-        
+
         /* Sets to be sync */
         $.ajaxSetup({
             async: false
         });
-        
+
         /* Retrieves the API data and populates */
         $.getJSON( url, function( data )
         {
@@ -147,7 +147,7 @@ function populateTutorial(id)
                 /* adds as global variable */
                 tutorial = data;
                 console.log("set: " + tutorial);
-                
+
                 hasData = true;
             }
             else
@@ -161,12 +161,12 @@ function populateTutorial(id)
                 onError();
                 tutorial = null;
             });
-        
+
          /* Sets to be async */
         $.ajaxSetup({
             async: true
         });
-        
+
         if( hasData)
         {
             $(".tutorial-content" ).fadeIn(fadeIn);
@@ -191,7 +191,7 @@ function populateAsset(data)
 }
 
 
-/* Populates the additional resources */ 
+/* Populates the additional resources */
 function addAdditionalResource(resource)
 {
     /* Adds the asset link */
@@ -312,7 +312,7 @@ function addCodeEditor(segment, selector, type, isExample)
 
 
 /* Links up the run Run Button */
-$(function() 
+$(function()
 {
     $("#run-button" ).click(function()
     {
@@ -450,7 +450,7 @@ function editSegment(id)
 
 
 /* Invokes the build after review*/
-$(function() 
+$(function()
 {
     $("#build-button" ).click(function()
     {
