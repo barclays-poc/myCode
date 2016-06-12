@@ -1,0 +1,62 @@
+{
+	"id": "50703a9c-2d83-c163-6f82-b6597b034e98",
+	"name": "Developer Website API Test",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"id": "f49a5777-8069-7f7f-b13c-477d51067fc9",
+			"name": "Request Methods",
+			"description": "",
+			"order": [
+				"34e78704-d5bf-30a7-c898-591b03139769",
+				"7c6ab290-6698-129f-e4d6-d92bed1085d5"
+			],
+			"owner": 0
+		}
+	],
+	"timestamp": 1464188309683,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "34e78704-d5bf-30a7-c898-591b03139769",
+			"headers": "",
+			"url": "https://192.168.99.100:8080/api/tutorials/1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Response time is less than 200ms\"] = responseTime < 200;\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");\ntests[\"Body matches string\"] = responseBody.has(\"id\");\n\nvar data = JSON.parse(responseBody);\ntests[\"validate Tutorial Id\"] = data.id == 1;\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1464790783711,
+			"name": "Tutorial Get - Based on ID",
+			"description": "Testing the tutorial Get Request",
+			"collectionId": "50703a9c-2d83-c163-6f82-b6597b034e98",
+			"responses": []
+		},
+		{
+			"id": "7c6ab290-6698-129f-e4d6-d92bed1085d5",
+			"headers": "",
+			"url": "https://192.168.99.100:8080/api/tutorials",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "tests[\"Response time is less than 200ms\"] = responseTime < 200;\ntests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");\ntests[\"Json contains ID\"] = responseBody.has(\"id\");\n\nvar data = JSON.parse(responseBody);\ntests[\"validate Tutorial Id\"] = data.id === 0;\n\nvar schema = {\n          \"tutorial\": {\n          \"type\": \"object\",\n          \"properties\": {\n              \"id\": {\n                  \"type\": \"string\",\n                  \"description\": \"Unique identifier representing a Tutorial.\"\n              },\n              \"name\": {\n                  \"type\": \"string\",\n                  \"description\": \"Static string Tutorials.\"\n              },\n              \"children\": {\n                  \"type\":\"array\",\n                  \"description\": \"Array containing the list applications available in the developer website.\",\n                  \"items\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"name\": {\n                        \"type\" : \"string\",\n                        \"description\": \"Name of Application.\"\n                      },\n                      \"children\" : {\n                        \"type\":\"array\",\n                        \"description\": \"Array containing the different assets of an application.\",\n                        \"items\": {\n                          \"type\":\"object\",\n                          \"properties\": {\n                            \"name\": {\n                              \"type\" : \"string\",\n                              \"description\": \"Name of Asset.\"\n                            },\n                            \"children\": {\n                              \"type\":\"array\",\n                              \"description\": \"Array containing Asset specific tutorials.\",\n                              \"items\": {\n                                \"type\":\"object\",\n                                \"properties\": {\n                                  \"name\": {\n                                    \"type\" : \"string\",\n                                    \"description\": \"Name of Tutorial.\"\n                                  },\n                                  \"id\": {\n                                    \"type\":\"string\",\n                                    \"description\": \"ID of Tutorial.\"\n                                  }\n                                }\n                              }\n                            }\n                          }\n                        }\n                      }\n                    }\n                  }\n                }\n              }\n}\n}\n \nvar data = JSON.parse(responseBody);\nvar result = tv4.validateResult(data, schema);\ntests[\"Validate Tutorials Schema\"] = result.valid;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1464790767783,
+			"name": "Tutorials Get",
+			"description": "Get the Tutorials",
+			"collectionId": "50703a9c-2d83-c163-6f82-b6597b034e98",
+			"responses": []
+		}
+	]
+}

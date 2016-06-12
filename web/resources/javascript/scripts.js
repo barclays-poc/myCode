@@ -382,7 +382,8 @@ function validateRun(result, type, segments)
             var input = {
                 id: id,
                 command: segment.command,
-                value: editor.getValue()
+                value: editor.getValue(),
+                mode: segment.mode
             };
 
             result.inputs.push(input);
@@ -464,6 +465,7 @@ function build(buildInput)
 {
     var input = JSON.stringify(buildInput);
     var url = config.baseUrl + "/api/tutorials/" + tutorial.id + "/build";
+    //var url = "https://localhost:8081/api/deploy";
 
     $.ajax({
     url: url,

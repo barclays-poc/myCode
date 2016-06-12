@@ -1,0 +1,35 @@
+{
+"version": 1.0,
+"id": 0,
+"name": "Tutorials",
+"children": [
+{
+  "name": "Decision Management"
+},
+{
+"name": "Pricing & Billing",
+"children":
+[
+{
+"name": "Personal miReveune",
+"children": [
+{
+"name": "Add New Data Source",
+"id" : "1"
+},
+{
+"name": "Add New Charging Policy",
+"id" : "2"
+}
+]
+},
+{
+"name": "Personal Reconcilation"
+}
+]
+},
+{
+"name": "Robotic Automation"
+}
+]
+}

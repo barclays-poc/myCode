@@ -1,0 +1,313 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Developer Portal API",
+      "description": "API's for Developer Website",
+      "termsOfService": "http://swagger.io/terms/"
+    },
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Developer Website API",
+        "description": "API for the Developer Website"
+      }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/tutorials": {
+            "get": {
+                "summary": "Tutorials List",
+                "description": "The Tutorial endpoint returns information about the *Tutorials* available in the Developer Website. The response includes the platform, application, asset\nand other details about each Tutorial.\n",
+                "tags": [
+                    "Developer Website API"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tutorials object used for website drop down list",
+                        "schema": {
+                            "$ref": "#/definitions/Tutorials"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tutorials/{id}": {
+            "get": {
+                "summary": "Application Tutorial",
+                "description": "The Tutorial endpoint returns the selected tutorial. The response will include information about the application,\n tutorial for developers with examples and dedicated sections to try out the code.<br><br>The response json object will be used to dynamically generate the body of the website.",
+                "tags": [
+                    "Developer Website API"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "type": "number",
+                        "required": true,
+                        "in": "path",
+                        "description": "ID of the tutorial to be returned."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tutorial information",
+                        "schema": {
+                            "$ref": "#/definitions/Tutorial"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+  "definitions": {
+      "Tutorials": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "number",
+              "description": "Version of Tutorial"
+            },
+              "id": {
+                  "type": "number",
+                  "description": "Unique identifier representing a Tutorial."
+              },
+              "name": {
+                  "type": "string",
+                  "description": "Static string Tutorials."
+              },
+              "children": {
+                  "type":"array",
+                  "description": "Array containing the list applications available in the developer website.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type" : "string",
+                        "description": "Name of Application."
+                      },
+                      "children" : {
+                        "type":"array",
+                        "description": "Array containing the different assets of an application.",
+                        "items": {
+                          "type":"object",
+                          "properties": {
+                            "name": {
+                              "type" : "string",
+                              "description": "Name of Asset."
+                            },
+                            "children": {
+                              "type":"array",
+                              "description": "Array containing Asset specific tutorials.",
+                              "items": {
+                                "type":"object",
+                                "properties": {
+                                  "name": {
+                                    "type" : "string",
+                                    "description": "Name of Tutorial."
+                                  },
+                                  "id": {
+                                    "type":"string",
+                                    "description": "ID of Tutorial."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+        "Tutorial": {
+            "type": "object",
+            "properties": {
+                "version": {
+                  "type": "number",
+                  "description": "Version of Tutorial"
+                },
+                "id": {
+                    "type": "number",
+                    "description": "ID of Tutorial."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of Tutorial."
+                },
+                "asset": {
+                  "type": "object",
+                  "description" : "Information about the Asset.",
+                  "properties":{
+                    "id": {
+                      "type": "number",
+                      "description": "ID of Asset."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description" : "Name of Asset."
+                    },
+                    "content": {
+                      "type": "string",
+                      "description":"Asset content information."
+                    },
+                    "diagram": {
+                      "type": "string",
+                      "description": "Asset diagram."
+                    },
+                    "resouces": {
+                      "type": "array",
+                      "description": "Asset available resources.",
+                      "items": {
+                        "type": "object",
+                        "properties":{
+                          "title" : {
+                            "type": "string",
+                            "description" : "Name of resource."
+                          },
+                          "target": {
+                            "type" : "string",
+                            "description":""
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Url for Resource."
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "requirement": {
+                  "type": "object",
+                  "properties": {
+                    "new":{
+                      "type": "string",
+                      "description": "Requirement for Tutorial."
+                    },
+                    "example": {
+                      "type": "string",
+                      "description":"An example asset requirement"
+                    }
+                  }
+                },
+                  "design": {
+                    "type": "string",
+                    "description": "Contains information for the design."
+                },
+                  "code": {
+                    "type": "object",
+                    "description": "Contains Coding components required for Tutorial.",
+                    "properties": {
+                        "segments": {
+                            "type": "array",
+                            "description": "Contains the code segments required for Tutorial.",
+                            "items":{
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number",
+                                  "description": "ID of Segment."
+                                },
+                                "command": {
+                                  "type": "string",
+                                  "description": "Command for Segment."
+                                },
+                                "mode": {
+                                  "type": "string",
+                                  "description": "Segment mode."
+                                },
+                                "example": {
+                                  "type": "string",
+                                  "description": "Segment example."
+                                }
+                              }
+                            }
+                        },
+                        "video":{
+                          "type": "string",
+                          "description": "Video provided by Team."
+                        }
+                    }
+                  },
+                  "test": {
+                    "type": "object",
+                    "properties": {
+                       "segments": {
+                          "type": "array",
+                          "description": "Contains the code segments required for Tutorial.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number",
+                                "description": "ID of Segment."
+                              },
+                              "command": {
+                                "type": "string",
+                                "description": "Command for Segment."
+                              },
+                              "mode": {
+                                "type": "string",
+                                "description": "Segment mode."
+                              },
+                              "example": {
+                                "type": "string",
+                                "description": "Segment example."
+                              }
+                            }
+                          }
+                      } ,
+                      "video":{
+                        "type": "string",
+                        "description": "Video provided by Team."
+                      }
+                    }
+                  },
+                  "dockerfile": {
+                    "type": "string",
+                    "description": "Contains the dockerfile required to deploy the tutorial output."
+                  },
+                  "review": {
+                    "type": "boolean",
+                    "description": "Flag to determine whether the review section is visible to end user."
+                  }
+                }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
