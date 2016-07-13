@@ -3,8 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var https = require('https');
+var http = require('http');
 var fs = require('fs');
-
 
 app.use(function(req, res, next){
   res.header('Access-Control-Allow-Origin', "*");
@@ -16,28 +16,30 @@ app.use(function(req, res, next){
 //tells to parse the body of a request as json
 app.use(bodyParser.json());
 
-//variables
-var port = 8080;
-var domain = 'localhost';
-
-//assign model
-var Tutorials = require ('./models/tutorials');
-var Tutorial = require ('./models/tutorial');
-var Swagger = require('./swagger.js');
-
-//configure swagger
-Swagger.configureSwagger(app, port, domain);
-
 //connect to mongoose
 mongoose.connect('mongodb://localhost/api');
 var db = mongoose.connection;
 
-function log( request, messageType, object)
-{
-  console.log("");
-  console.log(request.protocol + '://' + request.get('host') + request.originalUrl + " - " + messageType);
-  console.log(JSON.stringify(object, null, 2));
-}
+//logger configuration
+var log = require('./logger/config.js');
+var logger=log.LOG;
+
+//contains api environment variables like port/domain/protocol
+var env = require('./environment/environmentvariable');
+
+//Server info
+logger.info("Port: "+ env.port);
+logger.info("Domain: "+ env.domain);
+logger.info("Protocol: "+ env.protocol);
+
+//assign route
+var tutorials = require('./routes/tutorials.js');
+
+//swagger object
+var Swagger = require('./swagger.js');
+
+//configure swagger
+Swagger.configureSwagger(app, env.port, env.domain);
 
 //API GET calls
 //api home page
@@ -45,54 +47,18 @@ app.get('/', function(request, response){
 	response.send('Please use the /api/tutorials');
 })
 
+//api tutorials endpoint
+app.use('/api/tutorials', tutorials);
 
-//loads all tutorials on page load
-app.get('/api/tutorials', function(request, response){
-    Tutorials.getTutorials(function(err, tutorials){
-     if(err){
-      log(err);
-     }
+//create https server
+// https.createServer({
+//   key: fs.readFileSync(__dirname + '/ssl/key.pem'),
+//   cert: fs.readFileSync(__dirname + '/ssl/cert.pem')
+// }, app).listen(8080);
 
-     log(request, "Response", tutorials[0]);
-     response.json(tutorials[0]) ;
-    });
-});
+//create http server
+app.listen(env.port);
 
-
-//Get Tutorials json by id
-app.get('/api/tutorials/:id', function(request, response){
-  try
-  {
-    Tutorial.getTutorialById(request.params.id, function(err, tutorial){
-      if(err){
-        log(err);
-      }
-
-      log(request, "Response", tutorial);
-      response.json(tutorial);
-    })
-  } catch (e) {
-  } finally {
-  }
-
-});
-
-//add tutorials to db
-app.post('/api/tutorials/:id/build', function(request, response){
-    var tutorialRequest = request.body;
-    log(request, "Request", tutorialRequest);
-
-    var fs = require('fs');
-    fs.writeFile('../test.txt', JSON.stringify(tutorialRequest) , (err) => {
-        if (err) response.json('{"status":"Error"}');;
-    });
-    response.json('{"status":"successfull"}');
-});
-
-//app.listen(8080);
-
-https.createServer({
-  key: fs.readFileSync(__dirname + '/ssl/key.pem'),
-  cert: fs.readFileSync(__dirname + '/ssl/cert.pem')
-}, app).listen(8080);
-console.log("Server running on port 8080.....");
+//server info
+logger.info("Server Initialised");
+logger.info("API url: "+env.protocol+"://"+env.domain+":"+env.port);

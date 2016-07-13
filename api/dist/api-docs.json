@@ -7,7 +7,7 @@
       "termsOfService": "http://swagger.io/terms/"
     },
     "schemes": [
-        "https"
+        "http"
     ],
     "basePath": "/",
     "tags": [

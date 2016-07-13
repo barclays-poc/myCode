@@ -13,6 +13,7 @@ var subSegmentSchema = mongoose.Schema({
       command: {type: String, required: true},
       mode: {type: String, required: true} ,
       example: {type: String},
+      filename: {type: String},
     }, {_id: false});
 
 //tutorial schema required for api

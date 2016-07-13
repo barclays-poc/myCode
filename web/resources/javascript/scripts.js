@@ -2,6 +2,8 @@ var tutorial = null;
 var buildInput = null;
 var fadeIn = 1500;
 var fadeOut = 100;
+var longFadeOut = 1500;
+
 
 /* Sets the stylesheet, favicon, title */
 setStylesheet();
@@ -383,7 +385,8 @@ function validateRun(result, type, segments)
                 id: id,
                 command: segment.command,
                 value: editor.getValue(),
-                mode: segment.mode
+                mode: segment.mode,
+                filename: segment.filename
             };
 
             result.inputs.push(input);
@@ -429,8 +432,10 @@ function isEditorValid(editor)
 /* Display the review content */
 function displayReview(inputs)
 {
-    /* Clears previous preview */
-    $("#pre-view .prev").empty();
+    /* Clears previous preview and result */
+    //$("#pre-view .prev").empty();
+    $("#review-segments").empty();
+    $("#result-segments").empty();
 
     /* Add the code section for each input*/
     $.each(inputs, function(index, input)
@@ -446,7 +451,8 @@ function displayReview(inputs)
 function editSegment(id)
 {
     smoothScrolls( "#" + id);
-    $("#review").fadeOut(fadeOut);
+    $("#review").fadeOut(longFadeOut);
+    $("#result").fadeOut(longFadeOut);
 }
 
 
@@ -454,7 +460,11 @@ function editSegment(id)
 $(function()
 {
     $("#build-button" ).click(function()
-    {
+    {   
+        
+        $("#result").fadeOut(longFadeOut);
+        $("#result-segments").empty();
+        
         build(buildInput);
     });
  });
@@ -465,7 +475,7 @@ function build(buildInput)
 {
     var input = JSON.stringify(buildInput);
     var url = config.baseUrl + "/api/tutorials/" + tutorial.id + "/build";
-    //var url = "https://localhost:8081/api/deploy";
+    //var url = "https://localhost:8081/api/deploy/"+ tutorial.id;
 
     $.ajax({
     url: url,
@@ -474,9 +484,51 @@ function build(buildInput)
     headers: {"Content-Type": 'application/json' },
     dataType: 'json',
     success: function (data) {
-        json = JSON.parse(data);
-        alert(json['status']);
-        $("#pre-view").fadeOut(fadeOut);
+        
+        console.log(data);
+        output = JSON.parse(data);
+        displayResult(output.outputMessage, output.outputValue);
+        
+        //alert(json['status']);
+        //$("#pre-view").fadeOut(fadeOut);
     }
     });
 }
+
+/* displays the result returned from tutorial execution*/
+function displayResult(outputMessage,outputValue )
+{   
+    /* add result to webpage*/
+    final = "</h3><div class='code-result'>" + outputMessage + ":" +'\n'+ outputValue + "</div>";
+    $("#result-segments").append(final);
+    
+        $("#result").fadeIn(fadeIn);
+    smoothScrolls("#result");
+
+}
+
+/* Invokes the build after review*/
+$(function()
+{
+    $("#retry-button").click(function()
+    {   
+        $("#review").fadeOut(longFadeOut);
+        $("#result").fadeOut(longFadeOut);
+        
+        smoothScrolls("#code-section");
+
+    });
+ });
+
+/* Invokes the build after review*/
+$(function()
+{
+    $("#finish-button").click(function()
+    {           
+        $("#result").fadeOut(FadeOut);
+        $("#review").fadeOut(longFadeOut);
+        
+        smoothScrolls("#section-how-to");
+
+    });
+ });

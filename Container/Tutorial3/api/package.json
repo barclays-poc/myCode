@@ -1,0 +1,16 @@
+{
+  "name": "developerwebsitedeployapi",
+  "version": "1.0.0",
+  "description": "developer website tutorial deploy api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "log4js":"*"
+  },
+  "author": "Aran",
+  "license": "ISC"
+}
