@@ -14,8 +14,6 @@
     "swagger-node-express": "*",
     "log4js": "*",
     "dockerode": "*",
-    "request": "*",
-    "longjohn": "*",
     "requestretry": "*"
 
   },
