@@ -383,7 +383,6 @@ h3
 }
 
 /* Retry Button */
-
 .retry-button
 {
     font-size: 500%;
@@ -396,6 +395,27 @@ h3
 {
     color: #991f00;
     cursor: pointer;
+}
+
+/* Finish Button */
+.finish-button
+{
+    font-size: 500%;
+    color: #00adef;
+    cursor: pointer;
+    transition: color 0.8s;
+}
+
+.finish-button:hover
+{
+    color: #00395d;
+    cursor: pointer;
+}
+
+.last-row a
+{
+    margin:50px;
+        
 }
 
 .review

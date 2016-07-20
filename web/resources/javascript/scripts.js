@@ -451,6 +451,7 @@ function displayReview(inputs)
 function editSegment(id)
 {
     smoothScrolls( "#" + id);
+    //hides review and result sections
     $("#review").fadeOut(longFadeOut);
     $("#result").fadeOut(longFadeOut);
 }
@@ -483,15 +484,11 @@ function build(buildInput)
     data: input,
     headers: {"Content-Type": 'application/json' },
     dataType: 'json',
-    success: function (data) {
-        
+    success: function (data) {        
         console.log(data);
         output = JSON.parse(data);
-        displayResult(output.outputMessage, output.outputValue);
-        
-        //alert(json['status']);
-        //$("#pre-view").fadeOut(fadeOut);
-    }
+        displayResult(output.outputMessage, output.outputValue);        
+       }
     });
 }
 
@@ -507,28 +504,24 @@ function displayResult(outputMessage,outputValue )
 
 }
 
-/* Invokes the build after review*/
+/* Return to code section*/
 $(function()
 {
     $("#retry-button").click(function()
     {   
         $("#review").fadeOut(longFadeOut);
         $("#result").fadeOut(longFadeOut);
-        
         smoothScrolls("#code-section");
 
     });
  });
 
-/* Invokes the build after review*/
+/* Reload page for next tutorial*/
 $(function()
 {
     $("#finish-button").click(function()
-    {           
-        $("#result").fadeOut(FadeOut);
-        $("#review").fadeOut(longFadeOut);
-        
-        smoothScrolls("#section-how-to");
+    {   
+        document.location.href="/web/index.html";
 
     });
  });
