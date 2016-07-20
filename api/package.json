@@ -11,11 +11,7 @@
     "express": "*",
     "minimist": "*",
     "mongoose": "*",
-    "swagger-node-express": "*",
-    "log4js": "*",
-    "dockerode": "*",
-    "requestretry": "*"
-
+    "swagger-node-express": "*"
   },
   "author": "Aran",
   "license": "ISC"
