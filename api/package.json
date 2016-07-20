@@ -12,7 +12,9 @@
     "minimist": "*",
     "mongoose": "*",
     "swagger-node-express": "*",
-    "log4js": "*"
+    "log4js": "*",
+    "dockerode": "*",
+    "requestretry": "*"
   },
   "author": "Aran",
   "license": "ISC"
